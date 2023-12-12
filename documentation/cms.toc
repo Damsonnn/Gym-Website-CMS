@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Charakterystyka ogólna projektu}{2}{section.1}%
+\contentsline {section}{\numberline {2}Wymagania}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Funkcjonalne}{3}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Redaktor}{3}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Administrator}{3}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Czytelnik}{3}{subsubsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.2}Niefunkcjonalne}{3}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Architektura systemu}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Narzędzia}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Backend aplikacji}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Frontend aplikacji}{4}{subsection.3.3}%
