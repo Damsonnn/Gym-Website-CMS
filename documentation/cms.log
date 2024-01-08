@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10) (preloaded format=pdflatex 2023.11.15)  15 NOV 2023 21:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10) (preloaded format=pdflatex 2023.11.15)  13 DEC 2023 21:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -274,7 +274,28 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip50
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 10.
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen153
+\Gin@req@width=\dimen154
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 11.
 
 (C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
@@ -284,26 +305,26 @@ File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
 ) (cms.aux)
 \openout1 = `cms.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -346,33 +367,39 @@ Package: color 2022/01/06 v1.3d Standard LaTeX Color (DPC)
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+)
+Package hyperref Info: Link coloring ON on input line 15.
+ (cms.out) (cms.out)
+\@outlinefile=\write3
+\openout3 = `cms.out'.
 
-(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 
 (C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count293
-\scratchdimen=\dimen153
+\scratchdimen=\dimen155
 \scratchbox=\box52
 \nofMPsegments=\count294
 \nofMParguments=\count295
 \everyMPshowfont=\toks21
 \MPscratchCnt=\count296
-\MPscratchDim=\dimen154
+\MPscratchDim=\dimen156
 \MPnumerator=\count297
 \makeMPintoPDFobject=\count298
 \everyMPtoPDFconversion=\toks22
-))
-(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
 )
-Package hyperref Info: Link coloring ON on input line 14.
- (cms.out) (cms.out)
-\@outlinefile=\write3
-\openout3 = `cms.out'.
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
 
- [1
+(C:\Users\mrklo\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+)) [1
 
 {C:/Users/mrklo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/mrkl
 o/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}] (cms.toc
@@ -409,46 +436,72 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.44 \newpage
+l.45 \newpage
               [1]
-Underfull \hbox (badness 10000) in paragraph at lines 46--48
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--54
+Underfull \hbox (badness 10000) in paragraph at lines 53--55
 
  []
 
-[2] [3] [4] (cms.aux)
+[2] [3] [4] [5]
+<images/Relational.pdf, id=108, 1927.2pt x 1084.05pt>
+File: images/Relational.pdf Graphic file (type pdf)
+<use images/Relational.pdf>
+Package pdftex.def Info: images/Relational.pdf  used on input line 128.
+(pdftex.def)             Requested size: 433.62pt x 243.90073pt.
+ [6 <./images/Relational.pdf>]
+
+pdfTeX warning: pdflatex (file ./images/Przypadki_uzycia.pdf): PDF inclusion: f
+ound PDF version <1.7>, but at most version <1.5> allowed
+<images/Przypadki_uzycia.pdf, id=126, 598.15468pt x 847.24525pt>
+File: images/Przypadki_uzycia.pdf Graphic file (type pdf)
+<use images/Przypadki_uzycia.pdf>
+Package pdftex.def Info: images/Przypadki_uzycia.pdf  used on input line 131.
+(pdftex.def)             Requested size: 433.62pt x 614.21768pt.
+[7 <./images/Przypadki_uzycia.pdf>] (cms.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
-Package rerunfilecheck Info: File `cms.out' has not changed.
-(rerunfilecheck)             Checksum: A555EA8E52BEDFCF2572E8C5EB39D037;1443.
+
+
+Package rerunfilecheck Warning: File `cms.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `cms.out':
+(rerunfilecheck)             Before: D9529273FA8FE6C8547814A823C75E53;2070
+(rerunfilecheck)             After:  28EE8A147197736DDA0501B321C49D41;1900.
  ) 
 Here is how much of TeX's memory you used:
- 9278 strings out of 475247
- 144788 string characters out of 5757791
+ 9641 strings out of 475247
+ 151376 string characters out of 5757791
  1925785 words of memory out of 5000000
- 30679 multiletter control sequences out of 15000+600000
+ 31016 multiletter control sequences out of 15000+600000
  566896 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,5n,79p,290b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\mrklo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1200.pk><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plb
-x12.pfb><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr
-12.pfb><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr1
-7.pfb>
-Output written on cms.pdf (5 pages, 53598 bytes).
+ 75i,6n,79p,290b,503s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{subsection.4.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+ <C:\Users\mrklo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm12
+00.pk><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plbx1
+2.pfb><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr12
+.pfb><C:/Users/mrklo/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr17.
+pfb>
+Output written on cms.pdf (8 pages, 343244 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 89 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 171 PDF objects out of 1000 (max. 8388607)
+ 24 named destinations out of 1000 (max. 500000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 
