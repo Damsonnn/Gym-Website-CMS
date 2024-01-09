@@ -61,4 +61,15 @@ td {
   height: 30px;
 }
 
+.crud-buttons {
+  text-align: right;
+  padding-right: 10px;
+  width: 50px;
+}
+
+.crud-buttons>* {
+  color: black;
+  margin-left: 5px;
+}
+
 

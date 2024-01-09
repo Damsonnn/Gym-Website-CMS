@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-import SideMenu from './components/SideMenu';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import Pages from './components/Pages';
+import SideMenu from './components/general/SideMenu';
+import './assets/stylesheets/App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Pages from './components/general/Pages';
+import LoginPage from './components/general/LoginPage';
 
 function App() {
-  const [showMenu, setShowMenu] = useState(false) 
-
   return (
     <div className="App">
-      <header>
-        <div className='hamburger' onClick={() => setShowMenu(!showMenu)}>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </header>
       <BrowserRouter>
-        <div className='content'>
-          {showMenu ? <SideMenu/> : null}
-          <Pages/>
-        </div>
+        <Routes>
+          <Route path='login' element={<LoginPage />}/>
+          <Route path='manage/*' element={<Pages />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

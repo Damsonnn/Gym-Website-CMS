@@ -7,13 +7,13 @@ export default class SideMenu extends Component {
             <nav>
                 <ul className='side-menu'>
                     <li>
-                        <Link to='/posts'>Posty</Link>
+                        <Link to='posts'>Posty</Link>
                     </li>
                     <li>
-                        <Link to='/banners'>Banery</Link>
+                        <Link to='banners'>Banery</Link>
                     </li>
                     <li>
-                        <Link to='/'>Test3</Link>
+                        <Link to=''>Test3</Link>
                     </li>
                 </ul>
             </nav>

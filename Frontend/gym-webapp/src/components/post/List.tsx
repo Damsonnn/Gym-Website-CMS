@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 type Post = {
     title: string
@@ -14,7 +15,12 @@ export default function Posts() {
     }
     const [posts, setPosts] = useState(getPosts());
     const mapPosts = (posts: Array<Post>) => {
-        return posts.map(post => <tr><td>{post.title}</td><td>{post.author}</td></tr>)
+        const buttons = <td className='crud-buttons'>
+            <Link to="view">Zobacz</Link>
+            <Link to="edit">Edytuj</Link>
+            <Link to="delete">Usuń</Link>
+        </td>
+        return posts.map(post => <tr><td>{post.title}</td><td>{post.author}</td>{buttons}</tr>)
     }
 
     return (
