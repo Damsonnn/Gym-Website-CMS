@@ -5,6 +5,7 @@
 \usepackage{blindtext}
 \usepackage[a4paper, total={6in, 9in}]{geometry}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \hypersetup{colorlinks=true,
 linkcolor=,
 urlcolor = blue}
@@ -60,31 +61,40 @@ Do stworzenia warstwy wizualnej wykorzystany zostanie szablon mieszczący się n
 Wymagania z podziałem na role użytkowników:
 \subsubsection{Redaktor}
 \begin{itemize}
-\item edycja, dodawanie, usuwanie artykułów
+\item edycja, dodawanie, usuwanie artykułów i kategorii
 \item edycja banerów strony (tekst i obraz)
 \item edycja elementu witającego użytkownika
 \item edycja, dodawanie, usuwanie informacji o trenerach w tym linki do ich serwisów społecznościowych
 \item dodawanie i usuwanie opinii klientów
+\item wylogowywanie się
+\item zmiana własnego hasła
 \end{itemize}
 \subsubsection{Administrator}
 \begin{itemize}
 \item posiadanie wszystkie możliwości redaktora
-\item dodawanie i usuwanie redaktorów
+\item dodawanie, usuwanie i edycja redaktorów
 \item edycja informacji o ofercie siłowni
 \item edycja informacji o kontakcie i placówkach
+\item zmiana maila na którego przychodzą wiadomości z formularza kontaktowego
 \end{itemize}
 \subsubsection{Czytelnik}
 \begin{itemize}
 \item przeglądanie zawartości strony
 \item możliwość skorzystania z formularza kontaktowego
+\item możliwość zalogowania do konta administratora bądź redaktora
+\item wyszukiwanie artykułów po nazwie autora lub tytule
 \end{itemize}
 \subsection{Niefunkcjonalne}
 \begin{itemize}
+\item system sprawdza poprawność formatu wprowadzanych danych (np. email)
 \item zmniejszanie rozdzielczości wysłanych zdjęć
 \item autoryzacja z pomocą tokenów JWT
 \item system kompatybilny z najpopularniejszymi przeglądarkami (Chrome, Firefox, Safari)
 \item użytkownik może wykonać wszystkie akcje bez ingerencji w kod źródłowy
 \item system zostanie przetestowany z użyciem testów jednostkowych
+\item możliwość pracy wielu użytkowników jednocześnie
+\item system wczytuje stronę w czasie poniżej 3 sekund
+
 \end{itemize}
 
 \newpage
@@ -107,8 +117,16 @@ Technologie użyte do stworzenia części serwerowej aplikacji:
 \subsection{Frontend aplikacji}
 Technologie użyte do stworzenia części klienckiej projektu:
 \begin{itemize}
-\item \textbf{JavaScript}
-\item \textbf{HTML}
-\item \textbf{CSS}
+\item \textbf{TypeScript} - rozszerzenie języka JavaScript
+\item \textbf{HTML} - język znaczników użyty do budowy układu strony
+\item \textbf{CSS} - język służacy do opisu formy prezentacji strony
+\item \textbf{React.js} - biblioteka języka JavaScript obsługująca także TypeScript
 \end{itemize}
+\newpage
+\section{Schemat baz danych}
+\subsection{Model relacyjny}
+\includegraphics[width=1\textwidth, angle=0]{images/Relational.pdf}
+\newpage
+\section{Diagram przypadków użycia}
+\includegraphics[width=1\textwidth, angle=0]{images/Przypadki_uzycia.pdf}
 \end{document}
