@@ -1,8 +1,13 @@
 import React, { useState, Component } from 'react'
 import { Route, Routes } from 'react-router'
-import Posts from '../post/List'
-import Banners from '../banner/List'
+import ListPosts from '../post/List'
+import ListBanners from '../banner/List'
+import ListLocations from '../location/List'
 import SideMenu from './SideMenu'
+import ListUsers from '../user/List'
+import ListOffers from '../offer/List'
+import ListOpinions from '../opinion/List'
+import ListTrainers from '../trainer/List'
 
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(false)
@@ -19,8 +24,13 @@ export default function Pages() {
             <div className='content'>
                 {showMenu ? <SideMenu /> : null}
                 <Routes>
-                    <Route path="posts" element={<Posts />} />
-                    <Route path="banners" element={<Banners />} />
+                    <Route path="users" element={<ListUsers />} />
+                    <Route path="posts" element={<ListPosts />} />
+                    <Route path="banners" element={<ListBanners />} />
+                    <Route path="locations" element={<ListLocations />} />
+                    <Route path="offers" element={<ListOffers />} />
+                    <Route path="opinions" element={<ListOpinions />} />
+                    <Route path="trainers" element={<ListTrainers />} />
                 </Routes>
             </div>
         </div>

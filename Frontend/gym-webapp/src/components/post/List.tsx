@@ -1,12 +1,12 @@
 import React, { Component, useState } from 'react'
-import { Link } from 'react-router-dom'
+import renderList from '../../utils/RenderList'
 
 type Post = {
     title: string
     author: string
 }
 
-export default function Posts() {
+export default function ListPosts() {
     const getPosts = () => {
         const postsTest = [{title: "tytul 1", author: "autor 1"},
             {title: "tytul 2", author: "autor 2"},
@@ -14,26 +14,9 @@ export default function Posts() {
         return postsTest
     }
     const [posts, setPosts] = useState(getPosts());
-    const mapPosts = (posts: Array<Post>) => {
-        const buttons = <td className='crud-buttons'>
-            <Link to="view">Zobacz</Link>
-            <Link to="edit">Edytuj</Link>
-            <Link to="delete">Usuń</Link>
-        </td>
-        return posts.map(post => <tr><td>{post.title}</td><td>{post.author}</td>{buttons}</tr>)
-    }
+    const mapPosts = (posts: Array<Post>) => posts.map(post => [post.title, post.author])
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Tytuł</th>
-                    <th>Autor</th>
-                </tr>
-            </thead>
-            <tbody>
-                {mapPosts(posts)}
-            </tbody>
-        </table>
+        renderList(["Tytuł", "Autor"], mapPosts(posts))
     )
-}
+    }
