@@ -29,4 +29,8 @@ public class UserService {
         existingUser.setPassword(user.getPassword());
         return userRepository.save(existingUser);
     }
+
+    public void deleteUser(Integer id){
+        userRepository.deleteById(id);
+    }
 }
