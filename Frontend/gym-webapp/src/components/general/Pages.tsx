@@ -9,6 +9,9 @@ import ListOffers from '../offer/List'
 import ListOpinions from '../opinion/List'
 import ListTrainers from '../trainer/List'
 import ListCategories from '../category/List'
+import { CrudAction } from '../../utils/CrudAction'
+import BannerView from '../banner/View'
+import BannerRoutes from '../banner/Routes'
 
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(false)
@@ -27,7 +30,7 @@ export default function Pages() {
                 <Routes>
                     <Route path="users" element={<ListUsers />} />
                     <Route path="posts" element={<ListPosts />} />
-                    <Route path="banners" element={<ListBanners />} />
+                    <Route path="banners" element={<BannerRoutes />} />
                     <Route path="locations" element={<ListLocations />} />
                     <Route path="offers" element={<ListOffers />} />
                     <Route path="opinions" element={<ListOpinions />} />

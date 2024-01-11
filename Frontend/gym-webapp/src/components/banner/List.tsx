@@ -1,5 +1,7 @@
-import React, { Component, useState } from 'react'
+import { useState } from 'react'
 import renderList from "../../utils/RenderList"
+import BannerView from './View'
+import {Routes, Route} from 'react-router-dom'
 
 type Banner = {
     id: number

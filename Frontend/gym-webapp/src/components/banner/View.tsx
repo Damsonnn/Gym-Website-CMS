@@ -1,7 +1,12 @@
-import React from 'react'
+import { CrudAction } from "../../utils/CrudAction";
 
-export default function BannerView() {
+export default function BannerView(props: {action: CrudAction}) {
   return (
-    <div>View</div>
+    <div>
+        <form action="">
+            <label htmlFor="title">Tytuł:</label>
+            <input type="text" name='title' />
+        </form>
+    </div>
   )
 }
