@@ -27,6 +27,9 @@ export default class SideMenu extends Component {
                     <li>
                         <Link to='trainers'>Trenerzy</Link>
                     </li>
+                    <li>
+                        <Link to='categories'>Kategorie</Link>
+                    </li>
                 </ul>
             </nav>
         )

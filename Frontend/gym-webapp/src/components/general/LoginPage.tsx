@@ -13,7 +13,7 @@ export default function LoginPage() {
           <input type="password" name="password" id="password" /><br/>
           <input type="submit" value="Zaloguj"/>
         </form>
-        <Link to="/password-recovery">Zapomniałem hasła</Link>
+        <Link to="/recovery">Zapomniałem hasła</Link>
       </div>
     </div>
   )

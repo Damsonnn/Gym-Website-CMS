@@ -8,6 +8,7 @@ import ListUsers from '../user/List'
 import ListOffers from '../offer/List'
 import ListOpinions from '../opinion/List'
 import ListTrainers from '../trainer/List'
+import ListCategories from '../category/List'
 
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(false)
@@ -31,6 +32,7 @@ export default function Pages() {
                     <Route path="offers" element={<ListOffers />} />
                     <Route path="opinions" element={<ListOpinions />} />
                     <Route path="trainers" element={<ListTrainers />} />
+                    <Route path="categories" element={<ListCategories />} />
                 </Routes>
             </div>
         </div>
