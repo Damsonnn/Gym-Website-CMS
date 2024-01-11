@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react'
-import { Route, Routes } from 'react-router'
+import { Route, Routes } from 'react-router-dom'
 import ListPosts from '../post/List'
 import ListBanners from '../banner/List'
 import ListLocations from '../location/List'

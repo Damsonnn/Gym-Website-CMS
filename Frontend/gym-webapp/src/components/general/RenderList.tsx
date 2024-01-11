@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import {Link} from 'react-router-dom'
-import { ListItem } from './ListItem'
+import { ListItem } from '../../utils/ListItem'
 
 export default function renderList(headers: Array<string>, items: Array<ListItem>) {
     const renderCrudButtons = (id: number): ReactNode => {

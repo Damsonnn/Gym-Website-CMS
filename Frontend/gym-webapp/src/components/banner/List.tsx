@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import renderList from "../../utils/RenderList"
+import renderList from "../general/RenderList"
 import BannerView from './View'
 import {Routes, Route} from 'react-router-dom'
 

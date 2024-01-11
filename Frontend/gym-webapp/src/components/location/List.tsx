@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import renderList from "../../utils/RenderList"
+import renderList from "../general/RenderList"
 import { ListItem } from '../../utils/ListItem'
 
 type Location = {
