@@ -6,8 +6,8 @@ export default function renderList(headers: Array<string>, items: Array<ListItem
     const renderCrudButtons = (id: number): ReactNode => {
         return(
             <td className='crud-buttons'>
-                <Link to={"view/" + id}>Zobacz</Link>
-                <Link to={"edit/" + id}>Edytuj</Link>
+                <Link to={id.toString()}>Zobacz</Link>
+                <Link to={id + "/edit"}>Edytuj</Link>
                 <Link to="delete">Usuń</Link>
             </td>)}
 
