@@ -14,9 +14,9 @@
 
 header {
   display: flex;
+  justify-content: space-between;
   height: 50px;
   border-bottom: 1px solid;
-  background-image: linear-gradient(to top, #ab6530, #87410f);
 }
 
 .content {
@@ -31,7 +31,6 @@ header {
 }
 
 .side-menu>li {
-  background-image: linear-gradient(to right, #bebebe, white, #bebebe);
   border-bottom: 1px solid;
   height: 40px;
 }
@@ -82,13 +81,22 @@ td {
 
 .create-button {
   cursor: pointer;
+  border: 1px solid;
   font-size: large;
   font-weight: 600;
   margin-top: 30px;
   margin-left: 30px;
-  background-color: rgb(164, 131, 38);
   padding: 4px;
   border-radius: 10%;
+}
+
+.logout-button {
+  align-self: center;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 10%;
+  margin-right: 30px;
 }
 
 

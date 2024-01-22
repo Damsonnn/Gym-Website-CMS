@@ -12,6 +12,7 @@ import ListCategories from '../category/List'
 import { CrudAction } from '../../utils/CrudAction'
 import BannerView from '../banner/View'
 import BannerRoutes from '../banner/Routes'
+import ViewTrainer from '../trainer/View'
 
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(false)
@@ -24,6 +25,7 @@ export default function Pages() {
                     <div></div>
                     <div></div>
                 </div>
+                <button className='logout-button'>Wyloguj</button>
             </header>
             <div className='content'>
                 {showMenu ? <SideMenu /> : null}
@@ -36,6 +38,7 @@ export default function Pages() {
                     <Route path="opinions" element={<ListOpinions />} />
                     <Route path="trainers" element={<ListTrainers />} />
                     <Route path="categories" element={<ListCategories />} />
+                    <Route path="trainers/create" element={<ViewTrainer />} />
                 </Routes>
             </div>
         </div>
