@@ -1,4 +1,4 @@
-package damcio.gymcms.security;
+package damcio.gymcms.configuration;
 
 import damcio.gymcms.user.UserRepository;
 import lombok.RequiredArgsConstructor;
