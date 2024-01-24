@@ -1,71 +1,12 @@
-.hamburger {
-  align-self: center;
-  width: 50px;
-  margin-left: 10px;
-}
-
-.hamburger>div {
-  width: 35px;
-  height: 5px;
-  background-color: black;
-  margin: 5px;
-  border-radius: 25%;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  height: 50px;
-  border-bottom: 1px solid;
-}
-
 .content {
   display: flex;
 }
 
 .side-menu {
   background-color: white;
-  width: 15rem;
+  min-width: 20rem;
+  width: 20%;
   height: calc(100vh - 50px);
-  border-right: 2px solid;
-}
-
-.side-menu>li {
-  border-bottom: 1px solid;
-  height: 40px;
-}
-
-.side-menu>li>* {
-  display: block;
-  height: 100%;
-  text-decoration: none;
-  color: black;
-  padding-left: 5px;
-  font-weight: 500;
-  font-size: large;
-}
-
-.side-menu>li>*:hover {
-  background-color: rgb(230, 230, 230);
-}
-
-.list-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-
-table {
-  width: 90%;
-  height: 100%;
-  margin: 5%;
-  border-collapse: collapse;
-}
-
-td {
-  border: 1px solid;
-  height: 30px;
 }
 
 .crud-buttons {
@@ -77,26 +18,6 @@ td {
 .crud-buttons>* {
   color: black;
   margin-left: 5px;
-}
-
-.create-button {
-  cursor: pointer;
-  border: 1px solid;
-  font-size: large;
-  font-weight: 600;
-  margin-top: 30px;
-  margin-left: 30px;
-  padding: 4px;
-  border-radius: 10%;
-}
-
-.logout-button {
-  align-self: center;
-  padding: 5px;
-  cursor: pointer;
-  border: 1px solid;
-  border-radius: 10%;
-  margin-right: 30px;
 }
 
 

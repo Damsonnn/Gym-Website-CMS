@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom'
 
 export default function LoginPage() {
   return (
-    <div className='login-container'>
-      <div className='form-container'>
-        <form>
+    <div className='container p-5 login-container'>
+      <div className='border rounded'>
+        <form className='p-5'>
           <label htmlFor="username">Nazwa użytkownika:</label><br/>
-          <input type="text" name="username" id="username" /><br/>
+          <input type="text" name="username" id="username" className='form-control' placeholder='Nazwa użytkownika'/><br/>
           <label htmlFor="password">Hasło:</label><br/>
-          <input type="password" name="password" id="password" /><br/>
-          <input type="submit" value="Zaloguj"/>
+          <input type="password" name="password" id="password" className='form-control' placeholder='Hasło'/><br/>
+          <input type="submit" value="Zaloguj" className='btn btn-primary'/>
         </form>
-        <Link to="/recovery">Zapomniałem hasła</Link>
       </div>
+      <Link to="/recovery">Zapomniałem hasła</Link>
     </div>
   )
 }

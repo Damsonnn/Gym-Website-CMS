@@ -24,14 +24,12 @@ export default function Pages() {
 
     return (
         <div>
-            <header>
-                <div className='hamburger' onClick={() => setShowMenu(!showMenu)}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <button className='logout-button'>Wyloguj</button>
-            </header>
+            <nav className='navbar navbar-dark bg-dark'>
+                <button className='nabar-toggler border rounded p-1 mx-3' onClick={() => setShowMenu(!showMenu)}>
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <button className='btn btn-primary mx-3'>Wyloguj</button>
+            </nav>
             <div className='content'>
                 {showMenu ? <SideMenu /> : null}
                 <Routes>

@@ -5,11 +5,23 @@ import { ListItem } from '../../utils/ListItem'
 export default function renderList(headers: Array<string>, items: Array<ListItem>) {
     const renderCrudButtons = (id: number): ReactNode => {
         return(
-            <td className='crud-buttons'>
-                <Link to={id.toString()}>Zobacz</Link>
-                <Link to={id + "/edit"}>Edytuj</Link>
-                <Link to="delete">Usuń</Link>
-            </td>)}
+            <div>
+                <td >
+                    <Link className='mx-2' to={id.toString()}>
+                        <button className='btn btn-primary'>Zobacz</button>
+                    </Link>
+                </td>
+                <td>
+                    <Link className='mx-2' to={id + "/edit"}>
+                        <button className='btn btn-primary'>Edytuj</button>
+                    </Link>
+                </td>
+                <td>
+                    <Link className='mx-2' to="delete">
+                        <button className='btn btn-primary'>Usuń</button>
+                    </Link>
+                </td>
+            </div>)}
 
     const renderHeaders = (headers: Array<string>): ReactNode => {
         return headers.map(header => <th>{header}</th>)}
@@ -20,14 +32,14 @@ export default function renderList(headers: Array<string>, items: Array<ListItem
     }
     
     return (
-    <div className='list-container'>
+    <div className='container p-3'>
         <Link to="create">
-            <button className='create-button'>Utwórz</button>
+            <button className='btn btn-primary'>Utwórz</button>
         </Link>
-        <table>
-            <thead>
+        <table className='table table-bordered border mt-5'>
+            <thead className='table-dark'>
                 <tr>
-                    {renderHeaders(headers)}
+                    {renderHeaders([...headers, "Akcje"])}
                 </tr>
             </thead>
             <tbody>

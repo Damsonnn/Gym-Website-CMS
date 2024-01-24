@@ -2,7 +2,7 @@
 import "../../assets/stylesheets/View.css"
 import { CrudAction } from '../../utils/CrudAction'
 
-export default function TrainerView(props = {action: CrudAction}) {
+export default function TrainerView(props: {action: CrudAction}) {
   return (
     <div className='view-container'>
         <form action="submit" className='view-form'>
