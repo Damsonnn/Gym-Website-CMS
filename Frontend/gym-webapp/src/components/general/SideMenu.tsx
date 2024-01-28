@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default class SideMenu extends Component {
     render() {
         return (
-            <div className='list-group side-menu border'>
+            <div className='list-group border'>
                 <Link className="list-group-item list-group-item-action" to='users'>Użytkownicy</Link>
                 <Link className="list-group-item list-group-item-action" to='posts'>Posty</Link>
                 <Link className="list-group-item list-group-item-action" to='banners'>Banery</Link>

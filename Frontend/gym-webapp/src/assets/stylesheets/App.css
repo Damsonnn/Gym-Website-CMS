@@ -1,23 +1,7 @@
-.content {
-  display: flex;
-}
-
-.side-menu {
-  background-color: white;
+/* .side-menu {
   min-width: 20rem;
   width: 20%;
   height: calc(100vh - 50px);
 }
 
-.crud-buttons {
-  text-align: right;
-  padding-right: 10px;
-  width: 50px;
-}
-
-.crud-buttons>* {
-  color: black;
-  margin-left: 5px;
-}
-
-
+ */

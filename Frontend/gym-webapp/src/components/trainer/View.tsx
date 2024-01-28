@@ -1,6 +1,4 @@
-﻿﻿import React from 'react'
-import "../../assets/stylesheets/View.css"
-import { CrudAction } from '../../utils/CrudAction'
+﻿﻿import { CrudAction } from '../../utils/CrudAction'
 
 export default function TrainerView(props: {action: CrudAction}) {
   return (
