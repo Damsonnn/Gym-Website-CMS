@@ -35,7 +35,7 @@ export default function Pages() {
                     <div className='col-2'>
                         {showMenu ? <SideMenu /> : null}
                     </div>
-                    <div className='col-8'>
+                    <div className='col-10'>
                         <Routes>
                             <Route path="users">
                                 <Route index={true} element={<ListUsers />}/>

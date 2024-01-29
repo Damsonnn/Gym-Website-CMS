@@ -3,5 +3,7 @@
   width: 20%;
   height: calc(100vh - 50px);
 }
-
- */
+*/
+.btns-crud {
+  width: 250px;
+}

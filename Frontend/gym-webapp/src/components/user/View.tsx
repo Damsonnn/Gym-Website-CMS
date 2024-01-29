@@ -3,7 +3,7 @@ import { CrudAction } from '../../utils/CrudAction'
 
 export default function UserView(props: {action: CrudAction}) {
   return (
-    <div className="container border rounded p-4 m-4">
+    <div className="container border rounded p-4 mt-4">
       <form>
         <div className='row mb-3'>
           <div className='form-group col'>
