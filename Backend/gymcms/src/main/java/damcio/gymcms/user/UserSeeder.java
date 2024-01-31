@@ -23,6 +23,7 @@ public class UserSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         loadRootUser();
+        loadPostmanUser();
     }
 
     private void loadRootUser() {
@@ -35,5 +36,17 @@ public class UserSeeder implements CommandLineRunner {
         rootUser.setEmail("test@gmail.com");
 
         userRepository.save(rootUser);
+    }
+
+    private void loadPostmanUser() {
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
+
+        User postmanUser = new User();
+        postmanUser.setUsername("postman");
+        postmanUser.setPassword(passwordEncoder.encode("postman"));
+        postmanUser.setRole(optionalRole.get());
+        postmanUser.setEmail("test@gmail.com");
+
+        userRepository.save(postmanUser);
     }
 }

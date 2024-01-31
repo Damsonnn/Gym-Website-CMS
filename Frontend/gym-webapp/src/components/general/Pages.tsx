@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import ListPosts from '../post/List'
 import ListBanners from '../banner/List'
 import ListLocations from '../location/List'
@@ -21,6 +21,13 @@ import CategoryView from '../category/View'
 
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(false)
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (sessionStorage.getItem("token") === null){
+            navigate("/login")
+        }
+    },[])  
 
     return (
         <div>

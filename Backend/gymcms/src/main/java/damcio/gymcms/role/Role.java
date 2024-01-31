@@ -1,7 +1,10 @@
 package damcio.gymcms.role;
 
+import damcio.gymcms.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -14,4 +17,7 @@ public class Role {
     private RoleEnum name;
 
     private String description;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> users;
 }

@@ -22,7 +22,10 @@ export default function renderList(headers: Array<string>, items: Array<ListItem
     
 
     function renderListItems(items: Array<ListItem>) {
-        return items.map(item => <tr>{item.content.map(cell => <td>{cell}</td>)}{renderCrudButtons(item.id)}</tr>)
+        if (items){
+            return items.map(item => <tr id={`${item.id}`}>{item.content.map(cell => <td>{cell}</td>)}{renderCrudButtons(item.id)}</tr>)
+        }
+        return <tr id='1'>Brak danych do wyświetlenia</tr>
     }
     
     return (

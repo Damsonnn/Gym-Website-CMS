@@ -1,5 +1,6 @@
 package damcio.gymcms.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import damcio.gymcms.post.Post;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class Category {
 
     private Boolean active;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
 }

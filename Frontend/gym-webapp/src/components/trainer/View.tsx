@@ -14,9 +14,15 @@ export default function TrainerView(props: {action: CrudAction}) {
             <input type="text" name="lastname" id="lastname" className='form-control' placeholder='Nazwisko'/>
           </div>
         </div>
-        <div className='form-group mb-3'>
-          <label htmlFor="email">E-mail:</label>
-          <input type="email" name="email" id="email" className='form-control' placeholder='E-mail'/>
+        <div className='row mb-3'>
+          <div className='form-group col'>
+            <label htmlFor="email">E-mail:</label>
+            <input type="email" name="email" id="email" className='form-control' placeholder='E-mail'/>
+          </div>
+          <div className='form-group col'>
+            <label htmlFor="birthdate">Data urodzenia:</label>
+            <input className="form-control" type="date" name="birthdate" id="birthdate"/>
+          </div>
         </div>
         <div className='form-group mb-3'>
           <label htmlFor="facebook">Link do Facebooka:</label>
@@ -30,10 +36,7 @@ export default function TrainerView(props: {action: CrudAction}) {
           <label htmlFor="twitter">Link do Twittera:</label>
           <input type="text" name="twitter" id="twitter" className='form-control' placeholder='twitter.com/uzytkownik'/>
         </div>
-        <div className='form-group mb-3'>
-          <label htmlFor="birthdate">Data urodzenia:</label>
-          <input className="form-control" type="date" name="birthdate" id="birthdate"/>
-        </div>
+
         {/* <input type="submit" value="Zaloguj" className='btn btn-primary'/> */}
       </form>
     </div>
