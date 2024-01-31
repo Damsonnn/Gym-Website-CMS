@@ -1,6 +1,6 @@
-import React, { Component, useState, useEffect } from 'react'
+import {  useState, useEffect } from 'react'
 import renderList from "../general/RenderList"
-import axios from 'axios';
+import { getAllObjects } from '../../utils/ApiRequests';
 
 export type Category = {
     id: number
@@ -8,25 +8,11 @@ export type Category = {
     active: boolean
 }
 
-const config = {
-    headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-    'Content-Type': 'application/json', }
-};
-
 export default function ListCategories() {
     const [categories, setCategories] = useState<Array<Category>>([]);
 
-    const getCategories = async () => {
-        await axios.get("http://localhost:8080/api/categories", config).then(response =>{
-            console.log(response)
-            if (response.status === 200) {
-                setCategories(response.data)
-                return response.data
-            }
-            else {
-                return null
-            }
-        })
+    const getCategories = () => {
+        getAllObjects("categories", setCategories);
     }
     useEffect(() => {
         getCategories()
@@ -43,6 +29,6 @@ export default function ListCategories() {
     }
 
     return (
-        renderList(["Tytuł", "Aktywny"], mapCategories(categories))
+        renderList(["Tytuł", "Aktywny"], mapCategories(categories), "categories")
     )
 }

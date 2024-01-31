@@ -46,7 +46,7 @@ export default function ListBanners() {
     }
 
     return (
-        renderList(["Tytuł", "Aktywny"], mapBanners(banners))
+        renderList(["Tytuł", "Aktywny"], mapBanners(banners), "banners")
     )
 
 }

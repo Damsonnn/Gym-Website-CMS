@@ -20,6 +20,6 @@ export default function ListPosts() {
     })
 
     return (
-        renderList(["Tytuł", "Autor"], mapPosts(posts))
+        renderList(["Tytuł", "Autor"], mapPosts(posts), "posts")
     )
     }

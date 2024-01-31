@@ -20,7 +20,7 @@ export default function ListUsers() {
     })
 
     return (
-        renderList(["Nazwa użytkownika", "E-mail"], mapUsers(users))
+        renderList(["Nazwa użytkownika", "E-mail"], mapUsers(users), "users")
     )
 
 }

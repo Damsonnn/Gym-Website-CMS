@@ -20,12 +20,17 @@ import TrainerView from '../trainer/View'
 import CategoryView from '../category/View'
 
 export default function Pages() {
-    const [showMenu, setShowMenu] = useState(false)
+    const [showMenu, setShowMenu] = useState(true)
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('token');
+        navigate("/login");
+    }
     
     useEffect(() => {
         if (sessionStorage.getItem("token") === null){
-            navigate("/login")
+            navigate("/login");
         }
     },[])  
 
@@ -35,7 +40,7 @@ export default function Pages() {
                 <button className='nabar-toggler border rounded p-1 mx-3' onClick={() => setShowMenu(!showMenu)}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <button className='btn btn-primary mx-3'>Wyloguj</button>
+                <button className='btn btn-primary mx-3' onClick={handleLogout}>Wyloguj</button>
             </nav>
             <div>
                 <div className='row w-100'>

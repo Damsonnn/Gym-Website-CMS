@@ -20,6 +20,6 @@ export default function ListOpinions() {
     })
 
     return (
-        renderList(["Recenzent", "Aktywna"], mapOpinions(opinions))
+        renderList(["Recenzent", "Aktywna"], mapOpinions(opinions), "opinions")
     )
 }

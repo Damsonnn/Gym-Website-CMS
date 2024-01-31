@@ -21,6 +21,6 @@ export default function ListOffers() {
     })
 
     return (
-        renderList(["Nazwa", "Cena", "Aktywna"], mapOffers(offers))
+        renderList(["Nazwa", "Cena", "Aktywna"], mapOffers(offers), "offers")
     )
 }

@@ -21,6 +21,6 @@ export default function ListTrainers() {
     })
 
     return (
-        renderList(["Imię", "Nazwisko", "Aktywny"], mapTrainers(trainers))
+        renderList(["Imię", "Nazwisko", "Aktywny"], mapTrainers(trainers), "trainers")
     )
 }
