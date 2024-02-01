@@ -1,23 +1,31 @@
-import React, { Component, useState } from 'react'
+import { useState, useEffect } from 'react'
 import renderList from "../general/RenderList"
+import { getAllObjects } from '../../utils/ApiRequests'
 
-type User = {
+export type User = {
     id: number
     username: string
-    email: string
+    email: string 
+    role : {
+        name: string
+        description: string
+    }
 }
 
 export default function ListUsers() {
+    const [users, setUsers] = useState<Array<User>>([]);
+
     const getUsers = () => {
-        const postsTest = [{id:1, username: "nazwa 1", email: "email 1"},
-            {id:2, username: "nazwa 2", email: "email 2"},
-            {id:3, username: "nazwa 3", email: "email 3"}]
-        return postsTest
+        getAllObjects("users", setUsers);
     }
-    const [users, setUsers] = useState(getUsers());
+    
     const mapUsers = (users: Array<User>) => users.map(user => {
         return {id: user.id, content: [user.username, user.email]}
     })
+
+    useEffect(() => {
+        getUsers();
+    },[])
 
     return (
         renderList(["Nazwa użytkownika", "E-mail"], mapUsers(users), "users")

@@ -1,24 +1,29 @@
-import React, { Component, useState } from 'react'
+import { useState, useEffect } from 'react'
 import renderList from "../general/RenderList"
+import { getAllObjects } from '../../utils/ApiRequests'
 
-type Offer = {
+export type Offer = {
     id: number
     name: string
     price: number
+    body: string
+    discount: number
     active: boolean
 }
 
 export default function ListOffers() {
+    const [offers, setOffers] = useState<Array<Offer>>([])
+
     const getOffers = () => {
-        const postsTest = [{id:1, name: "oferta 1", price: 109.50, active: true},
-            {id:2, name: "oferta 2", price: 40, active: false},
-            {id:3, name: "oferta 3", price: 79.99, active: true}]
-        return postsTest
+        getAllObjects("offers", setOffers)
     }
-    const [offers, setOffers] = useState(getOffers());
     const mapOffers = (offers: Array<Offer>) => offers.map(offer => {
-        return {id: offer.id, content: [offer.name, offer.price.toString(), offer.active ? "Tak" : "Nie"]}
+        return {id: offer.id, content: [offer.name, offer.active ? "Tak" : "Nie"]}
     })
+
+    useEffect(() => {
+        getOffers();
+    },[])
 
     return (
         renderList(["Nazwa", "Cena", "Aktywna"], mapOffers(offers), "offers")

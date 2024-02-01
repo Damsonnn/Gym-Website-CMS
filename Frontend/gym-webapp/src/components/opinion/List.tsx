@@ -1,23 +1,28 @@
-import React, { Component, useState } from 'react'
+import { useState, useEffect } from 'react'
 import renderList from "../general/RenderList"
+import { getAllObjects } from '../../utils/ApiRequests'
 
-type Opinion = {
+export type Opinion = {
     id: number
     reviewer: string
+    body: string
     active: boolean
 }
 
 export default function ListOpinions() {
+    const [opinions, setOpinions] = useState<Array<Opinion>>([]);
+
     const getOpinions = () => {
-        const postsTest = [{id:1, reviewer: "klient 1",  active: true},
-            {id:2, reviewer: "klient 2", active: false},
-            {id:3, reviewer: "klient 3", active: true}]
-        return postsTest
+        getAllObjects("categories", setOpinions);
     }
-    const [opinions, setOpinions] = useState(getOpinions());
+    
     const mapOpinions = (opinions: Array<Opinion>) => opinions.map(opinion => {
         return {id: opinion.id, content: [opinion.reviewer, opinion.active ? "Tak" : "Nie"]}
     })
+
+    useEffect(() => {
+        getOpinions();
+    },[])
 
     return (
         renderList(["Recenzent", "Aktywna"], mapOpinions(opinions), "opinions")
