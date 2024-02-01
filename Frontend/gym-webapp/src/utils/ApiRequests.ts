@@ -6,7 +6,7 @@ import { SetStateAction } from "react";
 
 
 
-export const createEditRequest = async (action: CrudAction, objectData: Object, id: string | undefined, endpoint: string, navigate: NavigateFunction) => {
+export const createOrEditRequest = async (action: CrudAction, objectData: Object, id: string | undefined, endpoint: string, navigate: NavigateFunction) => {
     if (action === CrudAction.Create) {
         try {
             const response = await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, config);

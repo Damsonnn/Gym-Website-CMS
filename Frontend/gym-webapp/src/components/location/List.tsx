@@ -7,13 +7,13 @@ export type Location = {
     city: string
     address: string
     phoneNumber: string
-    email: number 
+    email: string 
 }
 
 export default function ListLocations() {
     const [locations, setLocations] = useState<Array<Location>>([]);
 
-    const getLocations = async () => {
+    const getLocations = () => {
        getAllObjects("locations", setLocations);
     }
     

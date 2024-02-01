@@ -1,28 +1,63 @@
-import React from 'react'
+import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../utils/CrudAction'
+import { Opinion } from './List';
+import { createOrEditRequest, getOneObject } from '../../utils/ApiRequests';
+import { refreshInput } from '../../utils/Handlers';
 
 export default function OpinionView(props: {action: CrudAction}) {
+  const [action, setAction] = useState<CrudAction>(props.action)
+  const [opinionData, setOpinionData] = useState<Opinion>({
+    id: 0,
+    reviewer: "",
+    body: "",
+    active: false
+  });
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const getOpinion = () => {
+    if (action != CrudAction.Create) {
+      getOneObject(id, "opinions", setOpinionData);
+    }
+  }
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    refreshInput(event, opinionData, setOpinionData);
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    createOrEditRequest(action, opinionData, id, "opinions", navigate);
+  };
+
+  useEffect(() => {
+    getOpinion()
+  }, []);
+
   return (
     <div className="container border rounded p-4 mt-4">
-    <form>
-      <div className='row mb-3'>
-        <div className='form-group col'>
-          <label htmlFor="reviewer">Autor:</label>
-          <input type="text" name="reviewer" id="reviewer" className='form-control' placeholder='Autor opinii'/>
+      <form onSubmit={handleSubmit}>
+        <div className='row mb-3'>
+          <div className='form-group col'>
+            <label htmlFor="reviewer">Autor:</label>
+            <input type="text" name="reviewer" id="reviewer" className='form-control' placeholder='Autor opinii'  onChange={handleInputChange} value={opinionData.reviewer} disabled={action === CrudAction.View}/>
+          </div>
         </div>
-      </div>
-      <div className='row mb-3'>
-        <div className='form-group col'>
-          <label htmlFor="reviewer">Opinia:</label>
-          <textarea rows={4} name="reviewer" id="reviewer" className='form-control' placeholder='Tu wprowadź opinię' />
+        <div className='row mb-3'>
+          <div className='form-group col'>
+            <label htmlFor="body">Opinia:</label>
+            <input type='text' name="body" id="body" className='form-control' placeholder='Tu wprowadź opinię'  onChange={handleInputChange} value={opinionData.body} disabled={action === CrudAction.View}/>
+          </div>
         </div>
-      </div>
-      <div className='form-check'>
-        <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
-        <input className="form-check-input" type="checkbox" name="active" id="active"/>
-      </div>
-      {/* <input type="submit" value="Zaloguj" className='btn btn-primary'/> */}
-    </form>
-  </div>
+        <div className='form-check'>
+          <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
+          <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={opinionData.active} disabled={action === CrudAction.View}/>
+        </div>
+        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+      </form>
+    </div>
   )
 }

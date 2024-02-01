@@ -5,6 +5,7 @@ import { getAllObjects } from '../../utils/ApiRequests'
 export type User = {
     id: number
     username: string
+    password: string
     email: string 
     role : {
         name: string

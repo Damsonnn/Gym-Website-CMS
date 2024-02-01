@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import renderList from "../general/RenderList"
 import { getAllObjects } from '../../utils/ApiRequests';
 
-type Banner = {
+export type Banner = {
     id: number
     title: string
     body: string
