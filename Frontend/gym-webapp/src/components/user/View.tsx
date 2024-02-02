@@ -4,18 +4,24 @@ import { CrudAction } from '../../utils/CrudAction'
 import { User } from './List';
 import { createOrEditRequest, getAllObjects, getOneObject } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
+import { unchangedTextChangeRange } from 'typescript';
+
+type AddUserDto = {
+  username: string
+  password: string
+  email: string 
+  roleId: number
+}
 
 export default function UserView(props: {action: CrudAction}) {
   const [action, setAction] = useState<CrudAction>(props.action)
   const [roles, setRoles] = useState<Array<any>>([]);
-  const [userData, setUserData] = useState<User>({
-    id: 0,
+  const [requestedUser, setRequestedUser] = useState<User>()
+  const [userData, setUserData] = useState<AddUserDto>({
     username: "",
     password: "",
     email: "",
-    role: {
-      id: 1
-    }
+    roleId: 0
   });
 
   const navigate = useNavigate();
@@ -23,7 +29,15 @@ export default function UserView(props: {action: CrudAction}) {
 
   const getUser = () => {
     if (action != CrudAction.Create) {
-      getOneObject(id, "users", setUserData);
+      getOneObject(id, "users", setRequestedUser);
+      if (requestedUser){
+        setUserData({
+          ...userData,
+          username: requestedUser.username,
+          email: requestedUser.email,
+          roleId: requestedUser.role.id
+        })
+      }
     }
   }
 
@@ -73,7 +87,7 @@ export default function UserView(props: {action: CrudAction}) {
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="role">Rola:</label>
-            <select className="form-select" name="role" id="role" onChange={handleInputChange} value={userData.role.id} disabled={action === CrudAction.View}>
+            <select className="form-select" name="role" id="role" onChange={handleInputChange} value={userData.roleId} disabled={action === CrudAction.View}>
               {mapRoles(roles)}
             </select>
           </div>

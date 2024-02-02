@@ -1,6 +1,5 @@
 package damcio.gymcms.role;
 
-import damcio.gymcms.trainer.Trainer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

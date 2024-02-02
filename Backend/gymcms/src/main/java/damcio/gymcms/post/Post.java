@@ -1,7 +1,6 @@
 package damcio.gymcms.post;
 
 import damcio.gymcms.category.Category;
-import damcio.gymcms.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

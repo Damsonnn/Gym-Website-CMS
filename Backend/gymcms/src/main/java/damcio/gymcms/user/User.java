@@ -1,6 +1,6 @@
 package damcio.gymcms.user;
 
-import damcio.gymcms.post.Post;
+// import damcio.gymcms.post.Post;
 import damcio.gymcms.role.Role;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,8 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,7 @@ public class User implements UserDetails {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String email;

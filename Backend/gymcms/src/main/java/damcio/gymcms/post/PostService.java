@@ -1,6 +1,5 @@
 package damcio.gymcms.post;
 
-import damcio.gymcms.banner.BannerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

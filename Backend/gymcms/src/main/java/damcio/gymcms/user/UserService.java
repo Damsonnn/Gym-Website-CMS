@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.role.RoleRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,10 +14,15 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public User createUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User createUser(AddUserDto user){
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setRole(roleRepository.findById(user.getRoleId()).get());
+        return userRepository.save(newUser);
     }
 
     public Optional<User> getUserById(Integer id){
@@ -26,11 +33,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(User user){
-        User existingUser = userRepository.findById(user.getId()).get();
+    public User updateUser(AddUserDto user, Integer id){
+        User existingUser = userRepository.findById(id).get();
         existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        existingUser.setRole(user.getRole());
+        if (user.getPassword() != "") {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        existingUser.setRole(roleRepository.findById(user.getRoleId()).get());
         return userRepository.save(existingUser);
     }
 

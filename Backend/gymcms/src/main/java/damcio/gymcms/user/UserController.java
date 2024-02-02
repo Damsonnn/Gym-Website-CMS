@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody AddUserDto user){
         User savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -36,9 +36,8 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody User user){
-        user.setId(id);
-        User updatedUser = userService.updateUser(user);
+    public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody AddUserDto user){
+        User updatedUser = userService.updateUser(user, id);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 

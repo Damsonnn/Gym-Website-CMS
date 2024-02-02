@@ -39,7 +39,6 @@ const getOptions = () => {
 }
 
 const onEditorStateChange = (newState: EditorState) => {
-  newState.
   setEditorState(newState);
 };
 
