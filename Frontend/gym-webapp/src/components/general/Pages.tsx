@@ -25,6 +25,7 @@ export default function Pages() {
 
     const handleLogout = () => {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('role');
         navigate("/login");
     }
     
@@ -55,18 +56,6 @@ export default function Pages() {
                                 <Route path=':id/edit' element={<UserView action = {CrudAction.Edit} />}/>
                                 <Route path='create' element={<UserView action = {CrudAction.Create}/>}/>
                             </Route>
-                            <Route path="posts">
-                                <Route index={true} element={<ListPosts />}/>
-                                <Route path=':id' element={<PostView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<PostView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<PostView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="banners">
-                                <Route index={true} element={<ListBanners />}/>
-                                <Route path=':id' element={<BannerView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<BannerView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<BannerView action = {CrudAction.Create}/>}/>
-                            </Route>
                             <Route path="locations">
                                 <Route index={true} element={<ListLocations />}/>
                                 <Route path=':id' element={<LocationView action = {CrudAction.View}/>}/>
@@ -78,6 +67,18 @@ export default function Pages() {
                                 <Route path=':id' element={<OfferView action = {CrudAction.View}/>}/>
                                 <Route path=':id/edit' element={<OfferView action = {CrudAction.Edit} />}/>
                                 <Route path='create' element={<OfferView action = {CrudAction.Create}/>}/>
+                            </Route>
+                            <Route path="posts">
+                                <Route index={true} element={<ListPosts />}/>
+                                <Route path=':id' element={<PostView action = {CrudAction.View}/>}/>
+                                <Route path=':id/edit' element={<PostView action = {CrudAction.Edit} />}/>
+                                <Route path='create' element={<PostView action = {CrudAction.Create}/>}/>
+                            </Route>
+                            <Route path="banners">
+                                <Route index={true} element={<ListBanners />}/>
+                                <Route path=':id' element={<BannerView action = {CrudAction.View}/>}/>
+                                <Route path=':id/edit' element={<BannerView action = {CrudAction.Edit} />}/>
+                                <Route path='create' element={<BannerView action = {CrudAction.Create}/>}/>
                             </Route>
                             <Route path="opinions">
                                 <Route index={true} element={<ListOpinions />}/>

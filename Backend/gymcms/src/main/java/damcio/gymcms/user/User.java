@@ -26,8 +26,8 @@ public class User implements UserDetails {
 
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Post> posts;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Post> posts;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

@@ -21,9 +21,14 @@ export default function ListTrainers() {
        getAllObjects("trainers", setTrainers);
     }
     
-    const mapTrainers = (trainers: Array<Trainer>) => trainers.map(trainer => {
-        return {id: trainer.id, content: [trainer.firstName, trainer.lastName, trainer.active ? "Tak" : "Nie"]}
-    })
+    const mapTrainers = (trainers: Array<Trainer>) => {
+        if (trainers.length === 0) {
+            return [];
+        }
+        return trainers.map(trainer => {
+            return {id: trainer.id, content: [trainer.firstName, trainer.lastName, trainer.active ? "Tak" : "Nie"]}
+        })
+    }
 
     useEffect(() => {
         getTrainers();

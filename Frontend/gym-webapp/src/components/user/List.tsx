@@ -8,8 +8,7 @@ export type User = {
     password: string
     email: string 
     role : {
-        name: string
-        description: string
+        id: number
     }
 }
 
@@ -20,9 +19,14 @@ export default function ListUsers() {
         getAllObjects("users", setUsers);
     }
     
-    const mapUsers = (users: Array<User>) => users.map(user => {
-        return {id: user.id, content: [user.username, user.email]}
-    })
+    const mapUsers = (users: Array<User>) => {
+        if (users.length === 0) {
+            return [];
+        }
+        return users.map(user => {
+            return {id: user.id, content: [user.username, user.email]}
+        })
+    }
 
     useEffect(() => {
         getUsers();
@@ -31,5 +35,4 @@ export default function ListUsers() {
     return (
         renderList(["Nazwa użytkownika", "E-mail"], mapUsers(users), "users")
     )
-
 }

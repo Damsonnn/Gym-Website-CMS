@@ -6,7 +6,7 @@ import { createOrEditRequest, getOneObject } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
 
 export default function CategoryView(props: { action: CrudAction }) {
-  const [action, setAction] = useState<CrudAction>(props.action)
+  const [action, setAction] = useState<CrudAction>(props.action);
   const [categoryData, setCategoryData] = useState<Category>({
     id: 0,
     name: "",

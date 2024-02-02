@@ -25,6 +25,8 @@ export default function LoginPage() {
         console.log('Login successful');
         console.log(response.data);
         sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("role", response.data.roleName);
+        console.log(sessionStorage.getItem("role"));
         navigate("/manage");
       } else {
         console.error('Login failed');

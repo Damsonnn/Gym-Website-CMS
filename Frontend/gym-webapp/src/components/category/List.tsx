@@ -15,9 +15,14 @@ export default function ListCategories() {
         getAllObjects("categories", setCategories);
     }
     
-    const mapCategories = (categories: Array<Category>) => categories.map(category => {
-        return {id: category.id, content: [category.name, category.active ? "Tak" : "Nie"]}
-    })
+    const mapCategories = (categories: Array<Category>) => {
+        if (categories.length === 0) {
+            return [];
+        }
+        return categories.map(category => {
+            return {id: category.id, content: [category.name, category.active ? "Tak" : "Nie"]}
+        })
+    }
 
     useEffect(() => {
         getCategories();

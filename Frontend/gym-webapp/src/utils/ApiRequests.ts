@@ -18,9 +18,10 @@ export const createOrEditRequest = async (action: CrudAction, objectData: Object
                 navigate(`/manage/${endpoint}`);
             } else {
                 console.error('Could not create');
+                console.log(response)
             }
         } catch (error) {
-            console.error('Error during creating:', error);
+            console.error('Error during creating:', error);     
         }
     }
     else {

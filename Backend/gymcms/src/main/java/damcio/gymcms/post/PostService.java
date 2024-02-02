@@ -34,6 +34,7 @@ public class PostService {
         existingPost.setBody(post.getBody());
         existingPost.setCategory(post.getCategory());
         existingPost.setTitle(post.getTitle());
+        existingPost.setAuthor(post.getAuthor());
         return postRepository.save(existingPost);
     }
 

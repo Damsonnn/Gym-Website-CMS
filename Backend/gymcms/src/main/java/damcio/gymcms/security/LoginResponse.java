@@ -8,4 +8,5 @@ public class LoginResponse {
 
     private Long expiresIn;
 
+    private String roleName;
 }

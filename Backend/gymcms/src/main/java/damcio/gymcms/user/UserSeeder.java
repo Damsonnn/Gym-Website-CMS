@@ -22,30 +22,31 @@ public class UserSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        loadRootUser();
-        loadPostmanUser();
+        loadAdmin("root", "root", "root@example.com");
+        loadAdmin("postman", "postman", "postman@example.com");
+        loadUser("user", "user", "user@example.com");
     }
 
-    private void loadRootUser() {
+    private void loadAdmin(String username, String password, String email) {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
 
         User rootUser = new User();
-        rootUser.setUsername("root");
-        rootUser.setPassword(passwordEncoder.encode("root"));
+        rootUser.setUsername(username);
+        rootUser.setPassword(passwordEncoder.encode(password));
         rootUser.setRole(optionalRole.get());
-        rootUser.setEmail("test@gmail.com");
+        rootUser.setEmail(email);
 
         userRepository.save(rootUser);
     }
 
-    private void loadPostmanUser() {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
+    private void loadUser(String username, String password, String email) {
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
 
         User postmanUser = new User();
-        postmanUser.setUsername("postman");
-        postmanUser.setPassword(passwordEncoder.encode("postman"));
+        postmanUser.setUsername(username);
+        postmanUser.setPassword(passwordEncoder.encode(password));
         postmanUser.setRole(optionalRole.get());
-        postmanUser.setEmail("test@gmail.com");
+        postmanUser.setEmail(email);
 
         userRepository.save(postmanUser);
     }

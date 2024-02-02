@@ -16,9 +16,14 @@ export default function ListBanners() {
         getAllObjects("banners", setBanners);
     }
     
-    const mapBanners = (banners: Array<Banner>) => banners.map(banner => {
-        return {id: banner.id, content: [banner.title, banner.active ? "Tak" : "Nie"]}
-    })
+    const mapBanners = (banners: Array<Banner>) => {
+        if (banners.length === 0) {
+            return [];
+        }
+        return banners.map(banner => {
+            return {id: banner.id, content: [banner.title, banner.active ? "Tak" : "Nie"]}
+        })
+    }
 
     useEffect(() => {
         getBanners()

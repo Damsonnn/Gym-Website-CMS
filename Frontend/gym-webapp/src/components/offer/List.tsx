@@ -17,9 +17,15 @@ export default function ListOffers() {
     const getOffers = () => {
         getAllObjects("offers", setOffers)
     }
-    const mapOffers = (offers: Array<Offer>) => offers.map(offer => {
-        return {id: offer.id, content: [offer.name, offer.active ? "Tak" : "Nie"]}
-    })
+    const mapOffers = (offers: Array<Offer>) => {
+        if (offers.length === 0) {
+            return [];
+        }
+        console.log(offers)
+        return offers.map(offer => {
+            return {id: offer.id, content: [offer.name, String(offer.price), offer.active ? "Tak" : "Nie"]}
+        })
+    }
 
     useEffect(() => {
         getOffers();

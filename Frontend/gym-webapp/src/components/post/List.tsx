@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import renderList from '../general/RenderList'
 import { Category } from '../category/List'
-import { User } from '../user/List'
 import { getAllObjects } from '../../utils/ApiRequests'
 
 export type Post = {
@@ -9,7 +8,8 @@ export type Post = {
     title: string
     body: string
     category: Category
-    user: User
+    author: string
+    active: boolean
 }
 
 export default function ListPosts() {
@@ -19,9 +19,14 @@ export default function ListPosts() {
         getAllObjects("posts", setPosts);
     }
 
-    const mapPosts = (posts: Array<Post>) => posts.map(post => {
-        return {id: post.id, content: [post.title, post.user.username]}
-    })
+    const mapPosts = (posts: Array<Post>) => {
+        if (posts.length === 0) {
+            return [];
+        }
+        return posts.map(post => {
+            return {id: post.id, content: [post.title, post.author]}
+        })
+    }
 
     useEffect(() => {
         getPosts();

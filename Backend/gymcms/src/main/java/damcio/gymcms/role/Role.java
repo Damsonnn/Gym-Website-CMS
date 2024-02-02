@@ -1,5 +1,6 @@
 package damcio.gymcms.role;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import damcio.gymcms.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Role {
 
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users;
 }

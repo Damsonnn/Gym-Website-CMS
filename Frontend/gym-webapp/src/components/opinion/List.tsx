@@ -13,12 +13,18 @@ export default function ListOpinions() {
     const [opinions, setOpinions] = useState<Array<Opinion>>([]);
 
     const getOpinions = () => {
-        getAllObjects("categories", setOpinions);
+        getAllObjects("opinions", setOpinions);
     }
     
-    const mapOpinions = (opinions: Array<Opinion>) => opinions.map(opinion => {
-        return {id: opinion.id, content: [opinion.reviewer, opinion.active ? "Tak" : "Nie"]}
-    })
+    const mapOpinions = (opinions: Array<Opinion>) => {
+        if (opinions.length === 0) {
+            return [];
+        }
+        console.log(opinions)
+        return opinions.map(opinion => {
+            return {id: opinion.id, content: [opinion.reviewer, opinion.active ? "Tak" : "Nie"]}
+        })
+    }
 
     useEffect(() => {
         getOpinions();

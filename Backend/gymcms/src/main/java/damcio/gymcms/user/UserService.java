@@ -30,6 +30,7 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).get();
         existingUser.setUsername(user.getUsername());
         existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        existingUser.setRole(user.getRole());
         return userRepository.save(existingUser);
     }
 

@@ -49,14 +49,14 @@ export default function OfferView(props: {action: CrudAction}) {
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="offer">Treść oferty</label>
-            <input type='text' name="offer" id="offer" className='form-control' placeholder='Tu wprowadź treść oferty' onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View}/>
+            <label htmlFor="body">Treść oferty</label>
+            <input type='text' name="body" id="body" className='form-control' placeholder='Tu wprowadź treść oferty' onChange={handleInputChange} value={offerData.body} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="price">Cena:</label>
-            <input type="number" name="price" id="price" className='form-control' placeholder='100.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View}/>
+            <input type="number" name="price" id="price" className='form-control' placeholder='100.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.price} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='form-check'>

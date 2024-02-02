@@ -17,9 +17,14 @@ export default function ListLocations() {
        getAllObjects("locations", setLocations);
     }
     
-    const mapLocations = (locations: Array<Location>) => locations.map(location => {
-        return {id: location.id, content: [location.city, location.address]}
-    })
+    const mapLocations = (locations: Array<Location>) => {
+        if (locations.length === 0) {
+            return [];
+        }
+        return locations.map(location => {
+            return {id: location.id, content: [location.city, location.address]}
+        })
+    }
 
     useEffect(() => {
         getLocations();
