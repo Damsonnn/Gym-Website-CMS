@@ -1,5 +1,6 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor, EditorState } from "react-draft-wysiwyg";
+import { Editor } from "react-draft-wysiwyg";
+import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
 import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../utils/CrudAction'
@@ -7,6 +8,8 @@ import { Post } from './List';
 import { Category } from "../category/List";
 import { createOrEditRequest, getOneObject, getAllObjects } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
+import axios from "axios";
+import { config } from "../../utils/JWTConfig";
 
 export default function PostView(props: { action: CrudAction }) {
   const [editorState, setEditorState] = useState<EditorState>();
@@ -28,9 +31,23 @@ export default function PostView(props: { action: CrudAction }) {
 const navigate = useNavigate();
 const { id } = useParams();
 
-const getPost = () => {
+const getPost = async () => {
   if (action != CrudAction.Create) {
-    getOneObject(id, "posts", setPostData);
+    try {
+      await axios.get(`http://localhost:8080/api/posts/${id}`, config).then(response => {
+          console.log(response)
+          if (response.status === 200) {
+              setPostData(response.data)
+              setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(response.data["body"]))))
+          }
+          else {
+              console.log("Could not get data");
+          }
+        })
+  } catch (error) {
+      console.error('Error during fetching:', error);
+  }
+    // getOneObject(id, "posts", setPostData);
   }
 }
 
@@ -39,7 +56,11 @@ const getOptions = () => {
 }
 
 const onEditorStateChange = (newState: EditorState) => {
+  console.log(newState)
   setEditorState(newState);
+  // console.log(newState.getCurrentContent().toString());
+  setPostData({...postData, ["body"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
+  console.log(postData)
 };
 
 const mapCategories = (categories: Array<Category>) => {
@@ -94,6 +115,7 @@ useEffect(() => {
           </div>
         </div>
           <Editor
+            readOnly={action === CrudAction.View}
             editorState={editorState}
             wrapperClassName="border rounded p-2"
             editorClassName="border rounded p-2"

@@ -1,9 +1,6 @@
 package damcio.gymcms.trainer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -19,6 +16,7 @@ public class Trainer {
 
     private Integer age;
 
+    @Column(length = 10000)
     private String about;
 
     private String facebookLink;

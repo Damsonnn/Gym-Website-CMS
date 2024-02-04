@@ -4,7 +4,6 @@ import { CrudAction } from '../../utils/CrudAction'
 import { User } from './List';
 import { createOrEditRequest, getAllObjects, getOneObject } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
-import { unchangedTextChangeRange } from 'typescript';
 
 type AddUserDto = {
   username: string
@@ -29,17 +28,9 @@ export default function UserView(props: {action: CrudAction}) {
 
   const getUser = () => {
     if (action != CrudAction.Create) {
-      getOneObject(id, "users", setRequestedUser);
-      if (requestedUser){
-        setUserData({
-          ...userData,
-          username: requestedUser.username,
-          email: requestedUser.email,
-          roleId: requestedUser.role.id
-        })
+      getOneObject(id, "users", setRequestedUser)
       }
     }
-  }
 
   const getRoles = () => {
     if (action != CrudAction.Create) {
@@ -71,6 +62,17 @@ export default function UserView(props: {action: CrudAction}) {
     getRoles();
   }, []);
 
+  useEffect(() => {
+    if (requestedUser) {
+      setUserData({
+        ...userData,
+        username: requestedUser.username,
+        email: requestedUser.email,
+        roleId: requestedUser.role.id
+      })
+    }
+  },[requestedUser])
+
   return (
     <div className="container border rounded p-4 m-4">
       <form onSubmit={handleSubmit}>
@@ -86,8 +88,8 @@ export default function UserView(props: {action: CrudAction}) {
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="role">Rola:</label>
-            <select className="form-select" name="role" id="role" onChange={handleInputChange} value={userData.roleId} disabled={action === CrudAction.View}>
+            <label htmlFor="roleId">Rola:</label>
+            <select className="form-select" name="roleId" id="roleId" onChange={handleInputChange} value={userData.roleId} disabled={action === CrudAction.View}>
               {mapRoles(roles)}
             </select>
           </div>

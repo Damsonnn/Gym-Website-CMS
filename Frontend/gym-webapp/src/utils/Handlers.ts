@@ -11,4 +11,5 @@ export const refreshInput = (event: ChangeEvent<HTMLInputElement>, objectData: O
         return;
     }
     setObject({ ...objectData, [name]: value });
+    console.log(objectData);
 };

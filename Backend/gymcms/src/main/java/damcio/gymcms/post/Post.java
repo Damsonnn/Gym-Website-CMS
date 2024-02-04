@@ -13,6 +13,7 @@ public class Post {
 
     private String title;
 
+    @Column(length = 50000)
     private String body;
 
     private Boolean active;

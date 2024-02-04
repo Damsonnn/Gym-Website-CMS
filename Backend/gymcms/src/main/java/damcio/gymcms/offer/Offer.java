@@ -1,9 +1,6 @@
 package damcio.gymcms.offer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -17,6 +14,7 @@ public class Offer {
 
     private Double price;
 
+    @Column(length = 10000)
     private String body;
 
     private Double discount;
