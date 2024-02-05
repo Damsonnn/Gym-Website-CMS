@@ -38,7 +38,7 @@ export default function Pages() {
     return (
         <div>
             <nav className='navbar navbar-dark bg-dark'>
-                <button className='nabar-toggler border rounded p-1 mx-3' onClick={() => setShowMenu(!showMenu)}>
+                <button className='navbar-toggler border rounded p-1 mx-3' onClick={() => setShowMenu(!showMenu)}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <button className='btn btn-primary mx-3' onClick={handleLogout}>Wyloguj</button>
