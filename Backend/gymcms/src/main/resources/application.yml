@@ -18,6 +18,23 @@ spring:
     user:
       name: admin
       password: admin
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 #    jwt:
 #      secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
 #      expiration-time: 3600000
+# spring.mail.host=smtp.gmail.com
+# spring.mail.port=587
+# spring.mail.username=<login user to smtp server>
+# spring.mail.password=<login password to smtp server>
+# spring.mail.properties.mail.smtp.auth=true
+# spring.mail.properties.mail.smtp.starttls.enable=true

@@ -3,7 +3,7 @@ import { Post } from "../components/post/List";
 import { getAllObjectsNoToken } from "../utils/ApiRequests";
 import PostComponent from "./Post";
 
-export default function Posts() {
+export default function PopularPosts() {
   const [posts, setPosts] = useState<Array<Post>>([]);
 
   const getPosts = () => {

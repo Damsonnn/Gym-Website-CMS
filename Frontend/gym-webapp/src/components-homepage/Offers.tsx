@@ -57,7 +57,7 @@ export default function Offers() {
                 return <OfferComponent key={offer.id} name={offer.name} body={offer.body} price={offer.price} discount={offer.discount}/>
             })
         }
-        return []
+        return <h2 className="mt-3">Brak ofert do wczytania</h2>
     }
 
     useEffect(() => {
