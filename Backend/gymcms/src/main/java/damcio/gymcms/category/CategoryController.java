@@ -1,5 +1,6 @@
 package damcio.gymcms.category;
 
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class CategoryController {
         return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Category>> getActiveCategories(){
         List<Category> activeCategories = categoryService.getActiveCategories();

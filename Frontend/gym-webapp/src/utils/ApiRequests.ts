@@ -56,6 +56,22 @@ export const getOneObject = async (id: string | undefined, endpoint: string, set
     }
 }
 
+export const getOneObjectNoToken = async (id: string | undefined, endpoint: string, setData: (data: SetStateAction<any>) => void) => {
+    try {
+        await axios.get(`http://localhost:8080/api/${endpoint}/${id}`).then(response => {
+            console.log(response)
+            if (response.status === 200) {
+                setData(response.data)
+            }
+            else {
+                console.log("Could not get data");
+            }
+        })
+    } catch (error) {
+        console.error('Error during fetching:', error);
+    }
+}
+
 export const getAllObjects = async (endpoint: string, setData: (data: SetStateAction<Array<any>>) => void) =>{
     try {await axios.get(`http://localhost:8080/api/${endpoint}`, config).then(response =>{
                 console.log(response)
@@ -70,6 +86,22 @@ export const getAllObjects = async (endpoint: string, setData: (data: SetStateAc
             console.error('Error during getting data:', error);
     }
 }
+
+export const getAllObjectsNoToken = async (endpoint: string, setData: (data: SetStateAction<Array<any>>) => void) =>{
+    try {await axios.get(`http://localhost:8080/api/${endpoint}`).then(response =>{
+                console.log(response)
+                if (response.status === 200) {
+                    setData(response.data)
+                }
+                else {
+                    console.error('Could not get data');
+                }
+            })
+        } catch (error) {
+            console.error('Error during getting data:', error);
+    }
+}
+
 
 export const deleteObject = async (endpoint: string, id: number) => {
     try {

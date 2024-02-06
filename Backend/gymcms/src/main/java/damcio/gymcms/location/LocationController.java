@@ -29,6 +29,7 @@ public class LocationController {
         return ResponseEntity.of(location);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<Location>> getAllLocations(){
         List<Location> locations = locationService.getAllLocation();

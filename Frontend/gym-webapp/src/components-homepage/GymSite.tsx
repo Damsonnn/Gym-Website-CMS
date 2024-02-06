@@ -5,6 +5,7 @@ import Posts from './Posts'
 import Offers from './Offers'
 import Contact from './Contact'
 import { Link } from 'react-router-dom'
+import FullPost from './FullPost'
 
 export default function GymSite() {
   return (
@@ -27,6 +28,7 @@ export default function GymSite() {
         </nav>
         <Routes>
           <Route index={true} element={<Homepage/>}/>
+          <Route path='/posts/:id' element={<FullPost/>}/>
           <Route path='/posts' element={<Posts/>}/>
           <Route path='/offers' element={<Offers/>}/>
           <Route path='/contact' element={<Contact/>}/>

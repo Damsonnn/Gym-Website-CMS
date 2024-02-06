@@ -29,3 +29,27 @@
         width: 50%
     }
 }
+
+.banner-container {
+    background-image: url(https://www.acemetrix.com/wp-content/uploads/2015/08/black-banner-vector21.png);
+    height: 300px;
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.banner-container>div {
+    width: 70%;
+}
+
+.fade-in {
+    transition: opacity 1.5s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}

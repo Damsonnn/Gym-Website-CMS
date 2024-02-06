@@ -35,6 +35,7 @@ public class BannerController {
         return new ResponseEntity<>(banners, HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Banner>> getActiveBanners(){
         List<Banner> activeBanners = bannerService.getActiveBanners();

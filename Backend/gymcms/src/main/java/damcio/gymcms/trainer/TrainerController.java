@@ -23,6 +23,7 @@ public class TrainerController {
         return new ResponseEntity<>(savedTrainer, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("{id}")
     public ResponseEntity<Trainer> getTrainerById(@PathVariable("id") Integer id){
         Optional<Trainer> trainer = trainerService.getTrainerById(id);
@@ -35,6 +36,7 @@ public class TrainerController {
         return new ResponseEntity<>(trainers, HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Trainer>> getActiveTrainers(){
         List<Trainer> activeTrainers = trainerService.getActiveTrainers();

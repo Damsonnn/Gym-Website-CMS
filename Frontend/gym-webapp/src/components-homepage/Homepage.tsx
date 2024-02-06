@@ -1,5 +1,9 @@
+import BannerComponent from "./Banner";
+
 export default function Homepage() {
   return (
-    <div>Homepage</div>
+    <div>
+      <BannerComponent/>
+    </div>
   )
 }

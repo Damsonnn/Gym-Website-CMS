@@ -23,22 +23,39 @@ public class PostController {
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("{id}")
     public ResponseEntity<Post> getPostById(@PathVariable("id") Integer id){
         Optional<Post> post = postService.getPostById(id);
         return ResponseEntity.of(post);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts(){
         List<Post> posts = postService.getAllPosts();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Post>> getActivePosts(){
         List<Post> activePosts = postService.getActivePosts();
         return new ResponseEntity<>(activePosts, HttpStatus.OK);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/search/title/{query}")
+    public ResponseEntity<List<Post>> getPostsByTitle(@PathVariable("query") String query){
+        List<Post> foundPosts = postService.getPostsByTitle(query);
+        return new ResponseEntity<>(foundPosts, HttpStatus.OK);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/search/author/{query}")
+    public ResponseEntity<List<Post>> getPostsByAuthor(@PathVariable("query") String query){
+        List<Post> foundPosts = postService.getPostsByAuthor(query);
+        return new ResponseEntity<>(foundPosts, HttpStatus.OK);
     }
 
     @PutMapping("{id}")

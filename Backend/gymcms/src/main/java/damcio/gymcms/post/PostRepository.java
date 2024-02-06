@@ -8,4 +8,8 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findByActive(Boolean active);
+
+    List<Post> findByActiveAndTitleLike(Boolean active, String title);
+
+    List<Post> findByActiveAndAuthorLike(Boolean active, String author);
 }

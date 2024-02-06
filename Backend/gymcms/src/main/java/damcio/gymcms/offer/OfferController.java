@@ -35,6 +35,7 @@ public class OfferController {
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Offer>> getActiveOffers(){
         List<Offer> activeOffers = offerService.getActiveOffers();

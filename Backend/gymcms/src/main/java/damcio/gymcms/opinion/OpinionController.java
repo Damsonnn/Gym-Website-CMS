@@ -35,6 +35,7 @@ public class OpinionController {
         return new ResponseEntity<>(opinions, HttpStatus.OK);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/active")
     public ResponseEntity<List<Opinion>> getActiveOpinions(){
         List<Opinion> activeOpinions = opinionService.getActiveOpinions();

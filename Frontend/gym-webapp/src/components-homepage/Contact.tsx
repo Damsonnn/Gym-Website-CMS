@@ -1,42 +1,42 @@
 import { useState, useEffect, ChangeEvent } from "react"
 import { Location } from "../components/location/List"
-import { getAllObjects } from "../utils/ApiRequests"
+import { getAllObjects, getAllObjectsNoToken } from "../utils/ApiRequests"
 
 export default function Contact() {
     const [locations, setLocations] = useState<Array<Location>>([]);
     const [chosenLocation, setChosenLocation] = useState<Location>({
         id:1,
-        city: "Gniezno",
-        address: "ul. Rynek 1/1",
-        phoneNumber: "123123123",
-        email: "gniezno@gmail.com"
+        city: "-",
+        address: "-",
+        phoneNumber: "-",
+        email: "-"
     })
 
     const getLocations = () => {
-        // getAllObjects("locations", setLocations);
-        const tempLocations = []
-        tempLocations.push({
-            id:1,
-            city: "Gniezno",
-            address: "ul. Rynek 1/1",
-            phoneNumber: "123123123",
-            email: "gniezno@gmail.com"
-        });
-        tempLocations.push({
-            id:2,
-            city: "Poznań",
-            address: "ul. Warszawska 1/1",
-            phoneNumber: "987987987",
-            email: "poznan@gmail.com"
-        });
-        tempLocations.push({
-            id:3,
-            city: "Warszawa",
-            address: "ul. Poznańska 1/1",
-            phoneNumber: "666666666",
-            email: "warszawa@gmail.com"
-        });
-        setLocations(tempLocations);
+        getAllObjectsNoToken("locations", setLocations);
+        // const tempLocations = []
+        // tempLocations.push({
+        //     id:1,
+        //     city: "Gniezno",
+        //     address: "ul. Rynek 1/1",
+        //     phoneNumber: "123123123",
+        //     email: "gniezno@gmail.com"
+        // });
+        // tempLocations.push({
+        //     id:2,
+        //     city: "Poznań",
+        //     address: "ul. Warszawska 1/1",
+        //     phoneNumber: "987987987",
+        //     email: "poznan@gmail.com"
+        // });
+        // tempLocations.push({
+        //     id:3,
+        //     city: "Warszawa",
+        //     address: "ul. Poznańska 1/1",
+        //     phoneNumber: "666666666",
+        //     email: "warszawa@gmail.com"
+        // });
+        // setLocations(tempLocations);
     }
 
     const mapLocations = () => {
@@ -56,7 +56,13 @@ export default function Contact() {
 
     useEffect(() => {
         getLocations();
-    })
+    },[])
+
+    useEffect(() => {
+        if (locations.length > 0){
+            setChosenLocation(locations[0]);
+        }    
+    },[locations]);
 
     return (
         <div className="contact-container">

@@ -27,6 +27,14 @@ public class PostService {
         return postRepository.findByActive(true);
     }
 
+    public List<Post> getPostsByTitle(String title) {
+        return postRepository.findByActiveAndTitleLike(true, title);
+    }
+
+    public List<Post> getPostsByAuthor(String author) {
+        return postRepository.findByActiveAndAuthorLike(true, author);
+    }
+
     public Post updatePost(Post post){
         Post existingPost = postRepository.findById(post.getId()).get();
         existingPost.setActive(post.getActive());
