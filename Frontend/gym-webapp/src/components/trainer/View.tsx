@@ -105,6 +105,16 @@ export default function TrainerView(props: {action: CrudAction}) {
           <label htmlFor="twitterLink">Link do Twittera:</label>
           <input type="text" name="twitterLink" id="twitterLink" className='form-control' placeholder='twitter.com/uzytkownik' onChange={handleInputChange} value={trainerData.twitterLink} disabled={action === CrudAction.View}/>
         </div>
+        <div className="row age-row mb-3">
+          <div className='form-group col'>
+            <label htmlFor="age">Wiek:</label>
+            <input type="number" name="age" id="age" className='form-control' placeholder='0' step={1} min="0" max={150} onChange={handleInputChange} value={trainerData.age} disabled={action === CrudAction.View}/>
+          </div>
+          <div className='form-check col pt-4'>
+            <label className="form-check-label" htmlFor="active">Wyświetlaj trenera na stronie głównej</label>
+            <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={trainerData.active} disabled={action === CrudAction.View}/>
+          </div>
+        </div>
         <div className='form-group mb-3'>
           <label htmlFor="about">O trenerze:</label>
           <Editor
@@ -114,10 +124,6 @@ export default function TrainerView(props: {action: CrudAction}) {
             editorClassName="border rounded p-2"
             onEditorStateChange={onEditorStateChange}
           />
-        </div>
-        <div className='form-check mb-3'>
-          <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
-          <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={trainerData.active} disabled={action === CrudAction.View}/>
         </div>
         {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
         {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}

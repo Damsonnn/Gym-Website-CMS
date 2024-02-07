@@ -7,3 +7,9 @@
 .btns-crud {
   width: 250px;
 }
+
+.age-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

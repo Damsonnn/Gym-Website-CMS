@@ -20,7 +20,8 @@ export default function ListCategories() {
             return [];
         }
         return categories.map(category => {
-            return {id: category.id, content: [category.name, category.active ? "Tak" : "Nie"]}
+            // return {id: category.id, content: [category.name, category.active ? "Tak" : "Nie"]}
+            return {id: category.id, content: [category.name]}
         })
     }
 
@@ -29,6 +30,7 @@ export default function ListCategories() {
     },[])
 
     return (
-        renderList(["Tytuł", "Aktywny"], mapCategories(categories), "categories")
+        // renderList(["Tytuł", "Aktywny"], mapCategories(categories), "categories")
+        renderList(["Nazwa"], mapCategories(categories), "categories")
     )
 }

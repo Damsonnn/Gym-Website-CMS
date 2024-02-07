@@ -1,4 +1,4 @@
-package damcio.gymcms.mailing;
+package damcio.gymcms.email;
 
 import java.io.UnsupportedEncodingException;
 
@@ -16,7 +16,7 @@ public class EmailService {
     private final JavaMailSender emailSender;
 
     public void sendFromContactForm(ContactFormDto message) throws UnsupportedEncodingException, MessagingException{
-        sendEmail(message.getSendTo(), "[Formularz] " + message.getSubject(), message.getMessage(), message.getSenderEmail(), message.getSenderName());
+        sendEmail(message.getSendTo(), message.getSubject(), message.getMessage(), message.getSenderEmail(), message.getSenderName());
     }
 
     private void sendEmail(String email, String subject, String content, String clientEmail, String clientName)throws MessagingException, UnsupportedEncodingException {
@@ -25,8 +25,8 @@ public class EmailService {
 
         helper.setFrom(clientEmail, clientName);
         helper.setTo(email);
-        helper.setSubject(subject);
-        helper.setText(content);
+        helper.setSubject("[Formularz] " + subject);
+        helper.setText("[" + clientEmail + "]\n" + content);
         
         emailSender.send(message);
     }

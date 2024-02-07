@@ -23,28 +23,28 @@ export default function BannerComponent() {
     getAllObjectsNoToken("banners/active", setBanners)
   }
 
-  useEffect(() => {
-    const fadeTimeout = setInterval(() => {
-      switch (fadeProp.fade){
-        case 'fade-in':
-          setFadeProp({fade: "static"})
-          break;
-        case 'static':
-          setFadeProp({fade: "fade-out"})
-          break;
-        case 'fade-out':
-          setFadeProp({fade: "fade-in"})
-          break;
-      }
-    }, fadeProp.fade === 'static' ? STATIC_INTERVAL_MS : FADE_INTERVAL_MS)
+  // useEffect(() => {
+  //   const fadeTimeout = setInterval(() => {
+  //     switch (fadeProp.fade){
+  //       case 'fade-in':
+  //         setFadeProp({fade: "static"})
+  //         break;
+  //       case 'static':
+  //         setFadeProp({fade: "fade-out"})
+  //         break;
+  //       case 'fade-out':
+  //         setFadeProp({fade: "fade-in"})
+  //         break;
+  //     }
+  //   }, fadeProp.fade === 'static' ? STATIC_INTERVAL_MS : FADE_INTERVAL_MS)
 
-    return () => clearInterval(fadeTimeout)
-  }, [fadeProp])
+  //   return () => clearInterval(fadeTimeout)
+  // }, [fadeProp,banners]);
 
   useEffect(() => {
     const wordTimeout = setInterval(() => {
       setWordOrder((prevWordOrder) => (prevWordOrder + 1) % banners.length)
-    }, WORD_CHANGE_INTERVAL_MS)
+    }, STATIC_INTERVAL_MS)
 
     return () => clearInterval(wordTimeout)
   }, [banners])

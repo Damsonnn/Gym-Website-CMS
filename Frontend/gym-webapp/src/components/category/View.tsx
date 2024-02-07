@@ -44,10 +44,10 @@ export default function CategoryView(props: { action: CrudAction }) {
             <input type="text" name="name" id="name" className='form-control' placeholder='Kategoria' onChange={handleInputChange} value={categoryData.name} disabled={action === CrudAction.View}/>
           </div>
         </div>
-        <div className='form-check mb-3'>
+        {/* <div className='form-check mb-3'>
           <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
           <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={categoryData.active} disabled={action === CrudAction.View}/>
-        </div>
+        </div> */}
         {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
         {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
       </form>

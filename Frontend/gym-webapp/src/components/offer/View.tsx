@@ -97,7 +97,7 @@ export default function OfferView(props: {action: CrudAction}) {
             <input type="number" name="discount" id="discount" className='form-control' placeholder='0' max="100" min="0" onChange={handleInputChange} value={offerData.discount} disabled={action === CrudAction.View}/>
           </div>
         </div>
-        <div className='form-check'>
+        <div className='form-check m-3'>
           <label className="form-check-label" htmlFor="active">Wyświetlaj wśród ofert</label>
           <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={offerData.active} disabled={action === CrudAction.View}/>
         </div>

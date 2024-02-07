@@ -2,6 +2,9 @@ import { useState, useEffect, ChangeEvent } from "react"
 import { Location } from "../components/location/List"
 import { getAllObjectsNoToken } from "../utils/ApiRequests"
 import { refreshInput } from "../utils/Handlers";
+import axios from "axios";
+import { config } from "../utils/JWTConfig";
+import { FormEvent } from "react";
 
 type ContactFormDto = {
     senderName: string
@@ -29,30 +32,30 @@ export default function Contact() {
     })
 
     const getLocations = () => {
-        // getAllObjectsNoToken("locations", setLocations);
-        const tempLocations = []
-        tempLocations.push({
-            id:1,
-            city: "Gniezno",
-            address: "ul. Rynek 1/1",
-            phoneNumber: "123123123",
-            email: "gniezno@gmail.com"
-        });
-        tempLocations.push({
-            id:2,
-            city: "Poznań",
-            address: "ul. Warszawska 1/1",
-            phoneNumber: "987987987",
-            email: "poznan@gmail.com"
-        });
-        tempLocations.push({
-            id:3,
-            city: "Warszawa",
-            address: "ul. Poznańska 1/1",
-            phoneNumber: "666666666",
-            email: "warszawa@gmail.com"
-        });
-        setLocations(tempLocations);
+        getAllObjectsNoToken("locations", setLocations);
+        // const tempLocations = []
+        // tempLocations.push({
+        //     id:1,
+        //     city: "Gniezno",
+        //     address: "ul. Rynek 1/1",
+        //     phoneNumber: "123123123",
+        //     email: "gniezno@gmail.com"
+        // });
+        // tempLocations.push({
+        //     id:2,
+        //     city: "Poznań",
+        //     address: "ul. Warszawska 1/1",
+        //     phoneNumber: "987987987",
+        //     email: "poznan@gmail.com"
+        // });
+        // tempLocations.push({
+        //     id:3,
+        //     city: "Warszawa",
+        //     address: "ul. Poznańska 1/1",
+        //     phoneNumber: "666666666",
+        //     email: "warszawa@gmail.com"
+        // });
+        // setLocations(tempLocations);
     }
 
     const mapLocations = () => {
@@ -66,12 +69,37 @@ export default function Contact() {
         })
     }
 
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(chosenLocation);
+        console.log(emailMessage);
+        try {
+            const response = await axios.post(`http://localhost:8080/api/email/contact`, emailMessage);
+
+            if (response.status === 200) {
+                console.log('Succesfully sent mail');
+                setEmailMessage({
+                    senderName: "",
+                    senderEmail: "",
+                    sendTo: "",
+                    message: "", 
+                    subject: ""
+                })
+            } else {
+                console.error('Could not send email');
+                console.log(response)
+            }
+        } catch (error) {
+            console.error('Error during sending email:', error);     
+        }
+    }
+
     const handleSelectChange = (event: ChangeEvent<any>) => {
-        setChosenLocation(locations[event.target.value])
+        setChosenLocation(locations[event.target.value])      
     }
 
     const handleInputChange = (event: ChangeEvent<any>) => {
-        refreshInput(event, emailMessage, setEmailMessage);
+        refreshInput(event, emailMessage, setEmailMessage);   
     }
 
     useEffect(() => {
@@ -83,6 +111,10 @@ export default function Contact() {
             setChosenLocation(locations[0]);
         }    
     },[locations]);
+
+    useEffect(() => {
+        setEmailMessage({...emailMessage, sendTo: chosenLocation.email});
+    }, [chosenLocation])
 
     return (
         <div className="contact-container">
@@ -99,7 +131,7 @@ export default function Contact() {
                 </div>
                 <h6 className="m-2">Formularz kontaktowy:</h6>
                 <div className="mx-2">(Wiadomość zostanie wysłana do wybranej placówki)</div>
-                <form className="contact-form border rounded mt-2">
+                <form className="contact-form border rounded mt-2" onSubmit={handleSubmit}>
                     <div className="row p-2">
                         <div className='form-group col'>
                             <label htmlFor="senderName">Imię i nazwisko:</label>
@@ -122,6 +154,7 @@ export default function Contact() {
                             <textarea rows={8} name="message" id="message" className='form-control' placeholder='Twoja wiadomość...' value={emailMessage.message}  onChange={handleInputChange}/>
                         </div>
                     </div>
+                    <input type="submit" value="Wyślij wiadomość" className='btn btn-primary m-2' />
                 </form>
             </div>   
         </div>

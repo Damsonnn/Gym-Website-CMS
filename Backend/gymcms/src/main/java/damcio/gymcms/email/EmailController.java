@@ -1,4 +1,4 @@
-package damcio.gymcms.mailing;
+package damcio.gymcms.email;
 
 import java.io.UnsupportedEncodingException;
 

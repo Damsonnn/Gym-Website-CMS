@@ -24,7 +24,7 @@ export default function ListPosts() {
             return [];
         }
         return posts.map(post => {
-            return {id: post.id, content: [post.title, post.author]}
+            return {id: post.id, content: [post.title, post.author, post.active ? "Tak" : "Nie"]}
         })
     }
 
@@ -33,6 +33,6 @@ export default function ListPosts() {
     },[])
 
     return (
-        renderList(["Tytuł", "Autor"], mapPosts(posts), "posts")
+        renderList(["Tytuł", "Autor", "Aktywny"], mapPosts(posts), "posts")
     )
     }

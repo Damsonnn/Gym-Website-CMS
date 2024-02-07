@@ -14,7 +14,6 @@ export const createOrEditRequest = async (action: CrudAction, objectData: Object
             if (response.status === 201) {
                 console.log('Succesfully created');
                 console.log(response.data);
-                sessionStorage.setItem("token", response.data.token);
                 navigate(`/manage/${endpoint}`);
             } else {
                 console.error('Could not create');
@@ -31,6 +30,7 @@ export const createOrEditRequest = async (action: CrudAction, objectData: Object
             if (response.status === 200) {
                 console.log('Succesfully updated');
                 console.log(response.data);
+                navigate(`/manage/${endpoint}`);
             } else {
                 console.error('Could not update data');
             }

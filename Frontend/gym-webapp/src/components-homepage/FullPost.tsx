@@ -43,8 +43,9 @@ export default function FullPost() {
                 <div className="border-bottom p-1">
                     <h1>{postData.title}</h1>
                 </div>
-                <div className="border-bottom p-2">
-                    <h3>{postData.category.name}</h3>
+                <div className="border-bottom p-2 row">
+                    <h3 className="col">{postData.category.name}</h3>
+                    <h3 className="col">Autor: {postData.author}</h3>
                 </div>
                 <div className="px-3 pt-3 h5">
                     <p dangerouslySetInnerHTML={{ __html: editorToHtml() }} />

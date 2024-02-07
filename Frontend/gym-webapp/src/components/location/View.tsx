@@ -55,8 +55,8 @@ export default function LocationView(props: {action: CrudAction}) {
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="phone">Numer telefonu placówki:</label>
-            <input className='form-control' type="text" id="phone" name="phone" pattern="[0-9]" placeholder='123123123' onChange={handleInputChange} value={locationData.phoneNumber} disabled={action === CrudAction.View}/> 
+            <label htmlFor="phoneNumber">Numer telefonu placówki:</label>
+            <input className='form-control' type="text" id="phoneNumber" name="phoneNumber" pattern="[0-9]*" placeholder='123123123' onChange={handleInputChange} value={locationData.phoneNumber} disabled={action === CrudAction.View}/> 
           </div>
           <div className='form-group col'>
             <label htmlFor="emial">E-mail placówki:</label>

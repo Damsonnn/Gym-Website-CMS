@@ -7,7 +7,7 @@ export default function PopularPosts() {
   const [posts, setPosts] = useState<Array<Post>>([]);
 
   const getPosts = () => {
-    getAllObjectsNoToken("posts", setPosts);
+    getAllObjectsNoToken("posts/active", setPosts);
   }
 
   const showPosts = (posts: Array<Post>) => {
@@ -24,7 +24,7 @@ export default function PopularPosts() {
   },[]);
 
   return (
-    <div className="offers-container">
+    <div className="popular-container">
         {showPosts(posts)}
     </div>
   )

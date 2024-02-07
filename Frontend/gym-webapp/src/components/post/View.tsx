@@ -114,15 +114,15 @@ useEffect(() => {
             <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={postData.active} disabled={action === CrudAction.View}/>
           </div>
         </div>
-          <Editor
-            readOnly={action === CrudAction.View}
-            editorState={editorState}
-            wrapperClassName="border rounded p-2"
-            editorClassName="border rounded p-2"
-            onEditorStateChange={onEditorStateChange}
-          />
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        <Editor
+          readOnly={action === CrudAction.View}
+          editorState={editorState}
+          wrapperClassName="border rounded p-2"
+          editorClassName="border rounded p-2"
+          onEditorStateChange={onEditorStateChange}
+        />
+        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary m-3' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary m-3' /> : null}
       </form>
     </div>
   )

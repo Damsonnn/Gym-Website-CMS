@@ -51,7 +51,7 @@ export default function OpinionView(props: {action: CrudAction}) {
             <input type='text' name="body" id="body" className='form-control' placeholder='Tu wprowadź opinię'  onChange={handleInputChange} value={opinionData.body} disabled={action === CrudAction.View}/>
           </div>
         </div>
-        <div className='form-check'>
+        <div className='form-check mb-3'>
           <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
           <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={opinionData.active} disabled={action === CrudAction.View}/>
         </div>

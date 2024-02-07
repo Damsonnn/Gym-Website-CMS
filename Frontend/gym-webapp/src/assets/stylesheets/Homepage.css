@@ -92,3 +92,38 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.popular-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+}
+
+.popular-container>*{
+    width: 400px;
+}
+
+.opinion-container {
+    text-align: center;
+}
+
+.personal-data-container{
+    display: flex;
+}
+
+.personal-data-container>img{
+    height: 250px;
+    width: 250px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+}
+
+.links>ul {
+    list-style-type: none;
+}
+
+
+

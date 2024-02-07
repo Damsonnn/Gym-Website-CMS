@@ -37,16 +37,18 @@ export default function BannerView(props: {action: CrudAction}) {
   }, []);
 
   return (
-    <div>
+    <div className="container border rounded p-4 mt-4">
         <form onSubmit={handleSubmit}>
           <div className='row mb-3'>
-            <label htmlFor="title">Tytuł:</label>
-            <input type="text" name='title' id="name" className='form-control' placeholder='Kategoria' onChange={handleInputChange} value={bannerData.title} readOnly={action === CrudAction.View}/>
+            <div className='form-group col'>
+              <label htmlFor="title">Tytuł:</label>
+              <input type="text" name='title' id="name" className='form-control' placeholder='Kategoria' onChange={handleInputChange} value={bannerData.title} disabled={action === CrudAction.View}/>
+            </div>
           </div>
           <div className='row mb-3'>
             <div className='form-group col'>
               <label htmlFor="body">Tekst pod tytułem:</label>
-              <input type="text" name="body" id="body" className='form-control' placeholder='Kategoria' onChange={handleInputChange} value={bannerData.body} readOnly={action === CrudAction.View}/>
+              <input type="text" name="body" id="body" className='form-control' placeholder='Kategoria' onChange={handleInputChange} value={bannerData.body} disabled={action === CrudAction.View}/>
             </div>
           </div>
           <div className='form-check mb-3'>
