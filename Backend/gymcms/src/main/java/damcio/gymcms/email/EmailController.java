@@ -1,28 +1,25 @@
-package damcio.gymcms.email;
+package damcio.gymcms.mailing;
 
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("api/email")
 @PreAuthorize("permitAll()")
 @RequiredArgsConstructor
 public class EmailController {
     private final EmailService emailService;
 
-    @PostMapping("/contact")
-    private ResponseEntity<String> sendFromContactForm(@RequestBody ContactFormDto message) throws UnsupportedEncodingException, MessagingException{
+    @PostMapping("contact")
+    public ResponseEntity<String> sendFromContactForm(@RequestBody ContactFormDto message) throws UnsupportedEncodingException, MessagingException{
         emailService.sendFromContactForm(message);
         return new ResponseEntity<String>("Wysłano wiadomość", HttpStatus.OK);
     }

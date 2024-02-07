@@ -1,4 +1,4 @@
-package damcio.gymcms.email;
+package damcio.gymcms.mailing;
 
 import java.io.UnsupportedEncodingException;
 
@@ -29,6 +29,5 @@ public class EmailService {
         helper.setText(content);
         
         emailSender.send(message);
-        return;
     }
 }
