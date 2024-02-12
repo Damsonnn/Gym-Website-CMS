@@ -17,10 +17,6 @@ export type Trainer = {
 export default function ListTrainers() {
     const [trainers, setTrainers] = useState<Array<Trainer>>([]);
 
-    const getTrainers = () => {
-       getAllObjects("trainers", setTrainers);
-    }
-    
     const mapTrainers = (trainers: Array<Trainer>) => {
         if (trainers.length === 0) {
             return [];
@@ -31,7 +27,7 @@ export default function ListTrainers() {
     }
 
     useEffect(() => {
-        getTrainers();
+        getAllObjects("trainers", setTrainers);
     },[])
 
     return (

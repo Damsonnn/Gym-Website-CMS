@@ -8,8 +8,6 @@ import { Post } from './List';
 import { Category } from "../category/List";
 import { createOrEditRequest, getOneObject, getAllObjects } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
-import axios from "axios";
-import { config } from "../../utils/JWTConfig";
 
 export default function PostView(props: { action: CrudAction }) {
   const [editorState, setEditorState] = useState<EditorState>();
@@ -31,36 +29,14 @@ export default function PostView(props: { action: CrudAction }) {
 const navigate = useNavigate();
 const { id } = useParams();
 
-const getPost = async () => {
-  if (action != CrudAction.Create) {
-    try {
-      await axios.get(`http://localhost:8080/api/posts/${id}`, config).then(response => {
-          console.log(response)
-          if (response.status === 200) {
-              setPostData(response.data)
-              setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(response.data["body"]))))
-          }
-          else {
-              console.log("Could not get data");
-          }
-        })
-  } catch (error) {
-      console.error('Error during fetching:', error);
-  }
-    // getOneObject(id, "posts", setPostData);
-  }
-}
-
-const getOptions = () => {
-  getAllObjects("categories", setCategories);
-}
+const setDataHelper = (data: Post) => {
+  setPostData(data)
+  setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(data.body))))
+};
 
 const onEditorStateChange = (newState: EditorState) => {
-  console.log(newState)
   setEditorState(newState);
-  // console.log(newState.getCurrentContent().toString());
   setPostData({...postData, ["body"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
-  console.log(postData)
 };
 
 const mapCategories = (categories: Array<Category>) => {
@@ -83,8 +59,8 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 };
 
 useEffect(() => {
-  getPost();
-  getOptions();
+  getOneObject(id, "posts", setDataHelper);
+  getAllObjects("categories", setCategories);
 }, []);
 
   return (

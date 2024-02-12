@@ -17,12 +17,6 @@ export default function BannerView(props: {action: CrudAction}) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getBanner = () => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "banners", setBannerData);
-    }
-  }
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     refreshInput(event, bannerData, setBannerData);
   };
@@ -33,7 +27,9 @@ export default function BannerView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getBanner()
+    if (action != CrudAction.Create) {
+      getOneObject(id, "banners", setBannerData);
+    }
   }, []);
 
   return (

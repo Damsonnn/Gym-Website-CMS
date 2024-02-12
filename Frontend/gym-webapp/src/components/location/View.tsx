@@ -18,12 +18,6 @@ export default function LocationView(props: {action: CrudAction}) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getLocation = () => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "locations", setLocationData);
-    }
-  }
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     refreshInput(event, locationData, setLocationData);
   };
@@ -34,7 +28,9 @@ export default function LocationView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getLocation()
+    if (action != CrudAction.Create) {
+      getOneObject(id, "locations", setLocationData);
+    }
   }, []);
 
 

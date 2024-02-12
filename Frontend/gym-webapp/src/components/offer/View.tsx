@@ -7,10 +7,8 @@ import { CrudAction } from '../../utils/CrudAction'
 import { Offer } from './List';
 import { createOrEditRequest, getOneObject } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
-import axios from "axios";
-import { config } from "../../utils/JWTConfig";
 
-export default function OfferView(props: {action: CrudAction}) {
+export default function OfferView(props: { action: CrudAction }) {
   const [editorState, setEditorState] = useState<EditorState>();
   const [action, setAction] = useState<CrudAction>(props.action)
   const [offerData, setOfferData] = useState<Offer>({
@@ -25,32 +23,14 @@ export default function OfferView(props: {action: CrudAction}) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getOffer = async () => {
-    if (action != CrudAction.Create) {
-      try {
-        await axios.get(`http://localhost:8080/api/offers/${id}`, config).then(response => {
-            console.log(response)
-            if (response.status === 200) {
-                setOfferData(response.data)
-                setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(response.data["body"]))))
-            }
-            else {
-                console.log("Could not get data");
-            }
-          })
-    } catch (error) {
-        console.error('Error during fetching:', error);
-    }
-      // getOneObject(id, "offers", setOfferData);
-    }
-  }
+  const setDataHelper = (data: Offer) => {
+    setOfferData(data)
+    setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(data.body))))
+  };
 
   const onEditorStateChange = (newState: EditorState) => {
-    console.log(newState)
     setEditorState(newState);
-    // console.log(newState.getCurrentContent().toString());
-    setOfferData({...offerData, ["body"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
-    console.log(offerData)
+    setOfferData({ ...offerData, ["body"]: JSON.stringify(convertToRaw(newState.getCurrentContent())) });
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +43,7 @@ export default function OfferView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getOffer()
+    getOneObject(id, "offers", setDataHelper);
   }, []);
 
   return (
@@ -72,34 +52,34 @@ export default function OfferView(props: {action: CrudAction}) {
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="name">Nazwa oferty:</label>
-            <input type="text" name="name" id="name" className='form-control' placeholder='Oferta' onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View}/>
+            <input type="text" name="name" id="name" className='form-control' placeholder='Oferta' onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View} />
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="body">Treść oferty</label>
             <Editor
-            readOnly={action === CrudAction.View}
-            editorState={editorState}
-            wrapperClassName="border rounded p-2"
-            editorClassName="border rounded p-2"
-            onEditorStateChange={onEditorStateChange}
-          />
+              readOnly={action === CrudAction.View}
+              editorState={editorState}
+              wrapperClassName="border rounded p-2"
+              editorClassName="border rounded p-2"
+              onEditorStateChange={onEditorStateChange}
+            />
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="price">Cena:</label>
-            <input type="number" name="price" id="price" className='form-control' placeholder='100.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.price} disabled={action === CrudAction.View}/>
+            <input type="number" name="price" id="price" className='form-control' placeholder='100.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.price} disabled={action === CrudAction.View} />
           </div>
           <div className='form-group col'>
             <label htmlFor="discount">Zniżka w %:</label>
-            <input type="number" name="discount" id="discount" className='form-control' placeholder='0' max="100" min="0" onChange={handleInputChange} value={offerData.discount} disabled={action === CrudAction.View}/>
+            <input type="number" name="discount" id="discount" className='form-control' placeholder='0' max="100" min="0" onChange={handleInputChange} value={offerData.discount} disabled={action === CrudAction.View} />
           </div>
         </div>
         <div className='form-check m-3'>
           <label className="form-check-label" htmlFor="active">Wyświetlaj wśród ofert</label>
-          <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={offerData.active} disabled={action === CrudAction.View}/>
+          <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={offerData.active} disabled={action === CrudAction.View} />
         </div>
         {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
         {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}

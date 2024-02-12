@@ -14,22 +14,18 @@ export type Offer = {
 export default function ListOffers() {
     const [offers, setOffers] = useState<Array<Offer>>([])
 
-    const getOffers = () => {
-        getAllObjects("offers", setOffers)
-    }
     const mapOffers = (offers: Array<Offer>) => {
         if (offers.length === 0) {
             return [];
         }
-        console.log(offers)
         return offers.map(offer => {
-            return {id: offer.id, content: [offer.name, String(offer.price), offer.active ? "Tak" : "Nie"]}
+            return { id: offer.id, content: [offer.name, String(offer.price), offer.active ? "Tak" : "Nie"] }
         })
     }
 
     useEffect(() => {
-        getOffers();
-    },[])
+        getAllObjects("offers", setOffers);
+    }, []);
 
     return (
         renderList(["Nazwa", "Cena", "Aktywna"], mapOffers(offers), "offers")

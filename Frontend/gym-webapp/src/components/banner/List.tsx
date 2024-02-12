@@ -11,10 +11,6 @@ export type Banner = {
 
 export default function ListBanners() {
     const [banners, setBanners] = useState<Array<Banner>>([]);
-
-    const getBanners = () => {
-        getAllObjects("banners", setBanners);
-    }
     
     const mapBanners = (banners: Array<Banner>) => {
         if (banners.length === 0) {
@@ -26,7 +22,7 @@ export default function ListBanners() {
     }
 
     useEffect(() => {
-        getBanners()
+        getAllObjects("banners", setBanners);
     },[])
 
     return (

@@ -16,12 +16,6 @@ export default function CategoryView(props: { action: CrudAction }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getCategory = () => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "categories", setCategoryData);
-    }
-  }
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     refreshInput(event, categoryData, setCategoryData);
   };
@@ -32,7 +26,9 @@ export default function CategoryView(props: { action: CrudAction }) {
   };
 
   useEffect(() => {
-    getCategory()
+    if (action != CrudAction.Create) {
+      getOneObject(id, "categories", setCategoryData);
+    }
   }, []);
 
   return (

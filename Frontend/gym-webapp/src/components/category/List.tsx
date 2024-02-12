@@ -10,27 +10,21 @@ export type Category = {
 
 export default function ListCategories() {
     const [categories, setCategories] = useState<Array<Category>>([]);
-
-    const getCategories = () => {
-        getAllObjects("categories", setCategories);
-    }
     
     const mapCategories = (categories: Array<Category>) => {
         if (categories.length === 0) {
             return [];
         }
         return categories.map(category => {
-            // return {id: category.id, content: [category.name, category.active ? "Tak" : "Nie"]}
             return {id: category.id, content: [category.name]}
         })
     }
 
     useEffect(() => {
-        getCategories();
+        getAllObjects("categories", setCategories);
     },[])
 
     return (
-        // renderList(["Tytuł", "Aktywny"], mapCategories(categories), "categories")
         renderList(["Nazwa"], mapCategories(categories), "categories")
     )
 }

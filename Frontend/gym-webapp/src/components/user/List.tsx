@@ -14,10 +14,6 @@ export type User = {
 export default function ListUsers() {
     const [users, setUsers] = useState<Array<User>>([]);
 
-    const getUsers = () => {
-        getAllObjects("users", setUsers);
-    }
-    
     const mapUsers = (users: Array<User>) => {
         if (users.length === 0) {
             return [];
@@ -28,7 +24,7 @@ export default function ListUsers() {
     }
 
     useEffect(() => {
-        getUsers();
+        getAllObjects("users", setUsers);
     },[])
 
     return (

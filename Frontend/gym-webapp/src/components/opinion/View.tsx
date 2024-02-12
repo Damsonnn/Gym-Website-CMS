@@ -17,12 +17,6 @@ export default function OpinionView(props: {action: CrudAction}) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getOpinion = () => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "opinions", setOpinionData);
-    }
-  }
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     refreshInput(event, opinionData, setOpinionData);
   };
@@ -33,7 +27,9 @@ export default function OpinionView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getOpinion()
+    if (action != CrudAction.Create) {
+      getOneObject(id, "opinions", setOpinionData);
+    }
   }, []);
 
   return (

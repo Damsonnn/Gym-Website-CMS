@@ -15,10 +15,6 @@ export type Post = {
 export default function ListPosts() {
     const [posts, setPosts] = useState<Array<Post>>([]);
 
-    const getPosts = () => {
-        getAllObjects("posts", setPosts);
-    }
-
     const mapPosts = (posts: Array<Post>) => {
         if (posts.length === 0) {
             return [];
@@ -29,8 +25,8 @@ export default function ListPosts() {
     }
 
     useEffect(() => {
-        getPosts();
-    },[])
+        getAllObjects("posts", setPosts);
+    },[]);
 
     return (
         renderList(["Tytuł", "Autor", "Aktywny"], mapPosts(posts), "posts")

@@ -7,8 +7,6 @@ import { CrudAction } from '../../utils/CrudAction'
 import { Trainer } from './List';
 import { createOrEditRequest, getOneObject } from '../../utils/ApiRequests';
 import { refreshInput } from '../../utils/Handlers';
-import axios from "axios";
-import { config } from "../../utils/JWTConfig";
 
 
 export default function TrainerView(props: {action: CrudAction}) {
@@ -29,32 +27,14 @@ export default function TrainerView(props: {action: CrudAction}) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getTrainer = async () => {
-    if (action != CrudAction.Create) {
-      try {
-        await axios.get(`http://localhost:8080/api/trainers/${id}`, config).then(response => {
-            console.log(response)
-            if (response.status === 200) {
-                setTrainerData(response.data)
-                setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(response.data["about"]))))
-            }
-            else {
-                console.log("Could not get data");
-            }
-          })
-    } catch (error) {
-        console.error('Error during fetching:', error);
-    }
-      // getOneObject(id, "trainers", setTrainerData);
-    }
-  }
+  const setDataHelper = (data: Trainer) => {
+    setTrainerData(data);
+    setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(data.about))));
+  };
 
   const onEditorStateChange = (newState: EditorState) => {
-    console.log(newState)
     setEditorState(newState);
-    // console.log(newState.getCurrentContent().toString());
     setTrainerData({...trainerData, ["about"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
-    console.log(trainerData)
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +47,7 @@ export default function TrainerView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getTrainer()
+    getOneObject(id, "trainers", setDataHelper);
   }, []);
 
   return (

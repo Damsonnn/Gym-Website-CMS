@@ -12,10 +12,6 @@ export type Location = {
 
 export default function ListLocations() {
     const [locations, setLocations] = useState<Array<Location>>([]);
-
-    const getLocations = () => {
-       getAllObjects("locations", setLocations);
-    }
     
     const mapLocations = (locations: Array<Location>) => {
         if (locations.length === 0) {
@@ -27,7 +23,7 @@ export default function ListLocations() {
     }
 
     useEffect(() => {
-        getLocations();
+        getAllObjects("locations", setLocations);
     },[])
 
     return (

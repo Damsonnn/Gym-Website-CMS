@@ -25,19 +25,7 @@ export default function UserView(props: {action: CrudAction}) {
 
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const getUser = () => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "users", setRequestedUser)
-      }
-    }
-
-  const getRoles = () => {
-    if (action != CrudAction.Create) {
-      getAllObjects("roles", setRoles);
-    }
-  }
-
+  
   const mapRoles = (roles: Array<any>) => {
     if (roles.length === 0) {
         return  <option value="0">Brak ról do wyboru</option>;
@@ -58,8 +46,10 @@ export default function UserView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    getUser();
-    getRoles();
+    if (action != CrudAction.Create) {
+      getOneObject(id, "users", setRequestedUser);
+      getAllObjects("roles", setRoles);
+    }
   }, []);
 
   useEffect(() => {

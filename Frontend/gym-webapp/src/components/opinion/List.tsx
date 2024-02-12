@@ -11,10 +11,6 @@ export type Opinion = {
 
 export default function ListOpinions() {
     const [opinions, setOpinions] = useState<Array<Opinion>>([]);
-
-    const getOpinions = () => {
-        getAllObjects("opinions", setOpinions);
-    }
     
     const mapOpinions = (opinions: Array<Opinion>) => {
         if (opinions.length === 0) {
@@ -27,7 +23,7 @@ export default function ListOpinions() {
     }
 
     useEffect(() => {
-        getOpinions();
+        getAllObjects("opinions", setOpinions);
     },[])
 
     return (
