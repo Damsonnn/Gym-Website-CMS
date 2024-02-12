@@ -4,7 +4,6 @@ import { Opinion } from "../components/opinion/List"
 
 const FADE_INTERVAL_MS = 2000
 const STATIC_INTERVAL_MS = 6000
-const WORD_CHANGE_INTERVAL_MS = FADE_INTERVAL_MS * 2 + STATIC_INTERVAL_MS
 
 type FadeProp = { fade: 'fade-in' | 'static' | 'fade-out' }
 
@@ -18,53 +17,28 @@ export default function Opinions() {
         active: true
     }])
 
+    useEffect(() => {
+        const fadeTimeout = setInterval(() => {
+            switch (fadeProp.fade) {
+                case 'fade-in':
+                    setFadeProp({ fade: "static" })
+                    break;
+                case 'static':
+                    setFadeProp({ fade: "fade-out" })
+                    break;
+                case 'fade-out':
+                    setFadeProp({ fade: "fade-in" })
+                    setWordOrder((prevWordOrder) => (prevWordOrder + 1) % opinions.length);
+                    break;
+            }
+        }, fadeProp.fade === 'static' ? STATIC_INTERVAL_MS : FADE_INTERVAL_MS)
 
-    const getOpinions = () => {
-        getAllObjectsNoToken("opinions/active", setOpinions)
-    }
-
-    // useEffect(() => {
-    //     if (opinions[0].id != 0){
-    //         const fadeTimeout = setInterval(() => {
-    //             switch (fadeProp.fade) {
-    //                 case 'fade-in':
-    //                     setFadeProp({ fade: "static" })
-    //                     break;
-    //                 case 'static':
-    //                     setFadeProp({ fade: "fade-out" })
-    //                     break;
-    //                 case 'fade-out':
-    //                     setFadeProp({ fade: "fade-in" })
-    //                     break;
-    //             }
-    //         }, fadeProp.fade === 'static' ? STATIC_INTERVAL_MS : FADE_INTERVAL_MS)
-
-    //         return () => clearInterval(fadeTimeout)
-    //     }
-    // }, [fadeProp, opinions])
+        return () => clearInterval(fadeTimeout)
+    }, [fadeProp])
 
     useEffect(() => {
-        const wordTimeout = setInterval(() => {
-            setWordOrder((prevWordOrder) => (prevWordOrder + 1) % opinions.length)
-        }, WORD_CHANGE_INTERVAL_MS)
-
-        return () => clearInterval(wordTimeout)
-    }, [opinions])
-
-    useEffect(() => {
-        getOpinions();
+        getAllObjectsNoToken("opinions/active", setOpinions);
     }, []);
-
-    useEffect(() => {
-        if (opinions.length === 0) {
-            setOpinions([{
-                id: 0,
-                author: "Brak opinii do załadowania",
-                body: "Brak opinii do załadowania",
-                active: true
-            }])
-        }
-    })
 
     return (
         <div className="opinion-container container-fluid rounded border mb-3">
