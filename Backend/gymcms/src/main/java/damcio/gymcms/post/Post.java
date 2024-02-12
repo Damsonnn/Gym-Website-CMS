@@ -2,22 +2,34 @@ package damcio.gymcms.post;
 
 import damcio.gymcms.category.Category;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
+@Setter
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "title", nullable = false, length = 150)
     private String title;
 
-    @Column(length = 50000)
+    @Column(name = "body", nullable = false, length = 50000)
     private String body;
 
-    private Boolean active;
+    @Column(name = "active", nullable = false)
+    private Boolean active = false;
 
+    @Column(name = "author", nullable = false, length = 40)
     private String author;
 
     @ManyToOne

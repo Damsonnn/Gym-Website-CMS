@@ -9,7 +9,7 @@ export default function OpinionView(props: {action: CrudAction}) {
   const [action, setAction] = useState<CrudAction>(props.action)
   const [opinionData, setOpinionData] = useState<Opinion>({
     id: 0,
-    reviewer: "",
+    author: "",
     body: "",
     active: false
   });
@@ -41,8 +41,8 @@ export default function OpinionView(props: {action: CrudAction}) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="reviewer">Autor:</label>
-            <input type="text" name="reviewer" id="reviewer" className='form-control' placeholder='Autor opinii'  onChange={handleInputChange} value={opinionData.reviewer} disabled={action === CrudAction.View}/>
+            <label htmlFor="author">Autor:</label>
+            <input type="text" name="author" id="author" className='form-control' placeholder='Autor opinii'  onChange={handleInputChange} value={opinionData.author} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='row mb-3'>

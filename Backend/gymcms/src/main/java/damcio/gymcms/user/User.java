@@ -3,7 +3,12 @@ package damcio.gymcms.user;
 // import damcio.gymcms.post.Post;
 import damcio.gymcms.role.Role;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,25 +19,32 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Data
-@Table(name = "_USERS")
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
+@Setter
+@Table(name = "_user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
 
     @JsonIgnore
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Post> posts;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
     @Override

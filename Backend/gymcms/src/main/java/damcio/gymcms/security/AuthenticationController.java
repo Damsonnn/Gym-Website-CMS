@@ -14,13 +14,6 @@ public class AuthenticationController {
     private final JWTService jwtService;
     private final AuthenticationService authenticationService;
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-//        User registeredUser = authenticationService.signup(registerUserDto);
-//
-//        return ResponseEntity.ok(registeredUser);
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);

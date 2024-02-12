@@ -3,12 +3,21 @@ package damcio.gymcms.role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import damcio.gymcms.user.User;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
+@Setter
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +26,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleEnum name;
 
+    @Column(name = "description", length = 100)
     private String description;
 
     @JsonIgnore

@@ -13,7 +13,7 @@ export default function Opinions() {
     const [wordOrder, setWordOrder] = useState(0)
     const [opinions, setOpinions] = useState<Array<Opinion>>([{
         id: 0,
-        reviewer: "Brak opinii do załadowania",
+        author: "Brak opinii do załadowania",
         body: "Brak opinii do załadowania",
         active: true
     }])
@@ -59,7 +59,7 @@ export default function Opinions() {
         if (opinions.length === 0) {
             setOpinions([{
                 id: 0,
-                reviewer: "Brak opinii do załadowania",
+                author: "Brak opinii do załadowania",
                 body: "Brak opinii do załadowania",
                 active: true
             }])
@@ -75,7 +75,7 @@ export default function Opinions() {
             </div>
             <div className="author-container">
                 <div className={`h5 m-1 ${fadeProp.fade}`}>
-                    ~{opinions[wordOrder].reviewer}
+                    ~{opinions[wordOrder].author}
                 </div>
             </div>
         </div>

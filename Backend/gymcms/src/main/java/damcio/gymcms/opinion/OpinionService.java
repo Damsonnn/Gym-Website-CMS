@@ -30,7 +30,7 @@ public class OpinionService {
     public Opinion updateOpinion(Opinion opinion){
         Opinion existingOpinion = opinionRepository.findById(opinion.getId()).get();
         existingOpinion.setActive(opinion.getActive());
-        existingOpinion.setReviewer(opinion.getReviewer());
+        existingOpinion.setAuthor(opinion.getAuthor());
         existingOpinion.setBody(opinion.getBody());
         return opinionRepository.save(existingOpinion);
     }
