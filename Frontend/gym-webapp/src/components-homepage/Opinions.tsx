@@ -11,11 +11,12 @@ export default function Opinions() {
     const [fadeProp, setFadeProp] = useState<FadeProp>({ fade: 'fade-in' })
     const [wordOrder, setWordOrder] = useState(0)
     const [opinions, setOpinions] = useState<Array<Opinion>>([{
-        id: 0,
-        author: "Brak opinii do załadowania",
-        body: "Brak opinii do załadowania",
-        active: true
-    }])
+            id: 0,
+            author: "Brak opinii do załadowania",
+            body: "Brak opinii do załadowania",
+            active: true
+        }
+    ])
 
     useEffect(() => {
         const fadeTimeout = setInterval(() => {
