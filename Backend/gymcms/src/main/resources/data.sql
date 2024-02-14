@@ -20,7 +20,7 @@ INSERT INTO offer (name, price, body, discount, active) VALUES
 
 INSERT INTO opinion (author, body, active) VALUES 
     ('Damian Cwikliski', 'Best gym ever', TRUE),
-    ('Jakiś Gość', 'I bought a carnet and gained 50kg of muscles in a week', TRUE),
+    ('Some guy', 'I bought a carnet and gained 50kg of muscles in a week', TRUE),
     ('Maciej', 'Ok', FALSE);
 
 INSERT INTO post (title, body, active, author, category_id) VALUES

@@ -1,10 +1,10 @@
 import './assets/stylesheets/App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Pages from './components/general/Pages';
-import LoginPage from './components/general/LoginPage';
-import PasswordRecovery from './components/general/PasswordRecovery';
-import Homepage from './components-homepage/GymSite';
-import GymSite from './components-homepage/GymSite';
+import Pages from './admin-panel/general/Pages';
+import LoginPage from './admin-panel/general/LoginPage';
+import PasswordRecovery from './admin-panel/general/PasswordRecovery';
+import Homepage from './main-page/GymSite';
+import GymSite from './main-page/GymSite';
 
 function App() {
   return (
