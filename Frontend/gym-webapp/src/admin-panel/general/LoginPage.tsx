@@ -1,29 +1,30 @@
-import {useState, ChangeEvent, FormEvent} from 'react'
 import "../../assets/stylesheets/LoginPage.css"
 import { Link, useNavigate  } from 'react-router-dom'
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
+
+type LoginDto = {
+  username: string
+  password: string
+}
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: ""
+  const navigate = useNavigate(); 
+  const schema = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required()
+  });
+  const {register, handleSubmit, formState: { errors }, reset} = useForm<LoginDto>({
+    resolver: yupResolver(schema)
   });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setLoginData({ ...loginData, [name]: value });
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit = async (data: LoginDto) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', loginData);
+      const response = await axios.post('http://localhost:8080/api/auth/login', data);
 
       if (response.status === 200) {
-        console.log('Login successful');
-        console.log(response.data);
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("role", response.data.roleName);
         console.log(sessionStorage.getItem("role"));
@@ -39,11 +40,13 @@ export default function LoginPage() {
   return (
     <div className='container p-5 login-container'>
       <div className='border rounded'>
-        <form className='p-5' onSubmit={handleSubmit}>
+        <form className='p-5' onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="username">Username:</label><br/>
-          <input type="text" name="username" id="username" className='form-control' placeholder='User' value={loginData.username} onChange={handleInputChange}/><br/>
+          <input type="text" className='form-control' placeholder='User' {...register("username")}/>
+          <p className="text-danger">{errors.username?.message}</p>
           <label htmlFor="password">Password:</label><br/>
-          <input type="password" name="password" id="password" className='form-control' placeholder='Password' value={loginData.password} onChange={handleInputChange}/><br/>
+          <input type="password" className={`form-control ${errors.password ? "input-invalid" : null}`} placeholder='Password' {...register("password")}/>
+          <p className="text-danger">{errors.password?.message}</p>
           <input type="submit" value="Log in" className='btn btn-primary'/>
         </form>
       </div>
