@@ -12,8 +12,8 @@ export default function Opinions() {
     const [wordOrder, setWordOrder] = useState(0)
     const [opinions, setOpinions] = useState<Array<Opinion>>([{
             id: 0,
-            author: "Brak opinii do załadowania",
-            body: "Brak opinii do załadowania",
+            author: "No opinions to show",
+            body: "No opinions to show",
             active: true
         }
     ])

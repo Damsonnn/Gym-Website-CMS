@@ -40,14 +40,14 @@ export default function LoginPage() {
     <div className='container p-5 login-container'>
       <div className='border rounded'>
         <form className='p-5' onSubmit={handleSubmit}>
-          <label htmlFor="username">Nazwa użytkownika:</label><br/>
-          <input type="text" name="username" id="username" className='form-control' placeholder='Nazwa użytkownika' value={loginData.username} onChange={handleInputChange}/><br/>
-          <label htmlFor="password">Hasło:</label><br/>
-          <input type="password" name="password" id="password" className='form-control' placeholder='Hasło' value={loginData.password} onChange={handleInputChange}/><br/>
-          <input type="submit" value="Zaloguj" className='btn btn-primary'/>
+          <label htmlFor="username">Username:</label><br/>
+          <input type="text" name="username" id="username" className='form-control' placeholder='User' value={loginData.username} onChange={handleInputChange}/><br/>
+          <label htmlFor="password">Password:</label><br/>
+          <input type="password" name="password" id="password" className='form-control' placeholder='Password' value={loginData.password} onChange={handleInputChange}/><br/>
+          <input type="submit" value="Log in" className='btn btn-primary'/>
         </form>
       </div>
-      <Link to="/recovery">Zapomniałem hasła</Link>
+      <Link to="/recovery">Forgot password?</Link>
     </div>
   )
 }

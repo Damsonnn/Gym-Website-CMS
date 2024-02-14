@@ -9,13 +9,13 @@ export default function Homepage() {
     <div>
       <BannerComponent/>
       <div className="homepage-content d-flex flex-column">
-        <h2 className="p-3 text-center">Nasi trenerzy:</h2>
+        <h2 className="p-3 text-center">Our trainers:</h2>
         <Trainers/>
-        <h2 className="p-3 text-center">Popularne posty:</h2>
+        <h2 className="p-3 text-center">Popular posts:</h2>
         <PopularPosts/>
-        <h2 className="p-3 text-center">Opinie naszych klientów:</h2> 
+        <h2 className="p-3 text-center">Client's opinions:</h2> 
         <Opinions/>
-        <h2 className="p-3 text-center">Przejdź do naszej <Link to="offers">oferty</Link></h2> 
+        <h2 className="p-3 text-center">Got to our <Link to="offers">offer</Link></h2> 
       </div>    
       <nav className='navbar navbar-dark navbar-default bg-dark navbar-fixed-top mt-3'>
         <div className="navbar-header mx-3">

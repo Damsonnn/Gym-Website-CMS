@@ -73,7 +73,7 @@ export default function Trainers() {
                 return <TrainerComponent key={trainer.id} id={trainer.id} name={trainer.firstName + " " + trainer.lastName}/>
             })
         }
-        return <h2 className="mt-3 text-center">Brak trenerów do wczytania</h2>
+        return <h2 className="mt-3 text-center">No trainers to show</h2>
     }
 
     useEffect(() => {

@@ -17,13 +17,13 @@ export default function GymSite() {
             </div>
             <ul className='nav navbar-nav'>
               <li className='nav-item mx-3'>
-                <Link className='nav-link' to='/posts'>Artykuły</Link>
+                <Link className='nav-link' to='/posts'>Article</Link>
               </li>
               <li className='nav-item mx-3'>
-                <Link className='nav-link' to='/offers'>Oferta</Link>
+                <Link className='nav-link' to='/offers'>Offer</Link>
               </li>
               <li className='nav-item mx-3'>
-                <Link className='nav-link' to='/contact'>Kontakt</Link>
+                <Link className='nav-link' to='/contact'>Contact</Link>
               </li>
             </ul>
         </nav>

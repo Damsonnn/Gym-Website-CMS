@@ -51,13 +51,13 @@ export default function OfferView(props: { action: CrudAction }) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="name">Nazwa oferty:</label>
-            <input type="text" name="name" id="name" className='form-control' placeholder='Oferta' onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View} />
+            <label htmlFor="name">Offer name:</label>
+            <input type="text" name="name" id="name" className='form-control' placeholder='Offer' onChange={handleInputChange} value={offerData.name} disabled={action === CrudAction.View} />
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="body">Treść oferty</label>
+            <label htmlFor="body">Offer content:</label>
             <Editor
               readOnly={action === CrudAction.View}
               editorState={editorState}
@@ -69,20 +69,20 @@ export default function OfferView(props: { action: CrudAction }) {
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="price">Cena:</label>
-            <input type="number" name="price" id="price" className='form-control' placeholder='100.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.price} disabled={action === CrudAction.View} />
+            <label htmlFor="price">Price:</label>
+            <input type="number" name="price" id="price" className='form-control' placeholder='99.99' step={0.01} min="0" onChange={handleInputChange} value={offerData.price} disabled={action === CrudAction.View} />
           </div>
           <div className='form-group col'>
-            <label htmlFor="discount">Zniżka w %:</label>
+            <label htmlFor="discount">Discount [%]:</label>
             <input type="number" name="discount" id="discount" className='form-control' placeholder='0' max="100" min="0" onChange={handleInputChange} value={offerData.discount} disabled={action === CrudAction.View} />
           </div>
         </div>
         <div className='form-check m-3'>
-          <label className="form-check-label" htmlFor="active">Wyświetlaj wśród ofert</label>
+          <label className="form-check-label" htmlFor="active">Show under 'offers' tab</label>
           <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={offerData.active} disabled={action === CrudAction.View} />
         </div>
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
     </div>
   )

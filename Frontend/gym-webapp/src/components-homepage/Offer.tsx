@@ -6,9 +6,9 @@ export default function OfferComponent(props: { name: string, body: string, pric
         if (props.discount && props.discount > 0){
             const discountDecimal = props.discount / 100
             const newPrice = Math.round((props.price - props.price * discountDecimal) * 100)/100
-            return <p><span className="text-danger">Promocja -{props.discount}%!</span><br/><s>{props.price}zł</s> {" -> " + newPrice}zł </p>
+            return <p><span className="text-danger">Promocja -{props.discount}%!</span><br/><s>{props.price}$</s> {" -> " + newPrice}$ </p>
         }
-        return <p>{props.price}zł</p>
+        return <p>{props.price}$</p>
     }
 
     const editorToHtml = () => {

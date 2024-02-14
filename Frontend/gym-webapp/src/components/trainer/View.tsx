@@ -55,12 +55,12 @@ export default function TrainerView(props: {action: CrudAction}) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="firstName">Imię:</label>
-            <input type="text" name="firstName" id="firstName" className='form-control' placeholder='Imię' onChange={handleInputChange} value={trainerData.firstName} disabled={action === CrudAction.View}/>
+            <label htmlFor="firstName">First name:</label>
+            <input type="text" name="firstName" id="firstName" className='form-control' placeholder='John' onChange={handleInputChange} value={trainerData.firstName} disabled={action === CrudAction.View}/>
           </div>
           <div className='form-group col'>
-            <label htmlFor="lastName">Nazwisko:</label>
-            <input type="text" name="lastName" id="lastName" className='form-control' placeholder='Nazwisko' onChange={handleInputChange} value={trainerData.lastName} disabled={action === CrudAction.View}/>
+            <label htmlFor="lastName">Last name:</label>
+            <input type="text" name="lastName" id="lastName" className='form-control' placeholder='Smith' onChange={handleInputChange} value={trainerData.lastName} disabled={action === CrudAction.View}/>
           </div>
         </div>
         {/* <div className='row mb-3'>
@@ -74,29 +74,29 @@ export default function TrainerView(props: {action: CrudAction}) {
           </div>
         </div> */}
         <div className='form-group mb-3'>
-          <label htmlFor="facebookLink">Link do Facebooka:</label>
-          <input type="text" name="facebookLink" id="facebookLink" className='form-control' placeholder='facebook.com/uzytkownik' onChange={handleInputChange} value={trainerData.facebookLink} disabled={action === CrudAction.View}/>
+          <label htmlFor="facebookLink">Link to Facebook:</label>
+          <input type="text" name="facebookLink" id="facebookLink" className='form-control' placeholder='facebook.com/user' onChange={handleInputChange} value={trainerData.facebookLink} disabled={action === CrudAction.View}/>
         </div>
         <div className='form-group mb-3'>
-          <label htmlFor="instagramLink">Link do Instagrama:</label>
-          <input type="text" name="instagramLink" id="instagramLink" className='form-control' placeholder='instagram.com/uzytkownik' onChange={handleInputChange} value={trainerData.instagramLink} disabled={action === CrudAction.View}/>
+          <label htmlFor="instagramLink">Link to Instagram:</label>
+          <input type="text" name="instagramLink" id="instagramLink" className='form-control' placeholder='instagram.com/user' onChange={handleInputChange} value={trainerData.instagramLink} disabled={action === CrudAction.View}/>
         </div>
         <div className='form-group mb-3'>
-          <label htmlFor="twitterLink">Link do Twittera:</label>
-          <input type="text" name="twitterLink" id="twitterLink" className='form-control' placeholder='twitter.com/uzytkownik' onChange={handleInputChange} value={trainerData.twitterLink} disabled={action === CrudAction.View}/>
+          <label htmlFor="twitterLink">Link to Twitter:</label>
+          <input type="text" name="twitterLink" id="twitterLink" className='form-control' placeholder='twitter.com/user' onChange={handleInputChange} value={trainerData.twitterLink} disabled={action === CrudAction.View}/>
         </div>
         <div className="row age-row mb-3">
           <div className='form-group col'>
-            <label htmlFor="age">Wiek:</label>
+            <label htmlFor="age">Age:</label>
             <input type="number" name="age" id="age" className='form-control' placeholder='0' step={1} min="0" max={150} onChange={handleInputChange} value={trainerData.age} disabled={action === CrudAction.View}/>
           </div>
           <div className='form-check col pt-4'>
-            <label className="form-check-label" htmlFor="active">Wyświetlaj trenera na stronie głównej</label>
+            <label className="form-check-label" htmlFor="active">Show on the main page</label>
             <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={trainerData.active} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='form-group mb-3'>
-          <label htmlFor="about">O trenerze:</label>
+          <label htmlFor="about">About trainer:</label>
           <Editor
             readOnly={action === CrudAction.View}
             editorState={editorState}
@@ -105,8 +105,8 @@ export default function TrainerView(props: {action: CrudAction}) {
             onEditorStateChange={onEditorStateChange}
           />
         </div>
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
     </div>
   )

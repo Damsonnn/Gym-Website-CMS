@@ -16,7 +16,7 @@ export default function PopularPosts() {
             return <PostComponent key={post.id} id={post.id} title={post.title} author={post.author} category={post.category.name}/>
         })
     }
-    return <h2 className="mt-3">Brak artykułów do wczytania</h2>
+    return <h2 className="mt-3">No posts to show</h2>
   } 
 
   useEffect(() => {

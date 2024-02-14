@@ -25,6 +25,6 @@ export default function ListCategories() {
     },[])
 
     return (
-        renderList(["Nazwa"], mapCategories(categories), "categories")
+        renderList(["Name"], mapCategories(categories), "categories")
     )
 }

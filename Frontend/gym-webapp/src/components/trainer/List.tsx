@@ -22,7 +22,7 @@ export default function ListTrainers() {
             return [];
         }
         return trainers.map(trainer => {
-            return {id: trainer.id, content: [trainer.firstName, trainer.lastName, trainer.active ? "Tak" : "Nie"]}
+            return {id: trainer.id, content: [trainer.firstName, trainer.lastName, trainer.active ? "Yes" : "No"]}
         })
     }
 
@@ -31,6 +31,6 @@ export default function ListTrainers() {
     },[])
 
     return (
-        renderList(["Imię", "Nazwisko", "Aktywny"], mapTrainers(trainers), "trainers")
+        renderList(["First name", "Last Name", "Active"], mapTrainers(trainers), "trainers")
     )
 }

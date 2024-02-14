@@ -17,7 +17,7 @@ export default function ListBanners() {
             return [];
         }
         return banners.map(banner => {
-            return {id: banner.id, content: [banner.title, banner.active ? "Tak" : "Nie"]}
+            return {id: banner.id, content: [banner.title, banner.active ? "Yes" : "No"]}
         })
     }
 
@@ -26,7 +26,7 @@ export default function ListBanners() {
     },[])
 
     return (
-        renderList(["Tytuł", "Aktywny"], mapBanners(banners), "banners")
+        renderList(["Title", "Active"], mapBanners(banners), "banners")
     )
 
 }

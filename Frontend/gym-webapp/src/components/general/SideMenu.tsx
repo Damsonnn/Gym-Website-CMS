@@ -6,15 +6,15 @@ export default class SideMenu extends Component {
         return (
             <div className='list-group border'>
                 {sessionStorage.getItem("role") === "ADMIN" ? (<div>
-                    <Link className="list-group-item list-group-item-action" to='users'>Użytkownicy</Link>
-                    <Link className="list-group-item list-group-item-action" to='locations'>Lokacje</Link>
-                    <Link className="list-group-item list-group-item-action" to='offers'>Oferty</Link>
+                    <Link className="list-group-item list-group-item-action" to='users'>Users</Link>
+                    <Link className="list-group-item list-group-item-action" to='locations'>Locations</Link>
+                    <Link className="list-group-item list-group-item-action" to='offers'>Offers</Link>
                 </div>) : null}
-                <Link className="list-group-item list-group-item-action" to='posts'>Posty</Link>
-                <Link className="list-group-item list-group-item-action" to='banners'>Banery</Link>
-                <Link className="list-group-item list-group-item-action" to='opinions'>Opinie</Link>
-                <Link className="list-group-item list-group-item-action" to='trainers'>Trenerzy</Link>
-                <Link className="list-group-item list-group-item-action" to='categories'>Kategorie</Link>
+                <Link className="list-group-item list-group-item-action" to='posts'>Posts</Link>
+                <Link className="list-group-item list-group-item-action" to='banners'>Banners</Link>
+                <Link className="list-group-item list-group-item-action" to='opinions'>Opinions</Link>
+                <Link className="list-group-item list-group-item-action" to='trainers'>Trainers</Link>
+                <Link className="list-group-item list-group-item-action" to='categories'>Categories</Link>
             </div>
         )
     }

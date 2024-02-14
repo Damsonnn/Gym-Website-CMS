@@ -28,7 +28,7 @@ export default function UserView(props: {action: CrudAction}) {
   
   const mapRoles = (roles: Array<any>) => {
     if (roles.length === 0) {
-        return  <option value="0">Brak ról do wyboru</option>;
+        return  <option value="0">No roles to choose from</option>;
     }
     return roles.map(role => {
         return <option value={role.id}>{role.name}</option>
@@ -68,17 +68,17 @@ export default function UserView(props: {action: CrudAction}) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="username">Nazwa użytkownika:</label>
-            <input type="text" name="username" id="username" className='form-control' placeholder='Nazwa użytkownika' onChange={handleInputChange} value={userData.username} disabled={action === CrudAction.View}/>
+            <label htmlFor="username">Username:</label>
+            <input type="text" name="username" id="username" className='form-control' placeholder='User' onChange={handleInputChange} value={userData.username} disabled={action === CrudAction.View}/>
           </div>
           {action != CrudAction.View ? <div className='form-group col'>
-            <label htmlFor="password">Hasło:</label>
-            <input type="text" name="password" id="password" className='form-control' placeholder='Hasło' onChange={handleInputChange}/>
+            <label htmlFor="password">Password:</label>
+            <input type="text" name="password" id="password" className='form-control' placeholder='Password' onChange={handleInputChange}/>
           </div> : null}
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="roleId">Rola:</label>
+            <label htmlFor="roleId">Role:</label>
             <select className="form-select" name="roleId" id="roleId" onChange={handleInputChange} value={userData.roleId} disabled={action === CrudAction.View}>
               {mapRoles(roles)}
             </select>
@@ -88,8 +88,8 @@ export default function UserView(props: {action: CrudAction}) {
             <input type="email" name="email" id="email" className='form-control' placeholder='E-mail' onChange={handleInputChange} value={userData.email} disabled={action === CrudAction.View}/>
           </div>
         </div>
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
     </div>
   )

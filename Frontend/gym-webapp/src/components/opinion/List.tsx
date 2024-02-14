@@ -18,7 +18,7 @@ export default function ListOpinions() {
         }
         console.log(opinions)
         return opinions.map(opinion => {
-            return {id: opinion.id, content: [opinion.author, opinion.active ? "Tak" : "Nie"]}
+            return {id: opinion.id, content: [opinion.author, opinion.active ? "Yes" : "No"]}
         })
     }
 
@@ -27,6 +27,6 @@ export default function ListOpinions() {
     },[])
 
     return (
-        renderList(["Recenzent", "Aktywna"], mapOpinions(opinions), "opinions")
+        renderList(["Author", "Active"], mapOpinions(opinions), "opinions")
     )
 }

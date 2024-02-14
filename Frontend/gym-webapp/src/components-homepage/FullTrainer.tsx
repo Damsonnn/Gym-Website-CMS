@@ -47,18 +47,18 @@ export default function FullTrainer() {
                         <h5>Wiek: {trainerData.age}</h5>
                         <ul >
                             <li className="py-1">
-                                Facebook: {trainerData.facebookLink ? <a href={trainerData.facebookLink}>[Kliknij]</a> : "Brak"}
+                                Facebook: {trainerData.facebookLink ? <a href={trainerData.facebookLink}>[Click here]</a> : "No link"}
                             </li>
                             <li className="py-1">
-                                Twitter: {trainerData.twitterLink ? <a href={trainerData.twitterLink}>[Kliknij]</a> : "Brak"}
+                                Twitter: {trainerData.twitterLink ? <a href={trainerData.twitterLink}>[Click here]</a> : "No link"}
                             </li>
                             <li className="py-1">
-                                Instagram: {trainerData.instagramLink ? <a href={trainerData.instagramLink}>[Kliknij]</a> : "Brak"}
+                                Instagram: {trainerData.instagramLink ? <a href={trainerData.instagramLink}>[Click here]</a> : "No link"}
                             </li>
                         </ul>
                     </div>
                 </div>
-                <h3 className="pt-3 px-3">O mnie:</h3>
+                <h3 className="pt-3 px-3">About me:</h3>
                 <div className="px-3 pt-3 h5">
                     <p dangerouslySetInnerHTML={{ __html: editorToHtml() }} />
                 </div>

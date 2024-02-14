@@ -12,8 +12,8 @@ export default function BannerComponent() {
   const [wordOrder, setWordOrder] = useState(0)
   const [banners, setBanners] = useState<Array<Banner>>([{
     id:0,
-    title:"Brak bannerów do załadowania",
-    body:"Brak bannerów do załadowania",
+    title:"No banners to show",
+    body:"No banners to show",
     active: true
   }])
 

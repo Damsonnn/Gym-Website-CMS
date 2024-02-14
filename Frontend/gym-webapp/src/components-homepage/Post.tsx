@@ -14,7 +14,7 @@ export default function PostComponent(props: {id: number, title: string, categor
                 Autor: {props.author}
             </div>
             <div className="col">
-                <Link to={`/posts/${props.id}`}>Czytaj dalej...</Link>
+                <Link to={`/posts/${props.id}`}>Read more...</Link>
             </div>
         </div>
     </div>

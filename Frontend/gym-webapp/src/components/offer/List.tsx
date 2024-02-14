@@ -19,7 +19,7 @@ export default function ListOffers() {
             return [];
         }
         return offers.map(offer => {
-            return { id: offer.id, content: [offer.name, String(offer.price), offer.active ? "Tak" : "Nie"] }
+            return { id: offer.id, content: [offer.name, String(offer.price), offer.active ? "Yes" : "No"] }
         })
     }
 
@@ -28,6 +28,6 @@ export default function ListOffers() {
     }, []);
 
     return (
-        renderList(["Nazwa", "Cena", "Aktywna"], mapOffers(offers), "offers")
+        renderList(["Name", "Price", "Active"], mapOffers(offers), "offers")
     )
 }

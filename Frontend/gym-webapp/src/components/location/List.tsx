@@ -27,7 +27,7 @@ export default function ListLocations() {
     },[])
 
     return (
-        renderList(["Miasto", "Adres"], mapLocations(locations), "locations")
+        renderList(["City", "Address"], mapLocations(locations), "locations")
     )
 
 }

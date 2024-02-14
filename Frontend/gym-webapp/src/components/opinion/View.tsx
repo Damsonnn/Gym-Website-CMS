@@ -37,22 +37,22 @@ export default function OpinionView(props: {action: CrudAction}) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="author">Autor:</label>
-            <input type="text" name="author" id="author" className='form-control' placeholder='Autor opinii'  onChange={handleInputChange} value={opinionData.author} disabled={action === CrudAction.View}/>
+            <label htmlFor="author">Author:</label>
+            <input type="text" name="author" id="author" className='form-control' placeholder={`Opinion's author`}  onChange={handleInputChange} value={opinionData.author} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="body">Opinia:</label>
-            <input type='text' name="body" id="body" className='form-control' placeholder='Tu wprowadź opinię'  onChange={handleInputChange} value={opinionData.body} disabled={action === CrudAction.View}/>
+            <label htmlFor="body">Opinion:</label>
+            <input type='text' name="body" id="body" className='form-control' placeholder='Opinion here...'  onChange={handleInputChange} value={opinionData.body} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='form-check mb-3'>
-          <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
+          <label className="form-check-label" htmlFor="active">Show on main page</label>
           <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={opinionData.active} disabled={action === CrudAction.View}/>
         </div>
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
     </div>
   )

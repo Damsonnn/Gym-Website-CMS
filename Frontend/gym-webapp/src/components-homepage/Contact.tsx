@@ -60,7 +60,7 @@ export default function Contact() {
 
     const mapLocations = () => {
         if (locations.length === 0) {
-            return  <option value="0">Brak placówki do wyboru</option>;
+            return  <option value="0">No locations to choose from</option>;
         }
         let index = -1;
         return locations.map(location => {
@@ -119,42 +119,42 @@ export default function Contact() {
     return (
         <div className="contact-container">
             <div className="border rounded m-4 p-3">
-                <label htmlFor="chosenLocation">Wybierz placówkę:</label>
+                <label htmlFor="chosenLocation">Choose location:</label>
                 <select className="form-select" name="chosenLocation" id="chosenLocation" onChange={handleSelectChange}>
                 {mapLocations()}
                 </select>
                 <div className="border rounded p-3 mt-2">
-                    <p className="border-bottom pb-1"><h6>Miasto:</h6> {chosenLocation.city}</p>
-                    <p className="border-bottom pb-1"><h6>Ulica:</h6> {chosenLocation.address}</p>
-                    <p className="border-bottom pb-1"><h6>Numer telefonu:</h6> {chosenLocation.phoneNumber}</p>
+                    <p className="border-bottom pb-1"><h6>City:</h6> {chosenLocation.city}</p>
+                    <p className="border-bottom pb-1"><h6>Street:</h6> {chosenLocation.address}</p>
+                    <p className="border-bottom pb-1"><h6>Phone number:</h6> {chosenLocation.phoneNumber}</p>
                     <p className="border-bottom pb-1"><h6>E-mail:</h6> {chosenLocation.email}</p>
                 </div>
-                <h6 className="m-2">Formularz kontaktowy:</h6>
-                <div className="mx-2">(Wiadomość zostanie wysłana do wybranej placówki)</div>
+                <h6 className="m-2">Contact form:</h6>
+                <div className="mx-2">(Message will be send to chosen location)</div>
                 <form className="contact-form border rounded mt-2" onSubmit={handleSubmit}>
                     <div className="row p-2">
                         <div className='form-group col'>
-                            <label htmlFor="senderName">Imię i nazwisko:</label>
-                            <input type='text' name="senderName" id="senderName" className='form-control' placeholder='Twoje imię i nazwisko' value={emailMessage.senderName}  onChange={handleInputChange}/>
+                            <label htmlFor="senderName">Name:</label>
+                            <input type='text' name="senderName" id="senderName" className='form-control' placeholder='Your name' value={emailMessage.senderName}  onChange={handleInputChange}/>
                         </div>
                         <div className='form-group col'>
-                            <label htmlFor="senderEmail">Email:</label>
-                            <input type='email' name="senderEmail" id="senderEmail" className='form-control' placeholder='Twój email' value={emailMessage.senderEmail} onChange={handleInputChange}/>
+                            <label htmlFor="senderEmail">Your E-mail:</label>
+                            <input type='email' name="senderEmail" id="senderEmail" className='form-control' placeholder='Your email' value={emailMessage.senderEmail} onChange={handleInputChange}/>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className='form-group col'>
-                            <label htmlFor="subject">Tytuł wiadomości:</label>
-                            <input type='text' name="subject" id="subject" className='form-control' placeholder='Tytuł' value={emailMessage.subject}  onChange={handleInputChange}/>
+                            <label htmlFor="subject">Message title:</label>
+                            <input type='text' name="subject" id="subject" className='form-control' placeholder='Title' value={emailMessage.subject}  onChange={handleInputChange}/>
                         </div>
                     </div>
                     <div className="row p-2">
                         <div className='form-group col'>
-                            <label htmlFor="message">Wiadomość:</label>
-                            <textarea rows={8} name="message" id="message" className='form-control' placeholder='Twoja wiadomość...' value={emailMessage.message}  onChange={handleInputChange}/>
+                            <label htmlFor="message">Message:</label>
+                            <textarea rows={8} name="message" id="message" className='form-control' placeholder='Your message...' value={emailMessage.message}  onChange={handleInputChange}/>
                         </div>
                     </div>
-                    <input type="submit" value="Wyślij wiadomość" className='btn btn-primary m-2' />
+                    <input type="submit" value="Send message" className='btn btn-primary m-2' />
                 </form>
             </div>   
         </div>

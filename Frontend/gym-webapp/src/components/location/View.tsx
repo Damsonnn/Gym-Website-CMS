@@ -39,28 +39,28 @@ export default function LocationView(props: {action: CrudAction}) {
       <form onSubmit={handleSubmit}>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="city">Miasto:</label>
-            <input type="text" name="city" id="city" className='form-control' placeholder='Poznań' onChange={handleInputChange} value={locationData.city} disabled={action === CrudAction.View}/>
+            <label htmlFor="city">City:</label>
+            <input type="text" name="city" id="city" className='form-control' placeholder='City' onChange={handleInputChange} value={locationData.city} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="address">Ulica:</label>
-            <input type="text" name="address" id="address" className='form-control' placeholder='ul. Grunwaldzka 1/2' onChange={handleInputChange} value={locationData.address} disabled={action === CrudAction.View}/>
+            <label htmlFor="address">Address:</label>
+            <input type="text" name="address" id="address" className='form-control' placeholder='Street' onChange={handleInputChange} value={locationData.address} disabled={action === CrudAction.View}/>
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
-            <label htmlFor="phoneNumber">Numer telefonu placówki:</label>
+            <label htmlFor="phoneNumber">Phone number:</label>
             <input className='form-control' type="text" id="phoneNumber" name="phoneNumber" pattern="[0-9]*" placeholder='123123123' onChange={handleInputChange} value={locationData.phoneNumber} disabled={action === CrudAction.View}/> 
           </div>
           <div className='form-group col'>
-            <label htmlFor="emial">E-mail placówki:</label>
+            <label htmlFor="emial">E-mail:</label>
             <input type="email" name="email" id="email" className='form-control' placeholder='E-mail' onChange={handleInputChange} value={locationData.email} disabled={action === CrudAction.View}/>
           </div>
         </div>
-        {action === CrudAction.Create ? <input type="submit" value="Utwórz" className='btn btn-primary' /> : null}
-        {action === CrudAction.Edit ? <input type="submit" value="Zapisz" className='btn btn-primary' /> : null}
+        {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
+        {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
     </div>
   )
