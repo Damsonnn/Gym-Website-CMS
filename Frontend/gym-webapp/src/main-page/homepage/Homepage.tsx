@@ -22,7 +22,6 @@ export default function Homepage() {
             <div className='navbar-brand'>Damian Ćwikliński</div>
         </div>
       </nav> 
-      
     </div>
   )
 }

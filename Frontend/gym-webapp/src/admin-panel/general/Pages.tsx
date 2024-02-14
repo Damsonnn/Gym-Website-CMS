@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Component, ReactComponentElement, FunctionComponent } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import ListPosts from '../components/post/List'
 import ListBanners from '../components/banner/List'
@@ -19,6 +19,27 @@ import OpinionView from '../components/opinion/View'
 import TrainerView from '../components/trainer/View'
 import CategoryView from '../components/category/View'
 
+interface ViewProps {
+    action: CrudAction
+}
+
+interface RouteParameters{
+    endpoint: string
+    List: FunctionComponent
+    View: FunctionComponent<ViewProps>
+}
+
+const ROUTES: Array<RouteParameters> = [
+    {endpoint: "users", List: ListUsers, View: UserView},
+    {endpoint: "locations", List: ListLocations, View: LocationView},
+    {endpoint: "offers", List: ListOffers, View: OfferView},
+    {endpoint: "posts", List: ListPosts, View: PostView},
+    {endpoint: "banners", List: ListBanners, View: BannerView},
+    {endpoint: "opinions", List: ListOpinions, View: OpinionView},
+    {endpoint: "trainers", List: ListTrainers, View: TrainerView},
+    {endpoint: "categories", List: ListCategories, View: CategoryView}
+]
+
 export default function Pages() {
     const [showMenu, setShowMenu] = useState(true)
     const navigate = useNavigate();
@@ -27,6 +48,17 @@ export default function Pages() {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('role');
         navigate("/login");
+    }
+
+    const createRoutes = () => {
+        return ROUTES.map((route) => {
+            return <Route path={route.endpoint}>
+                <Route index={true} element={<route.List />}/>
+                <Route path=':id' element={<route.View action = {CrudAction.View}/>}/>
+                <Route path=':id/edit' element={<route.View action = {CrudAction.Edit} />}/>
+                <Route path='create' element={<route.View action = {CrudAction.Create}/>}/>
+            </Route>
+        })
     }
     
     useEffect(() => {
@@ -50,54 +82,7 @@ export default function Pages() {
                     </div>
                     <div className='col-10'>
                         <Routes>
-                            <Route path="users">
-                                <Route index={true} element={<ListUsers />}/>
-                                <Route path=':id' element={<UserView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<UserView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<UserView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="locations">
-                                <Route index={true} element={<ListLocations />}/>
-                                <Route path=':id' element={<LocationView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<LocationView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<LocationView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="offers">
-                                <Route index={true} element={<ListOffers />}/>
-                                <Route path=':id' element={<OfferView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<OfferView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<OfferView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="posts">
-                                <Route index={true} element={<ListPosts />}/>
-                                <Route path=':id' element={<PostView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<PostView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<PostView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="banners">
-                                <Route index={true} element={<ListBanners />}/>
-                                <Route path=':id' element={<BannerView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<BannerView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<BannerView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="opinions">
-                                <Route index={true} element={<ListOpinions />}/>
-                                <Route path=':id' element={<OpinionView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<OpinionView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<OpinionView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="trainers">
-                                <Route index={true} element={<ListTrainers />}/>
-                                <Route path=':id' element={<TrainerView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<TrainerView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<TrainerView action = {CrudAction.Create}/>}/>
-                            </Route>
-                            <Route path="categories">
-                                <Route index={true} element={<ListCategories />}/>
-                                <Route path=':id' element={<CategoryView action = {CrudAction.View}/>}/>
-                                <Route path=':id/edit' element={<CategoryView action = {CrudAction.Edit} />}/>
-                                <Route path='create' element={<CategoryView action = {CrudAction.Create}/>}/>
-                            </Route>
+                            {createRoutes()}
                         </Routes>
                     </div>
                 </div>
