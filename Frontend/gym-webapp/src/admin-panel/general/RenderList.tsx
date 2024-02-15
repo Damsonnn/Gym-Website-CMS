@@ -16,10 +16,10 @@ export default function renderList(headers: Array<string>, items: Array<ListItem
                     <button className='btn btn-primary'>View</button>
                 </Link>
                 <Link className='mx-1' to={id + "/edit"}>
-                    <button className='btn btn-primary'>Edit</button>
+                    <button className='btn btn-primary btn-edit'>Edit</button>
                 </Link>
                 <Link className='mx-1' to={""}>
-                    <button className='btn btn-primary' onClick={() => handleDelete(id)}>Delete</button>
+                    <button className='btn btn-primary btn-delete' onClick={() => handleDelete(id)}>Delete</button>
                 </Link>
             </td>)}
 
@@ -31,7 +31,6 @@ export default function renderList(headers: Array<string>, items: Array<ListItem
         if (items.length != 0){
             return items.map(item => <tr key={`${item.id}`}>{item.content.map(cell => <td key={`${item.id}${cell}`}>{cell}</td>)}{renderCrudButtons(item.id)}</tr>)
         }
-        return <tr key='1'>No data to be shown</tr>
     }
     
     return (

@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom'
 
-export default function SideMenu() {
-    const adminBookmarks: string[][] = [
-        ["users", "Users"],
-        ["locations", "Locations"],
-        ["offers", "Offers"]
-    ];
-    const userBookmarks: string[][] = [
-        ["posts", "Posts"],
-        ["banners", "Banners"],
-        ["opinions", "Opinions"],
-        ["trainers", "Trainers"],
-        ["categories", "Categories"]
-    ];
+const ADMIN_BOOKMARKS: string[][] = [
+    ["users", "Users"],
+    ["locations", "Locations"],
+    ["offers", "Offers"]
+];
+const USER_BOOKMARKS: string[][] = [
+    ["posts", "Posts"],
+    ["banners", "Banners"],
+    ["opinions", "Opinions"],
+    ["trainers", "Trainers"],
+    ["categories", "Categories"]
+];
 
+export default function SideMenu() {
     const createLinks = (bookmarks: string[][]) => {
         return bookmarks.map(([endpoint, name]) => {
             return <Link className="list-group-item list-group-item-action" to={endpoint}>{name}</Link>
@@ -23,9 +23,9 @@ export default function SideMenu() {
     return (
         <div className='list-group border'>
             {sessionStorage.getItem("role") === "ADMIN" ? (<div>
-                {createLinks(adminBookmarks)}
+                {createLinks(ADMIN_BOOKMARKS)}
             </div>) : null}
-            {createLinks(userBookmarks)}
+            {createLinks(USER_BOOKMARKS)}
         </div>
     )
 }

@@ -42,7 +42,7 @@ export default function LoginPage() {
       <div className='border rounded'>
         <form className='p-5' onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="username">Username:</label><br/>
-          <input type="text" className='form-control' placeholder='User' {...register("username")}/>
+          <input type="text" className={`form-control ${errors.username ? "input-invalid" : null}`} placeholder='User' {...register("username")}/>
           <p className="text-danger">{errors.username?.message}</p>
           <label htmlFor="password">Password:</label><br/>
           <input type="password" className={`form-control ${errors.password ? "input-invalid" : null}`} placeholder='Password' {...register("password")}/>

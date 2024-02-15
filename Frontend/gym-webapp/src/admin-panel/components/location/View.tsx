@@ -1,62 +1,72 @@
-import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
-import { Location } from './List'
 import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
-import { refreshInput } from '../../../utils/Handlers';
+import * as yup from "yup"
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form'
+
+type LocationDto = {
+  city: string
+  address: string
+  phoneNumber: string
+  email: string
+}
 
 export default function LocationView(props: {action: CrudAction}) {
   const [action, setAction] = useState<CrudAction>(props.action)
-  const [locationData, setLocationData] = useState<Location>({
-    id: 0,
-    city: "",
-    address: "",
-    phoneNumber: "",
-    email: ""
-  });
-
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    refreshInput(event, locationData, setLocationData);
-  };
+  const schema = yup.object().shape({
+    city: yup.string().required().min(3).max(100),
+    address: yup.string().required().min(3).max(300),
+    phoneNumber: yup.string().required().min(3).max(20),
+    email: yup.string().required().email().max(50)
+  })
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    createOrEditRequest(action, locationData, id, "locations", navigate);
+  const {register, handleSubmit, formState: { errors }, reset} = useForm<LocationDto>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data: LocationDto) => {
+    createOrEditRequest(action, data, id, "locations", navigate);
   };
 
   useEffect(() => {
     if (action != CrudAction.Create) {
-      getOneObject(id, "locations", setLocationData);
+      getOneObject(id, "locations", reset);
     }
   }, []);
 
 
   return (
     <div className="container border rounded p-4 mt-4">
-      <form onSubmit={handleSubmit}>
-        <div className='row mb-3'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='row'>
           <div className='form-group col'>
             <label htmlFor="city">City:</label>
-            <input type="text" name="city" id="city" className='form-control' placeholder='City' onChange={handleInputChange} value={locationData.city} disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.city ? "input-invalid" : null}`} {...register("city")} placeholder='City' disabled={action === CrudAction.View}/>
+            <p className="text-danger">{errors.city?.message}</p>
           </div>
         </div>
-        <div className='row mb-3'>
+        <div className='row'>
           <div className='form-group col'>
             <label htmlFor="address">Address:</label>
-            <input type="text" name="address" id="address" className='form-control' placeholder='Street' onChange={handleInputChange} value={locationData.address} disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.address ? "input-invalid" : null}`} {...register("address")} placeholder='Street' disabled={action === CrudAction.View}/>
+            <p className="text-danger">{errors.address?.message}</p>
           </div>
         </div>
-        <div className='row mb-3'>
+        <div className='row'>
           <div className='form-group col'>
             <label htmlFor="phoneNumber">Phone number:</label>
-            <input className='form-control' type="text" id="phoneNumber" name="phoneNumber" pattern="[0-9]*" placeholder='123123123' onChange={handleInputChange} value={locationData.phoneNumber} disabled={action === CrudAction.View}/> 
+            <input  type="text" className={`form-control ${errors.phoneNumber ? "input-invalid" : null}`} {...register("phoneNumber")} placeholder='123123123' disabled={action === CrudAction.View}/> 
+            <p className="text-danger">{errors.phoneNumber?.message}</p>
           </div>
           <div className='form-group col'>
             <label htmlFor="emial">E-mail:</label>
-            <input type="email" name="email" id="email" className='form-control' placeholder='E-mail' onChange={handleInputChange} value={locationData.email} disabled={action === CrudAction.View}/>
+            <input type="email" className={`form-control ${errors.email ? "input-invalid" : null}`} {...register("email")} placeholder='E-mail' disabled={action === CrudAction.View}/>
+            <p className="text-danger">{errors.email?.message}</p>
           </div>
         </div>
         {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}

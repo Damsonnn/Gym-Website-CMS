@@ -1,49 +1,53 @@
-import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
-import { Category } from './List';
 import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
-import { refreshInput } from '../../../utils/Handlers';
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+
+
+type CategoryDto = {
+  name: string
+  active: boolean
+}
 
 export default function CategoryView(props: { action: CrudAction }) {
   const [action, setAction] = useState<CrudAction>(props.action);
-  const [categoryData, setCategoryData] = useState<Category>({
-    id: 0,
-    name: "",
-    active: false
+  const schema = yup.object().shape({
+    name: yup.string().required().min(3).max(50),
+    active: yup.boolean().required()
   });
-
   const navigate = useNavigate();
   const { id } = useParams();
+  const {register, handleSubmit, formState: { errors }, reset} = useForm<CategoryDto>({
+    resolver: yupResolver(schema),
+  });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    refreshInput(event, categoryData, setCategoryData);
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    createOrEditRequest(action, categoryData, id, "categories", navigate);
+  const onSubmit = (data: CategoryDto) => {
+    createOrEditRequest(action, data, id, "categories", navigate);
   };
 
   useEffect(() => {
     if (action != CrudAction.Create) {
-      getOneObject(id, "categories", setCategoryData);
+      getOneObject(id, "categories", reset);
     }
   }, []);
 
   return (
     <div className="container border rounded p-4 mt-4">
-      <form onSubmit={handleSubmit}>
-        <div className='row mb-3'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='row'>
           <div className='form-group col'>
             <label htmlFor="name">Category name:</label>
-            <input type="text" name="name" id="name" className='form-control' placeholder='name' onChange={handleInputChange} value={categoryData.name} disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.name ? "input-invalid" : null}`} placeholder='name' {...register("name")} disabled={action === CrudAction.View}/>
+            <p className="text-danger">{errors.name?.message}</p>
           </div>
         </div>
-        {/* <div className='form-check mb-3'>
-          <label className="form-check-label" htmlFor="active">Wyświetlaj na stronie głównej</label>
-          <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={categoryData.active} disabled={action === CrudAction.View}/>
-        </div> */}
+        <div className='form-check mb-3'>
+          <label className="form-check-label" htmlFor="active">Show on main page</label>
+          <input className="form-check-input" type="checkbox" {...register("active")} disabled={action === CrudAction.View}/>
+        </div>
         {action === CrudAction.Create ? <input type="submit" value="Create" className='btn btn-primary' /> : null}
         {action === CrudAction.Edit ? <input type="submit" value="Save" className='btn btn-primary' /> : null}
       </form>
