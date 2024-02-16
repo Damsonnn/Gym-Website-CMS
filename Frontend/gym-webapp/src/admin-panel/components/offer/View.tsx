@@ -18,8 +18,8 @@ type OfferForm = {
 }
 
 export default function OfferView(props: { action: CrudAction }) {
-const [editorState, setEditorState] = useState<EditorState>();
-  const [action, setAction] = useState<CrudAction>(props.action)
+  const action = props.action
+  const [editorState, setEditorState] = useState<EditorState>();
   const [offerData, setOfferData] = useState<Offer>();
 
   const navigate = useNavigate();
@@ -27,12 +27,12 @@ const [editorState, setEditorState] = useState<EditorState>();
 
   const schema = yup.object().shape({
     name: yup.string().required().min(3).max(50),
-    price: yup.number().required(),
-    discount: yup.number().required(),
+    price: yup.number().required().typeError("Must be a number").min(0),
+    discount: yup.number().typeError("Must be a number").required().min(0).max(100),
     active: yup.boolean().required()
   })
 
-  const {register, handleSubmit, formState: { errors }, reset} = useForm<OfferForm>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<OfferForm>({
     resolver: yupResolver(schema),
   });
 
@@ -46,34 +46,21 @@ const [editorState, setEditorState] = useState<EditorState>();
   };
 
   const onSubmit = (data: OfferForm) => {
-    if (editorState){
-      setOfferData({
-        id: 0,
-        name: data.name,
-        price: data.price,
-        discount: data.discount,
-        active: data.active,
+    if (editorState) {
+      const dataToSend = {
+        ...data,
         body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      })
-    }
-    if (offerData){
-      createOrEditRequest(action, offerData, id, "offers", navigate);
+      }
+      createOrEditRequest(action, dataToSend, id, "offers", navigate);
     }
   };
 
   useEffect(() => {
-    getOneObject(id, "offers", setDataHelper);
+    if (action !== CrudAction.Create) getOneObject(id, "offers", setDataHelper);
   }, []);
 
   useEffect(() => {
-    if (offerData){
-      reset({
-        name: offerData.name,
-        price: offerData.price,
-        discount: offerData.discount,
-        active: offerData.active,
-      })
-    }
+    if (offerData) reset(offerData)
   }, [offerData])
 
   return (
@@ -106,7 +93,7 @@ const [editorState, setEditorState] = useState<EditorState>();
           </div>
           <div className='form-group col'>
             <label htmlFor="discount">Discount [%]:</label>
-            <input type="number" className={`form-control ${errors.discount ? "input-invalid" : null}`} {...register("discount")} placeholder='0' max="100" min="0" disabled={action === CrudAction.View} />
+            <input type="number" className={`form-control ${errors.discount ? "input-invalid" : null}`} {...register("discount")} placeholder='0' disabled={action === CrudAction.View} />
             <p className="text-danger">{errors.discount?.message}</p>
           </div>
         </div>

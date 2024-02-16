@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
@@ -14,7 +14,7 @@ type LocationDto = {
 }
 
 export default function LocationView(props: {action: CrudAction}) {
-  const [action, setAction] = useState<CrudAction>(props.action)
+  const action = props.action
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -34,9 +34,7 @@ export default function LocationView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "locations", reset);
-    }
+    if (action !== CrudAction.Create) getOneObject(id, "locations", reset);
   }, []);
 
 

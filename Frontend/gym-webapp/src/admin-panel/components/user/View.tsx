@@ -15,7 +15,7 @@ type AddUserDto = {
 }
 
 export default function UserView(props: {action: CrudAction}) {
-  const [action, setAction] = useState<CrudAction>(props.action)
+  const action = props.action
   const [roles, setRoles] = useState<Array<any>>([]);
   const [requestedUser, setRequestedUser] = useState<User>()
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function UserView(props: {action: CrudAction}) {
         return  <option value="0">No roles to choose from</option>;
     }
     return roles.map(role => {
-        return <option value={role.id}>{role.name}</option>
+        return <option key={role.id} value={role.id}>{role.name}</option>
     })
   }
 
@@ -58,9 +58,7 @@ export default function UserView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "users", setRequestedUser);
-    }
+    if (action !== CrudAction.Create) getOneObject(id, "users", setRequestedUser);
     getAllObjects("roles", setRoles);
   }, []);
 
@@ -84,8 +82,8 @@ export default function UserView(props: {action: CrudAction}) {
             <input type="text" className={`form-control ${errors.username ? "input-invalid" : null}`} {...register("username")} placeholder='User' disabled={action === CrudAction.View}/>
             <p className="text-danger">{errors.username?.message}</p>
           </div>
-          {action != CrudAction.View ? <div className='form-group col'>
-            <label htmlFor="password">Password: {props.action != CrudAction.Create ? "(optional)" : null}</label>
+          {action !== CrudAction.View ? <div className='form-group col'>
+            <label htmlFor="password">Password: {action !== CrudAction.Create ? "(optional)" : null}</label>
             <input type="password" className={`form-control ${errors.password ? "input-invalid" : null}`} {...register("password")} placeholder='Password'/>
             <p className="text-danger">{errors.password?.message}</p>
           </div> : null}

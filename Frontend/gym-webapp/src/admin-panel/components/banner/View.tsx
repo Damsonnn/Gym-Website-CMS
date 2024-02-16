@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { CrudAction } from "../../../utils/CrudAction";
 import { useNavigate, useParams } from "react-router";
 import { createOrEditRequest, getOneObject } from "../../../utils/ApiRequests";
@@ -14,7 +14,7 @@ type BannerDto = {
 }
 
 export default function BannerView(props: {action: CrudAction}) {
-  const [action, setAction] = useState<CrudAction>(props.action);
+  const action = props.action
   const navigate = useNavigate();
   const { id } = useParams();
   
@@ -33,9 +33,7 @@ export default function BannerView(props: {action: CrudAction}) {
   };
 
   useEffect(() => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "banners", reset);
-    }
+    if (action !== CrudAction.Create) getOneObject(id, "banners", reset);
   }, []);
 
   return (

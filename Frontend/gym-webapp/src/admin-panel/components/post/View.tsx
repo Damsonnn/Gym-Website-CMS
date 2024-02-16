@@ -1,13 +1,12 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
-import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { Post } from './List';
 import { Category } from "../category/List";
 import { createOrEditRequest, getOneObject, getAllObjects } from '../../../utils/ApiRequests';
-import { refreshInput } from '../../../utils/Handlers';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
@@ -20,77 +19,75 @@ type PostForm = {
 }
 
 export default function PostView(props: { action: CrudAction }) {
+  const action = props.action
   const [editorState, setEditorState] = useState<EditorState>();
   const [categories, setCategories] = useState<Array<Category>>([]);
-  const [action, setAction] = useState<CrudAction>(props.action);
   const [postData, setPostData] = useState<Post>();
 
-const navigate = useNavigate();
-const { id } = useParams();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-const schema = yup.object().shape({
-  title: yup.string().required().min(3).max(150),
-  categoryId: yup.number().required(),
-  author: yup.string().required().min(3).max(40),
-  active: yup.boolean().required()
-})
-
-const {register, handleSubmit, formState: { errors }, reset} = useForm<PostForm>({
-  resolver: yupResolver(schema),
-});
-
-const setDataHelper = (data: Post) => {
-  setPostData(data)
-  setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(data.body))))
-};
-
-const onEditorStateChange = (newState: EditorState) => {
-  setEditorState(newState);
-  // setPostData({...postData, ["body"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
-};
-
-const mapCategories = (categories: Array<Category>) => {
-  if (categories.length === 0) {
-      return  <option value="0">No categories to choose from</option>;
-  }
-  return categories.map(category => {
-      return <option value={category.id}>{category.name}</option>
+  const schema = yup.object().shape({
+    title: yup.string().required().min(3).max(150),
+    categoryId: yup.number().required(),
+    author: yup.string().required().min(3).max(40),
+    active: yup.boolean().required()
   })
-}
 
-const onSubmit = (data: PostForm) => {
-  if (postData && editorState){
-    setPostData({
-      ...postData,
-      title: data.title,
-      author: data.author,
-      category: {
-        id: data.categoryId,
-        name: "",
-        active: true
-      },
-      active: data.active,
-      body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    })
-    createOrEditRequest(action, postData, id, "posts", navigate);
-  }
-};
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<PostForm>({
+    resolver: yupResolver(schema),
+  });
 
-useEffect(() => {
-  getOneObject(id, "posts", setDataHelper);
-  getAllObjects("categories", setCategories);
-}, []);
+  const setDataHelper = (data: Post) => {
+    setPostData(data)
+    setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(data.body))))
+  };
 
-useEffect(() => {
-  if (postData){
-    reset({
-      title: postData.title,
-      author: postData.author,
-      categoryId: postData.category.id,
-      active: postData.active,
+  const onEditorStateChange = (newState: EditorState) => {
+    setEditorState(newState);
+  };
+
+  const mapCategories = (categories: Array<Category>) => {
+    if (categories.length === 0) {
+      return <option value="0">No categories to choose from</option>;
+    }
+    return categories.map(category => {
+      return <option key={category.id} value={category.id}>{category.name}</option>
     })
   }
-}, [postData])
+
+  const onSubmit = (data: PostForm) => {
+    if (editorState) {
+      const dataToSend = {
+        title: data.title,
+        author: data.author,
+        category: {
+          id: data.categoryId,
+          name: "",
+          active: true
+        },
+        active: data.active,
+        body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+      }
+      createOrEditRequest(action, dataToSend, id, "posts", navigate);
+    }
+  };
+
+  useEffect(() => {
+    if (action !== CrudAction.Create) getOneObject(id, "posts", setDataHelper);
+    getAllObjects("categories", setCategories);
+  }, []);
+
+  useEffect(() => {
+    if (postData) {
+      reset({
+        title: postData.title,
+        author: postData.author,
+        categoryId: postData.category.id,
+        active: postData.active,
+      })
+    }
+  }, [postData])
 
 
   return (
@@ -99,20 +96,20 @@ useEffect(() => {
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="title">Title:</label>
-            <input type="text" className={`form-control ${errors.title ? "input-invalid" : null}`} {...register("title")} placeholder='Title' disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.title ? "input-invalid" : null}`} {...register("title")} placeholder='Title' disabled={action === CrudAction.View} />
             <p className="text-danger">{errors.title?.message}</p>
           </div>
         </div>
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="author">Author:</label>
-            <input type="text" className={`form-control ${errors.author ? "input-invalid" : null}`} {...register("author")} placeholder='Author' disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.author ? "input-invalid" : null}`} {...register("author")} placeholder='Author' disabled={action === CrudAction.View} />
             <p className="text-danger">{errors.author?.message}</p>
           </div>
           <div className='form-group col'>
             <label htmlFor="category">Category:</label>
             <select className="form-select" {...register("categoryId")} disabled={action === CrudAction.View}>
-            <option value="" disabled selected>Select category</option>
+              <option value="" disabled selected>Select category</option>
               {mapCategories(categories)}
             </select>
           </div>
@@ -120,7 +117,7 @@ useEffect(() => {
         <div className='mb-3'>
           <div className='form-check'>
             <label className="form-check-label" htmlFor="active">Show on main page</label>
-            <input className="form-check-input" type="checkbox" {...register("active")} disabled={action === CrudAction.View}/>
+            <input className="form-check-input" type="checkbox" {...register("active")} disabled={action === CrudAction.View} />
           </div>
         </div>
         <Editor

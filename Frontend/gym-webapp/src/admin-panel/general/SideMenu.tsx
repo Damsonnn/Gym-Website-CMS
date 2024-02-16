@@ -16,7 +16,7 @@ const USER_BOOKMARKS: string[][] = [
 export default function SideMenu() {
     const createLinks = (bookmarks: string[][]) => {
         return bookmarks.map(([endpoint, name]) => {
-            return <Link className="list-group-item list-group-item-action" to={endpoint}>{name}</Link>
+            return <Link key={endpoint} className="list-group-item list-group-item-action" to={endpoint}>{name}</Link>
         })
     }
     

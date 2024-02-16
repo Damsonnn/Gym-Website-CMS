@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
@@ -13,7 +13,7 @@ type CategoryDto = {
 }
 
 export default function CategoryView(props: { action: CrudAction }) {
-  const [action, setAction] = useState<CrudAction>(props.action);
+  const action = props.action
   const schema = yup.object().shape({
     name: yup.string().required().min(3).max(50),
     active: yup.boolean().required()
@@ -29,9 +29,7 @@ export default function CategoryView(props: { action: CrudAction }) {
   };
 
   useEffect(() => {
-    if (action != CrudAction.Create) {
-      getOneObject(id, "categories", reset);
-    }
+    if (action !== CrudAction.Create) getOneObject(id, "categories", reset);
   }, []);
 
   return (

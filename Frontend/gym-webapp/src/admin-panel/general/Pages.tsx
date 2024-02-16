@@ -1,4 +1,4 @@
-import { useState, useEffect, Component, ReactComponentElement, FunctionComponent } from 'react'
+import { useState, useEffect, FunctionComponent } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import ListPosts from '../components/post/List'
 import ListBanners from '../components/banner/List'
@@ -52,7 +52,7 @@ export default function Pages() {
 
     const createRoutes = () => {
         return ROUTES.map((route) => {
-            return <Route path={route.endpoint}>
+            return <Route key={route.endpoint} path={route.endpoint}>
                 <Route index={true} element={<route.List />}/>
                 <Route path=':id' element={<route.View action = {CrudAction.View}/>}/>
                 <Route path=':id/edit' element={<route.View action = {CrudAction.Edit} />}/>

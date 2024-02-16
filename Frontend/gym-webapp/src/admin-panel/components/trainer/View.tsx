@@ -1,31 +1,46 @@
 ﻿﻿import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
-import { FormEvent, useState, ChangeEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { Trainer } from './List';
 import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
-import { refreshInput } from '../../../utils/Handlers';
+import * as yup from "yup"
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form'
 
+type TrainerForm = {
+  firstName: string,
+  lastName: string,
+  age: number,
+  facebookLink?: string,
+  twitterLink?: string,
+  instagramLink?: string,
+  active: boolean
+}
 
-export default function TrainerView(props: {action: CrudAction}) {
+export default function TrainerView(props: { action: CrudAction }) {
+  const action = props.action
   const [editorState, setEditorState] = useState<EditorState>();
-  const [action, setAction] = useState<CrudAction>(props.action)
-  const [trainerData, setTrainerData] = useState<Trainer>({
-    id: 0,
-    firstName: "",
-    lastName: "",
-    age: 0,
-    about: "",
-    facebookLink: "",
-    twitterLink: "",
-    instagramLink: "",
-    active: false
-  });
+  const [trainerData, setTrainerData] = useState<Trainer>();
 
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const schema = yup.object().shape({
+    firstName: yup.string().required().max(50),
+    lastName: yup.string().required().max(50),
+    age: yup.number().required().typeError("Must be a number").min(0),
+    facebookLink: yup.string().optional().max(60),
+    twitterLink: yup.string().optional().max(60),
+    instagramLink: yup.string().optional().max(60),
+    active: yup.boolean().required()
+  })
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<TrainerForm>({
+    resolver: yupResolver(schema),
+  });
 
   const setDataHelper = (data: Trainer) => {
     setTrainerData(data);
@@ -34,65 +49,67 @@ export default function TrainerView(props: {action: CrudAction}) {
 
   const onEditorStateChange = (newState: EditorState) => {
     setEditorState(newState);
-    setTrainerData({...trainerData, ["about"]: JSON.stringify(convertToRaw(newState.getCurrentContent()))});
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    refreshInput(event, trainerData, setTrainerData);
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    createOrEditRequest(action, trainerData, id, "trainers", navigate);
+  const onSubmit = (data: TrainerForm) => {
+    if (editorState){
+      const dataToSend = {
+        ...data,
+        about: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+      }
+      createOrEditRequest(action, dataToSend, id, "trainers", navigate);
+    }   
   };
 
   useEffect(() => {
-    getOneObject(id, "trainers", setDataHelper);
+    if (action !== CrudAction.Create) getOneObject(id, "trainers", setDataHelper);
   }, []);
+
+  useEffect(() => {
+    if (trainerData) {
+      reset(trainerData)
+    }
+  }, [trainerData])
 
   return (
     <div className="container border rounded p-4 mt-4">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row mb-3'>
           <div className='form-group col'>
             <label htmlFor="firstName">First name:</label>
-            <input type="text" name="firstName" id="firstName" className='form-control' placeholder='John' onChange={handleInputChange} value={trainerData.firstName} disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.firstName ? "input-invalid" : null}`} {...register("firstName")} placeholder='John' disabled={action === CrudAction.View} />
+            <p className="text-danger">{errors.firstName?.message}</p>
           </div>
           <div className='form-group col'>
             <label htmlFor="lastName">Last name:</label>
-            <input type="text" name="lastName" id="lastName" className='form-control' placeholder='Smith' onChange={handleInputChange} value={trainerData.lastName} disabled={action === CrudAction.View}/>
+            <input type="text" className={`form-control ${errors.lastName ? "input-invalid" : null}`} {...register("lastName")} placeholder='Smith' disabled={action === CrudAction.View} />
+            <p className="text-danger">{errors.lastName?.message}</p>
           </div>
         </div>
-        {/* <div className='row mb-3'>
-          <div className='form-group col'>
-            <label htmlFor="email">E-mail:</label>
-            <input type="email" name="email" id="email" className='form-control' placeholder='E-mail' onChange={handleInputChange} value={trainerData.email} disabled={action === CrudAction.View}/>
-          </div>
-          <div className='form-group col'>
-            <label htmlFor="birthdate">Data urodzenia:</label>
-            <input className="form-control" type="date" name="birthdate" id="birthdate"/>
-          </div>
-        </div> */}
         <div className='form-group mb-3'>
           <label htmlFor="facebookLink">Link to Facebook:</label>
-          <input type="text" name="facebookLink" id="facebookLink" className='form-control' placeholder='facebook.com/user' onChange={handleInputChange} value={trainerData.facebookLink} disabled={action === CrudAction.View}/>
+          <input type="text" className={`form-control ${errors.facebookLink ? "input-invalid" : null}`} {...register("facebookLink")} placeholder='facebook.com/user' disabled={action === CrudAction.View} />
+          <p className="text-danger">{errors.facebookLink?.message}</p>
         </div>
         <div className='form-group mb-3'>
           <label htmlFor="instagramLink">Link to Instagram:</label>
-          <input type="text" name="instagramLink" id="instagramLink" className='form-control' placeholder='instagram.com/user' onChange={handleInputChange} value={trainerData.instagramLink} disabled={action === CrudAction.View}/>
+          <input type="text" className={`form-control ${errors.instagramLink ? "input-invalid" : null}`} {...register("instagramLink")} placeholder='instagram.com/user' disabled={action === CrudAction.View} />
+          <p className="text-danger">{errors.instagramLink?.message}</p>
         </div>
         <div className='form-group mb-3'>
           <label htmlFor="twitterLink">Link to Twitter:</label>
-          <input type="text" name="twitterLink" id="twitterLink" className='form-control' placeholder='twitter.com/user' onChange={handleInputChange} value={trainerData.twitterLink} disabled={action === CrudAction.View}/>
+          <input type="text" className={`form-control ${errors.twitterLink ? "input-invalid" : null}`} {...register("twitterLink")} placeholder='twitter.com/user' disabled={action === CrudAction.View} />
+          <p className="text-danger">{errors.twitterLink?.message}</p>
         </div>
         <div className="row age-row mb-3">
           <div className='form-group col'>
             <label htmlFor="age">Age:</label>
-            <input type="number" name="age" id="age" className='form-control' placeholder='0' step={1} min="0" max={150} onChange={handleInputChange} value={trainerData.age} disabled={action === CrudAction.View}/>
+            <input type="number" className={`form-control ${errors.age ? "input-invalid" : null}`} {...register("age")} placeholder='0' step={1} disabled={action === CrudAction.View} />
+            <p className="text-danger">{errors.age?.message}</p>
           </div>
           <div className='form-check col pt-4'>
             <label className="form-check-label" htmlFor="active">Show on the main page</label>
-            <input className="form-check-input" type="checkbox" name="active" id="active" onChange={handleInputChange} checked={trainerData.active} disabled={action === CrudAction.View}/>
+            <input className="form-check-input" type="checkbox" {...register("active")} disabled={action === CrudAction.View} />
           </div>
         </div>
         <div className='form-group mb-3'>
