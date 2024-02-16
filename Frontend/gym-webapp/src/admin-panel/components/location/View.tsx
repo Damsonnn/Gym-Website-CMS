@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
-import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
+import { createObject, editObject, getOneObject } from '../../../utils/ApiRequests';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
+import { showAlert, AlertType } from '../../../utils/Alerts'; 
 
 type LocationDto = {
   city: string
@@ -13,7 +14,10 @@ type LocationDto = {
   email: string
 }
 
+const ENDPOINT = "locations"
+
 export default function LocationView(props: {action: CrudAction}) {
+  const [alert, setAlert] = useState<AlertType>(AlertType.None)
   const action = props.action
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,21 +29,26 @@ export default function LocationView(props: {action: CrudAction}) {
     email: yup.string().required().email().max(50)
   })
 
-  const {register, handleSubmit, formState: { errors }, reset} = useForm<LocationDto>({
+  const {register, handleSubmit, formState: { errors, submitCount, isValid }, reset} = useForm<LocationDto>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: LocationDto) => {
-    createOrEditRequest(action, data, id, "locations", navigate);
+    if (action === CrudAction.Create) createObject(data, ENDPOINT, navigate, setAlert);
+    else if (id) editObject(data, id, ENDPOINT, setAlert)
   };
 
   useEffect(() => {
-    if (action !== CrudAction.Create) getOneObject(id, "locations", reset);
+    if (action !== CrudAction.Create) getOneObject(id, ENDPOINT, reset);
   }, []);
 
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
+  }, [submitCount]);
 
   return (
     <div className="container border rounded p-4 mt-4">
+      {showAlert(alert, setAlert)}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row'>
           <div className='form-group col'>

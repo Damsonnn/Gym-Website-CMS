@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { Trainer } from './List';
-import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
+import { createObject, editObject, getOneObject } from '../../../utils/ApiRequests';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
+import { showAlert, AlertType } from '../../../utils/Alerts'; 
 
 type TrainerForm = {
   firstName: string,
@@ -20,7 +21,10 @@ type TrainerForm = {
   active: boolean
 }
 
+const ENDPOINT = "trainers"
+
 export default function TrainerView(props: { action: CrudAction }) {
+  const [alert, setAlert] = useState<AlertType>(AlertType.None)
   const action = props.action
   const [editorState, setEditorState] = useState<EditorState>();
   const [trainerData, setTrainerData] = useState<Trainer>();
@@ -38,7 +42,7 @@ export default function TrainerView(props: { action: CrudAction }) {
     active: yup.boolean().required()
   })
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<TrainerForm>({
+  const { register, handleSubmit, formState: { errors, submitCount, isValid }, reset } = useForm<TrainerForm>({
     resolver: yupResolver(schema),
   });
 
@@ -57,12 +61,13 @@ export default function TrainerView(props: { action: CrudAction }) {
         ...data,
         about: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       }
-      createOrEditRequest(action, dataToSend, id, "trainers", navigate);
+      if (action === CrudAction.Create) createObject(dataToSend, ENDPOINT, navigate, setAlert);
+      else if (id) editObject(dataToSend, id, ENDPOINT, setAlert)
     }   
   };
 
   useEffect(() => {
-    if (action !== CrudAction.Create) getOneObject(id, "trainers", setDataHelper);
+    if (action !== CrudAction.Create) getOneObject(id, ENDPOINT, setDataHelper);
   }, []);
 
   useEffect(() => {
@@ -71,8 +76,13 @@ export default function TrainerView(props: { action: CrudAction }) {
     }
   }, [trainerData])
 
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
+  }, [submitCount]);
+
   return (
     <div className="container border rounded p-4 mt-4">
+      {showAlert(alert, setAlert)}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row mb-3'>
           <div className='form-group col'>

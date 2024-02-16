@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
-import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
+import { createObject, editObject, getOneObject } from '../../../utils/ApiRequests';
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { showAlert, AlertType } from '../../../utils/Alerts'; 
 
 
 type CategoryDto = {
@@ -12,7 +13,10 @@ type CategoryDto = {
   active: boolean
 }
 
+const ENDPOINT = "categories"
+
 export default function CategoryView(props: { action: CrudAction }) {
+  const [alert, setAlert] = useState<AlertType>(AlertType.None)
   const action = props.action
   const schema = yup.object().shape({
     name: yup.string().required().min(3).max(50),
@@ -20,20 +24,26 @@ export default function CategoryView(props: { action: CrudAction }) {
   });
   const navigate = useNavigate();
   const { id } = useParams();
-  const {register, handleSubmit, formState: { errors }, reset} = useForm<CategoryDto>({
+  const {register, handleSubmit, formState: { errors, submitCount, isValid }, reset} = useForm<CategoryDto>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: CategoryDto) => {
-    createOrEditRequest(action, data, id, "categories", navigate);
+    if (action === CrudAction.Create) createObject(data, ENDPOINT, navigate, setAlert);
+    else if (id) editObject(data, id, ENDPOINT, setAlert)
   };
 
   useEffect(() => {
-    if (action !== CrudAction.Create) getOneObject(id, "categories", reset);
+    if (action !== CrudAction.Create) getOneObject(id, ENDPOINT, reset);
   }, []);
+
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
+  }, [submitCount]);
 
   return (
     <div className="container border rounded p-4 mt-4">
+      {showAlert(alert, setAlert)}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row'>
           <div className='form-group col'>

@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { Offer } from './List';
-import { createOrEditRequest, getOneObject } from '../../../utils/ApiRequests';
+import { createObject, editObject, getOneObject } from '../../../utils/ApiRequests';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
+import { showAlert, AlertType } from '../../../utils/Alerts'; 
 
 type OfferForm = {
   name: string
@@ -17,7 +18,10 @@ type OfferForm = {
   active: boolean
 }
 
+const ENDPOINT = "offers"
+
 export default function OfferView(props: { action: CrudAction }) {
+  const [alert, setAlert] = useState<AlertType>(AlertType.None)
   const action = props.action
   const [editorState, setEditorState] = useState<EditorState>();
   const [offerData, setOfferData] = useState<Offer>();
@@ -32,7 +36,7 @@ export default function OfferView(props: { action: CrudAction }) {
     active: yup.boolean().required()
   })
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<OfferForm>({
+  const { register, handleSubmit, formState: { errors, submitCount, isValid }, reset } = useForm<OfferForm>({
     resolver: yupResolver(schema),
   });
 
@@ -51,20 +55,26 @@ export default function OfferView(props: { action: CrudAction }) {
         ...data,
         body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       }
-      createOrEditRequest(action, dataToSend, id, "offers", navigate);
+      if (action === CrudAction.Create) createObject(dataToSend, ENDPOINT, navigate, setAlert);
+      else if (id) editObject(dataToSend, id, ENDPOINT, setAlert)
     }
   };
 
   useEffect(() => {
-    if (action !== CrudAction.Create) getOneObject(id, "offers", setDataHelper);
+    if (action !== CrudAction.Create) getOneObject(id, ENDPOINT, setDataHelper);
   }, []);
 
   useEffect(() => {
     if (offerData) reset(offerData)
   }, [offerData])
 
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
+  }, [submitCount]);
+
   return (
     <div className="container border rounded p-4 mt-4">
+      {showAlert(alert, setAlert)}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row mb-3'>
           <div className='form-group col'>

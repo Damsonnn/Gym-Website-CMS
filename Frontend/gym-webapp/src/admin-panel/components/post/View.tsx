@@ -6,10 +6,11 @@ import { useParams, useNavigate } from 'react-router';
 import { CrudAction } from '../../../utils/CrudAction'
 import { Post } from './List';
 import { Category } from "../category/List";
-import { createOrEditRequest, getOneObject, getAllObjects } from '../../../utils/ApiRequests';
+import { createObject, editObject, getOneObject, getAllObjects } from '../../../utils/ApiRequests';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
+import { showAlert, AlertType } from '../../../utils/Alerts';
 
 type PostForm = {
   title: string
@@ -18,7 +19,10 @@ type PostForm = {
   active: boolean
 }
 
+const ENDPOINT = "posts"
+
 export default function PostView(props: { action: CrudAction }) {
+  const [alert, setAlert] = useState<AlertType>(AlertType.None)
   const action = props.action
   const [editorState, setEditorState] = useState<EditorState>();
   const [categories, setCategories] = useState<Array<Category>>([]);
@@ -34,7 +38,7 @@ export default function PostView(props: { action: CrudAction }) {
     active: yup.boolean().required()
   })
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<PostForm>({
+  const { register, handleSubmit, formState: { errors, submitCount, isValid }, reset } = useForm<PostForm>({
     resolver: yupResolver(schema),
   });
 
@@ -69,12 +73,13 @@ export default function PostView(props: { action: CrudAction }) {
         active: data.active,
         body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       }
-      createOrEditRequest(action, dataToSend, id, "posts", navigate);
+      if (action === CrudAction.Create) createObject(dataToSend, ENDPOINT, navigate, setAlert);
+      else if (id) editObject(dataToSend, id, ENDPOINT, setAlert)
     }
   };
 
   useEffect(() => {
-    if (action !== CrudAction.Create) getOneObject(id, "posts", setDataHelper);
+    if (action !== CrudAction.Create) getOneObject(id, ENDPOINT, setDataHelper);
     getAllObjects("categories", setCategories);
   }, []);
 
@@ -89,9 +94,13 @@ export default function PostView(props: { action: CrudAction }) {
     }
   }, [postData])
 
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
+  }, [submitCount]);
 
   return (
     <div className="container border rounded p-4 mt-4">
+      {showAlert(alert, setAlert)}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row mb-3'>
           <div className='form-group col'>
