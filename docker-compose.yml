@@ -22,6 +22,10 @@ services:
       - database-gymcms:/data/postgres
     restart: always 
 
+  frontend:
+    build:  /Frontend/gym-webapp
+    ports:
+      - "3000:3000"
 
 volumes:
   database-gymcms:
