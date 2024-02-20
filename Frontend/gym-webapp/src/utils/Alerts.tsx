@@ -8,6 +8,11 @@ export enum AlertType {
     Failure
 }
 
+export type Alert = {
+    type: AlertType
+    message: string
+}
+
 export const showAlert = (alert: AlertType, setAlert: (data: SetStateAction<any>) => void) => {
     switch (alert) {
         case AlertType.Failure:

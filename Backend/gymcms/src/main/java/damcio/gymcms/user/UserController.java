@@ -6,8 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -39,6 +44,12 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody AddUserDto user){
         User updatedUser = userService.updateUser(user, id);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @PutMapping("password-change")
+    public ResponseEntity<String> putMethodName(@RequestBody ChangePasswordDto changePasswordDto) {
+        userService.changePassword(changePasswordDto);
+        return new ResponseEntity<>("Password changed", HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

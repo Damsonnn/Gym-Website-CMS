@@ -5,7 +5,7 @@ import { createObject, editObject, getOneObject } from "../../../utils/ApiReques
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
-import { showAlert, AlertType } from '../../../utils/Alerts'; 
+import { showAlert, AlertType, AlertData } from '../../../utils/Alerts'; 
 
 type BannerDto = {
   title: string
@@ -16,7 +16,10 @@ type BannerDto = {
 const ENDPOINT = "banners"
 
 export default function BannerView(props: { action: CrudAction }) {
-  const [alert, setAlert] = useState<AlertType>(AlertType.None)
+  const [alert, setAlert] = useState<AlertData>({
+    type: AlertType.None,
+    message: ""
+  })
   const action = props.action
   const navigate = useNavigate();
   const { id } = useParams();

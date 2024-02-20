@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 
 import damcio.gymcms.exception.AllAdminsRemovalException;
 import damcio.gymcms.exception.ResourceNotFoundException;
+import damcio.gymcms.exception.UserAuthenticationFailedException;
 import damcio.gymcms.role.Role;
 import damcio.gymcms.role.RoleEnum;
 import damcio.gymcms.role.RoleRepository;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +71,19 @@ public class UserService {
             existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return userRepository.save(existingUser);
+    }
+
+    public void changePassword(ChangePasswordDto changePasswordDto){
+        Optional<User> optionalUser = userRepository.findById(changePasswordDto.getUserId());
+        if (optionalUser.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find user to change password");
+
+        User user = optionalUser.get();
+        if (user.getPassword() != passwordEncoder.encode(changePasswordDto.getOldPassword()))
+            throw new UserAuthenticationFailedException("Wrong password");
+
+        user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+        userRepository.save(user);
     }
 
     public void deleteUser(Integer id) {
