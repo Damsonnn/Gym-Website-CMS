@@ -25,8 +25,8 @@ public class OpinionController {
 
     @GetMapping("{id}")
     public ResponseEntity<Opinion> getOpinionById(@PathVariable("id") Integer id){
-        Optional<Opinion> opinion = opinionService.getOpinionById(id);
-        return ResponseEntity.of(opinion);
+        Opinion opinion = opinionService.getOpinionById(id);
+        return new ResponseEntity<>(opinion, HttpStatus.OK);
     }
 
     @GetMapping

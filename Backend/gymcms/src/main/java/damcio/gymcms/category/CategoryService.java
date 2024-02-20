@@ -3,6 +3,8 @@ package damcio.gymcms.category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,12 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Optional<Category> getCategoryById(Integer id){
-        return categoryRepository.findById(id);
+    public Category getCategoryById(Integer id){
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isEmpty())
+            throw new ResourceNotFoundException("Category not found");
+
+        return category.get(); 
     }
 
     public List<Category> getAllCategories() {
@@ -28,13 +34,20 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category category){
-        Category exitingCategory = categoryRepository.findById(category.getId()).get();
+        Optional<Category> optionalExitingCategory = categoryRepository.findById(category.getId());
+        if (optionalExitingCategory.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find category to update");
+        
+        Category exitingCategory = optionalExitingCategory.get();
         exitingCategory.setActive(category.getActive());
         exitingCategory.setName(category.getName());
         return categoryRepository.save(exitingCategory);
     }
 
     public void deleteCategory(Integer id){
+        if (categoryRepository.existsById(id))
+            throw new ResourceNotFoundException("Couldn't find category to delete");
+            
         categoryRepository.deleteById(id);
     }
 }

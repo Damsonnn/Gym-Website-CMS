@@ -3,6 +3,8 @@ package damcio.gymcms.opinion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,12 @@ public class OpinionService {
         return opinionRepository.save(opinion);
     }
 
-    public Optional<Opinion> getOpinionById(Integer id){
-        return opinionRepository.findById(id);
+    public Opinion getOpinionById(Integer id){
+        Optional<Opinion> opinion = opinionRepository.findById(id);
+        if (opinion.isEmpty()) 
+            throw new ResourceNotFoundException("Opinion not found");
+
+        return opinion.get();
     }
 
     public List<Opinion> getAllOpinions() {
@@ -28,7 +34,11 @@ public class OpinionService {
     }
 
     public Opinion updateOpinion(Opinion opinion){
-        Opinion existingOpinion = opinionRepository.findById(opinion.getId()).get();
+        Optional<Opinion> optionalExistingOpinion = opinionRepository.findById(opinion.getId());
+        if (optionalExistingOpinion.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find opinion to update");
+        
+        Opinion existingOpinion = optionalExistingOpinion.get();
         existingOpinion.setActive(opinion.getActive());
         existingOpinion.setAuthor(opinion.getAuthor());
         existingOpinion.setBody(opinion.getBody());
@@ -36,6 +46,9 @@ public class OpinionService {
     }
 
     public void deleteOpinion(Integer id){
+        if (!opinionRepository.existsById(id))
+            throw new ResourceNotFoundException("Couldn't find opinion to delete");
+            
         opinionRepository.deleteById(id);
     }
 }

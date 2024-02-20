@@ -26,8 +26,8 @@ public class TrainerController {
     @PreAuthorize("permitAll()")
     @GetMapping("{id}")
     public ResponseEntity<Trainer> getTrainerById(@PathVariable("id") Integer id){
-        Optional<Trainer> trainer = trainerService.getTrainerById(id);
-        return ResponseEntity.of(trainer);
+        Trainer trainer = trainerService.getTrainerById(id);
+        return new ResponseEntity<>(trainer, HttpStatus.OK);
     }
 
     @GetMapping

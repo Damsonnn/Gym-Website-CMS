@@ -25,8 +25,8 @@ public class OfferController {
 
     @GetMapping("{id}")
     public ResponseEntity<Offer> getOfferById(@PathVariable("id") Integer id){
-        Optional<Offer> offer = offerService.getOfferById(id);
-        return ResponseEntity.of(offer);
+        Offer offer = offerService.getOfferById(id);
+        return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
     @GetMapping

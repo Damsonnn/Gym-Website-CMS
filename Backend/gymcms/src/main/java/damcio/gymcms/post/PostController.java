@@ -26,8 +26,8 @@ public class PostController {
     @PreAuthorize("permitAll()")
     @GetMapping("{id}")
     public ResponseEntity<Post> getPostById(@PathVariable("id") Integer id){
-        Optional<Post> post = postService.getPostById(id);
-        return ResponseEntity.of(post);
+        Post post = postService.getPostById(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @PreAuthorize("permitAll()")

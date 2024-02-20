@@ -3,6 +3,8 @@ package damcio.gymcms.trainer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,12 @@ public class TrainerService {
         return trainerRepository.save(trainer);
     }
 
-    public Optional<Trainer> getTrainerById(Integer id){
-        return trainerRepository.findById(id);
+    public Trainer getTrainerById(Integer id){
+        Optional<Trainer> trainer = trainerRepository.findById(id);
+        if (trainer.isEmpty())
+            throw new ResourceNotFoundException("Trainer not found");
+
+        return trainer.get(); 
     }
 
     public List<Trainer> getAllTrainers(){
@@ -28,7 +34,11 @@ public class TrainerService {
     }
 
     public Trainer updateTrainer(Trainer trainer){
-        Trainer existingTrainer = trainerRepository.findById(trainer.getId()).get();
+        Optional<Trainer> optionalExistingTrainer = trainerRepository.findById(trainer.getId());
+        if (optionalExistingTrainer.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find trainer to update");
+        
+        Trainer existingTrainer = optionalExistingTrainer.get();
         existingTrainer.setAbout(trainer.getAbout());
         existingTrainer.setAge(trainer.getAge());
         existingTrainer.setActive(trainer.getActive());
@@ -41,6 +51,9 @@ public class TrainerService {
     }
 
     public void deleteTrainer(Integer id){
+        if (trainerRepository.existsById(id))
+            throw new ResourceNotFoundException("Couldn't find trainer to delete");
+            
         trainerRepository.deleteById(id);
     }
 }

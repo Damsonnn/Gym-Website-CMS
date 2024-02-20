@@ -26,8 +26,8 @@ public class CategoryController {
 
     @GetMapping("{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable("id") Integer id){
-        Optional<Category> category = categoryService.getCategoryById(id);
-        return ResponseEntity.of(category);
+        Category category = categoryService.getCategoryById(id);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @GetMapping

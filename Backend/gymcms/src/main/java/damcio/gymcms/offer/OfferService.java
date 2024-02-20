@@ -3,6 +3,8 @@ package damcio.gymcms.offer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,11 @@ public class OfferService {
         return offerRepository.save(offer);
     }
 
-    public Optional<Offer> getOfferById(Integer id){
-        return offerRepository.findById(id);
+    public Offer getOfferById(Integer id){
+        Optional<Offer> offer = offerRepository.findById(id);
+        if (offer.isEmpty()) 
+            throw new ResourceNotFoundException("Offer not found");
+        return offer.get();
     }
 
     public List<Offer> getAllOffers(){
@@ -28,7 +33,11 @@ public class OfferService {
     }
 
     public Offer updateOffer(Offer offer){
-        Offer existingOffer = offerRepository.findById(offer.getId()).get();
+        Optional<Offer> optionalExistingOffer = offerRepository.findById(offer.getId());
+        if (optionalExistingOffer.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find offer to update");
+        
+        Offer existingOffer = optionalExistingOffer.get();
         existingOffer.setActive(offer.getActive());
         existingOffer.setName(offer.getName());
         existingOffer.setBody(offer.getBody());
@@ -38,6 +47,9 @@ public class OfferService {
     }
 
     public void deleteOffer(Integer id){
+        if (!offerRepository.existsById(id))
+            throw new ResourceNotFoundException("Couldn't find offer to delete");
+
         offerRepository.deleteById(id);
     }
 }

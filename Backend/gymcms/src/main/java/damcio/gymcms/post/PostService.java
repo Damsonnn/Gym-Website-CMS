@@ -3,6 +3,8 @@ package damcio.gymcms.post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,12 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Optional<Post> getPostById(Integer id) {
-        return postRepository.findById(id);
+    public Post getPostById(Integer id) {
+        Optional<Post> post = postRepository.findById(id);
+        if (post.isEmpty())
+            throw new ResourceNotFoundException("Post not found");
+
+        return post.get();
     }
 
     public List<Post> getAllPosts() {
@@ -36,7 +42,11 @@ public class PostService {
     }
 
     public Post updatePost(Post post){
-        Post existingPost = postRepository.findById(post.getId()).get();
+        Optional<Post> optionalExistingPost = postRepository.findById(post.getId());
+        if (optionalExistingPost.isEmpty())
+            throw new ResourceNotFoundException("Couldn't find post to update");
+
+        Post existingPost = optionalExistingPost.get();
         existingPost.setActive(post.getActive());
         existingPost.setBody(post.getBody());
         existingPost.setCategory(post.getCategory());
@@ -46,6 +56,9 @@ public class PostService {
     }
 
     public void deletePost(Integer id){
+        if (!postRepository.existsById(id))
+            throw new ResourceNotFoundException("Couldn't find post to delete");
+
         postRepository.deleteById(id);
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import damcio.gymcms.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +27,8 @@ public class LocationController {
 
     @GetMapping("{id}")
     public ResponseEntity<Location> getLocationById(@PathVariable("id") Integer id){
-        Optional<Location> location = locationService.getLocationById(id);
-        return ResponseEntity.of(location);
+        Location location = locationService.getLocationById(id);
+        return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
     @PreAuthorize("permitAll()")
@@ -45,7 +47,7 @@ public class LocationController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteLocation(@PathVariable("id") Integer id){
-        locationService.deleteLocation(id);  // Changed method name
+        locationService.deleteLocation(id);
         return new ResponseEntity<>("Location deleted", HttpStatus.OK);
     }
 }

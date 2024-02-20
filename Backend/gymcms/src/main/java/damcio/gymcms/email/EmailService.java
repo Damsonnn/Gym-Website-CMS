@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import damcio.gymcms.exception.MailFailedException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,19 @@ public class EmailService {
         sendEmail(message.getSendTo(), message.getSubject(), message.getMessage(), message.getSenderEmail(), message.getSenderName());
     }
 
-    private void sendEmail(String email, String subject, String content, String clientEmail, String clientName)throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
+    private void sendEmail(String email, String subject, String content, String clientEmail, String clientName) {
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom(clientEmail, clientName);
-        helper.setTo(email);
-        helper.setSubject("[Formularz] " + subject);
-        helper.setText("[" + clientEmail + "]\n" + content);
-        
-        emailSender.send(message);
+            helper.setFrom(clientEmail, clientName);
+            helper.setTo(email);
+            helper.setSubject("[Formularz] " + subject);
+            helper.setText("[" + clientEmail + "]\n" + content);
+            
+            emailSender.send(message);
+        } catch (UnsupportedEncodingException | MessagingException ex){
+            throw new MailFailedException("Couldn't send mail\n" + ex.getMessage() );
+        }
     }
 }

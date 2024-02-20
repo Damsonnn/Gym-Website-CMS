@@ -25,8 +25,8 @@ public class BannerController {
 
     @GetMapping("{id}")
     public ResponseEntity<Banner> getBannerById(@PathVariable("id") Integer id){
-        Optional<Banner> banner = bannerService.getBannerById(id);
-        return ResponseEntity.of(banner);
+        Banner banner = bannerService.getBannerById(id);
+        return new ResponseEntity<>(banner, HttpStatus.OK);
     }
 
     @GetMapping
