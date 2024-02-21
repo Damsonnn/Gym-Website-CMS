@@ -1,47 +1,64 @@
-﻿import axios from "axios";
+import axios from "axios";
 import { NavigateFunction } from "react-router";
 import { config } from "./JWTConfig";
 import { SetStateAction } from "react";
-import { AlertType } from "./Alerts";
+import { AlertType } from "./ActionAlert";
 
-export const createObject = async (objectData: Object, endpoint: string, navigate: NavigateFunction, setAlert: (data: SetStateAction<any>) => void) => {
-    try {
-        const response = await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, config);
+export const createObject = async (objectData: Object, endpoint: string, navigate: NavigateFunction, setAlert: (data: SetStateAction<any>) => void | null) => {
+    await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, config).then(response => {
 
         if (response.status === 201) {
             console.log('Succesfully created');
             console.log(response.data);
             navigate(`/manage/${endpoint}`);
-        } else {
-            console.error('Could not create');
-            console.log(response);
-            setAlert(AlertType.Failure);
         }
-    } catch (error) {
-        console.error('Error during creating:', error);
-        setAlert(AlertType.Failure);
-    }
+     }).catch(error => {
+        if (error.response) {
+            console.error('Could not create');
+            console.log(error.response);
+            setAlert({
+                type: AlertType.Danger,
+                title: "Create request failed",
+                message: error.response.data
+            });
+        } else {
+            console.error('Error during creating:', error);
+            setAlert({
+                type: AlertType.Danger,
+                title: "Something went wrong",
+                message: "We couldn't send or receive this request"
+            });
+        }
+    })
 }
 
 
 export const editObject = async (objectData: Object, id: string, endpoint: string, setAlert: (data: SetStateAction<any>) => void) => {
-    try {
-        const response = await axios.put(`http://localhost:8080/api/${endpoint}/${id}`, objectData, config);
-
+    await axios.put(`http://localhost:8080/api/${endpoint}/${id}`, objectData, config).then(response => {
         if (response.status === 200) {
-            console.log('Succesfully updated');
-            console.log(response.data);
-            setAlert(AlertType.Success);
-        } else {
-            console.error('Could not update data');
-            setAlert(AlertType.Failure);
-        }
-    } catch (error) {
-        console.error('Error during updating data:', error);
-        setAlert(AlertType.Failure);
-    }
-
-}
+            setAlert({
+                type: AlertType.Success,
+                title: "Success!",
+                message: "We updated this successfully"
+            });
+        }}).catch(error => {
+            if (error.response) {
+                console.error('Could not update data');
+                setAlert({
+                    type: AlertType.Danger,
+                    title: "Update request failed",
+                    message: error.response.data
+                });
+            }else {
+                console.error('Error during updating data:', error);
+                setAlert({
+                    type: AlertType.Danger,
+                    title: "Something went wrong",
+                    message: "We couldn't send or receive this request"
+                });
+            }
+        });
+} 
 
 export const getOneObject = async (id: string | undefined, endpoint: string, setData: (data: SetStateAction<any>) => void) => {
     try {

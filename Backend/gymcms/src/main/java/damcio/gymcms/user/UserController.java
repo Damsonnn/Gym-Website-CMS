@@ -1,14 +1,14 @@
 package damcio.gymcms.user;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +46,10 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @PutMapping("password-change")
-    public ResponseEntity<String> putMethodName(@RequestBody ChangePasswordDto changePasswordDto) {
-        userService.changePassword(changePasswordDto);
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/password-change")
+    public ResponseEntity<String> changePassword(Authentication authentication, @RequestBody ChangePasswordDto changePasswordDto) {
+        userService.changePassword(authentication, changePasswordDto);
         return new ResponseEntity<>("Password changed", HttpStatus.OK);
     }
 

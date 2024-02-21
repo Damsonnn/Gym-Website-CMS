@@ -1,6 +1,8 @@
 package damcio.gymcms.user;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +13,8 @@ import damcio.gymcms.role.Role;
 import damcio.gymcms.role.RoleEnum;
 import damcio.gymcms.role.RoleRepository;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-
-import javax.swing.text.html.Option;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +38,14 @@ public class UserService {
 
     public User getUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty())
+            throw new ResourceNotFoundException("User not found");
+
+        return user.get();
+    }
+
+    public User getUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty())
             throw new ResourceNotFoundException("User not found");
 
@@ -73,12 +80,8 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void changePassword(ChangePasswordDto changePasswordDto){
-        Optional<User> optionalUser = userRepository.findById(changePasswordDto.getUserId());
-        if (optionalUser.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find user to change password");
-
-        User user = optionalUser.get();
+    public void changePassword(Authentication authentication, ChangePasswordDto changePasswordDto){
+        User user = getUserByUsername(authentication.getUsername());
         if (user.getPassword() != passwordEncoder.encode(changePasswordDto.getOldPassword()))
             throw new UserAuthenticationFailedException("Wrong password");
 

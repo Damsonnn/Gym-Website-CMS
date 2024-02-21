@@ -1,5 +1,5 @@
 import { useState, useEffect, FunctionComponent } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import ListPosts from '../components/post/List'
 import ListBanners from '../components/banner/List'
 import ListLocations from '../components/location/List'
@@ -18,6 +18,7 @@ import OfferView from '../components/offer/View'
 import OpinionView from '../components/opinion/View'
 import TrainerView from '../components/trainer/View'
 import CategoryView from '../components/category/View'
+import PasswordChange from './PasswordChange'
 
 interface ViewProps {
     action: CrudAction
@@ -50,7 +51,7 @@ export default function Pages() {
         navigate("/login");
     }
 
-    const createRoutes = () => {
+    const createCRUDRoutes = () => {
         return ROUTES.map((route) => {
             return <Route key={route.endpoint} path={route.endpoint}>
                 <Route index={true} element={<route.List />}/>
@@ -73,6 +74,7 @@ export default function Pages() {
                 <button className='navbar-toggler border rounded p-1 mx-3' onClick={() => setShowMenu(!showMenu)}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
+                <Link className='btn btn-primary mx-3' to={"password-change"}>Change password</Link>
                 <button className='btn btn-primary mx-3' onClick={handleLogout}>Logout</button>
             </nav>
             <div>
@@ -82,7 +84,8 @@ export default function Pages() {
                     </div>
                     <div className='col-10'>
                         <Routes>
-                            {createRoutes()}
+                            {createCRUDRoutes()}
+                            <Route path='password-change' element={<PasswordChange />}/>
                         </Routes>
                     </div>
                 </div>

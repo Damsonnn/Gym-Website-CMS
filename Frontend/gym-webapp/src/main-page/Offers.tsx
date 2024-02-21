@@ -6,51 +6,6 @@ import OfferComponent from "./list-item-components/Offer"
 export default function Offers() {
     const [offers, setOffers] = useState<Array<Offer>>([])
 
-    const getOffers = () => {
-        getAllObjectsNoToken("offers/active", setOffers);
-        // const tempOffers = []
-        // tempOffers.push({id: 1,
-        //     name: "Oferta 1",
-        //     price: 99.99,
-        //     discount: 0,
-        //     body: `Super oferta dla ludzi</br>Zawiera np.
-        //     <ul>
-        //     <li>Pierwszą rzecz</li>
-        //     <li>Drugą rzecz</li>
-        //     <li><h>Trzecią rzecz</h></li>
-        //     <li>Czwartą rzecz</li>
-        //     </ul>`,
-        //     active: true
-        // })
-        // tempOffers.push({id: 2,
-        //     name: "Oferta 2",
-        //     price: 50,
-        //     discount: 0,
-        //     body: `Super oferta dla ludzi</br>Zawiera np.
-        //     <ul>
-        //     <li>Pierwszą rzecz</li>
-        //     <li>Drugą rzecz</li>
-        //     <li><h>Trzecią rzecz</h></li>
-        //     <li>Czwartą rzecz</li>
-        //     </ul>`,
-        //     active: true
-        // })
-        // tempOffers.push({id: 3,
-        //     name: "Oferta 3",
-        //     price: 64.99,
-        //     discount: 25,
-        //     body: `Super oferta dla ludzi</br>Zawiera np.
-        //     <ul>
-        //     <li>Pierwszą rzecz</li>
-        //     <li>Drugą rzecz</li>
-        //     <li><h>Trzecią rzecz</h></li>
-        //     <li>Czwartą rzecz</li>
-        //     </ul>`,
-        //     active: true
-        // })
-        // setOffers(tempOffers)
-    }
-
     const showOffers = () => {
         if (offers.length > 0) {
             return offers.map(offer => {
@@ -61,7 +16,7 @@ export default function Offers() {
     }
 
     useEffect(() => {
-        getOffers();
+        getAllObjectsNoToken("offers/active", setOffers);
     },[])
 
     return (

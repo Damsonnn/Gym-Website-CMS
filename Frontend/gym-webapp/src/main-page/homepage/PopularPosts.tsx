@@ -4,28 +4,28 @@ import { getAllObjectsNoToken } from "../../utils/ApiRequests";
 import PostComponent from "../list-item-components/Post";
 
 export default function PopularPosts() {
-  const [posts, setPosts] = useState<Array<Post>>([]);
+    const [posts, setPosts] = useState<Array<Post>>([]);
 
-  const getPosts = () => {
-    getAllObjectsNoToken("posts/active", setPosts);
-  }
-
-  const showPosts = (posts: Array<Post>) => {
-    if (posts.length > 0) {
-        return posts.map(post => {
-            return <PostComponent key={post.id} id={post.id} title={post.title} author={post.author} category={post.category.name}/>
-        })
+    const getPosts = () => {
+        getAllObjectsNoToken("posts/active", setPosts);
     }
-    return <h2 className="mt-3">No posts to show</h2>
-  } 
 
-  useEffect(() => {
-    getPosts();
-  },[]);
+    const showPosts = (posts: Array<Post>) => {
+        if (posts.length > 0) {
+            return posts.map(post => {
+                return <PostComponent key={post.id} id={post.id} title={post.title} author={post.author} category={post.category.name} />
+            })
+        }
+        return <h2 className="mt-3">No posts to show</h2>
+    }
 
-  return (
-    <div className="popular-container">
-        {showPosts(posts)}
-    </div>
-  )
+    useEffect(() => {
+        getPosts();
+    }, []);
+
+    return (
+        <div className="popular-container">
+            {showPosts(posts)}
+        </div>
+    )
 }

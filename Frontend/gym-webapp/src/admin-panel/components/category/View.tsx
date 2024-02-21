@@ -5,7 +5,7 @@ import { createObject, editObject, getOneObject } from '../../../utils/ApiReques
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { showAlert, AlertType } from '../../../utils/Alerts'; 
+import ActionAlert, { AlertType, AlertData } from '../../../utils/ActionAlert'; 
 
 
 type CategoryDto = {
@@ -16,7 +16,7 @@ type CategoryDto = {
 const ENDPOINT = "categories"
 
 export default function CategoryView(props: { action: CrudAction }) {
-  const [alert, setAlert] = useState<AlertType>(AlertType.None)
+  const [alert, setAlert] = useState<AlertData | null>();
   const action = props.action
   const schema = yup.object().shape({
     name: yup.string().required().min(3).max(50),
@@ -38,12 +38,16 @@ export default function CategoryView(props: { action: CrudAction }) {
   }, []);
 
   useEffect(() => {
-    if (submitCount > 0 && !isValid) setAlert(AlertType.Incomplete);
-  }, [submitCount]);
+    if (submitCount > 0 && !isValid) setAlert({
+        type: AlertType.Danger,
+        title: "Form error",
+        message: "Please correct all errors in the form"
+    });
+}, [submitCount]);
 
   return (
     <div className="container border rounded p-4 mt-4">
-      {showAlert(alert, setAlert)}
+      {alert ? <ActionAlert data={alert} /> : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='row'>
           <div className='form-group col'>
