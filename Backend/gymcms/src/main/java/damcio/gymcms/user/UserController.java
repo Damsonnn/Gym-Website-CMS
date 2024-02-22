@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,8 +49,8 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/password-change")
-    public ResponseEntity<String> changePassword(Authentication authentication, @RequestBody ChangePasswordDto changePasswordDto) {
-        userService.changePassword(authentication, changePasswordDto);
+    public ResponseEntity<String> changePassword(Principal principal, @RequestBody ChangePasswordDto changePasswordDto) {
+        userService.changePassword(principal, changePasswordDto);
         return new ResponseEntity<>("Password changed", HttpStatus.OK);
     }
 

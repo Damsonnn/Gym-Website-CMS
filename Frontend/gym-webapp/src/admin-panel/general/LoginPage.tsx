@@ -32,7 +32,6 @@ export default function LoginPage() {
                 navigate("/manage");
             }}).catch(error => {
                 console.error('Error during login:', error);
-                console.error('Error during creating:', error);
                 if (error.response){
                     setAlert({
                         type: AlertType.Danger,

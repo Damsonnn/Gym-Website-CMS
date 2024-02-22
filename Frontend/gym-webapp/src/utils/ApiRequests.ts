@@ -19,7 +19,7 @@ export const createObject = async (objectData: Object, endpoint: string, navigat
             setAlert({
                 type: AlertType.Danger,
                 title: "Create request failed",
-                message: error.response.data
+                message: error.response.data.message
             });
         } else {
             console.error('Error during creating:', error);
@@ -47,7 +47,7 @@ export const editObject = async (objectData: Object, id: string, endpoint: strin
                 setAlert({
                     type: AlertType.Danger,
                     title: "Update request failed",
-                    message: error.response.data
+                    message: error.response.data.message
                 });
             }else {
                 console.error('Error during updating data:', error);

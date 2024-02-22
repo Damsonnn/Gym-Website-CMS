@@ -28,6 +28,8 @@ spring:
     username: email.service1605@gmail.com
     password: pkkatnpnjczzbdws
     properties:
+      sender:
+        name: GymCms
       mail:
         smtp:
           auth: true

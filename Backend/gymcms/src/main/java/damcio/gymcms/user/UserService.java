@@ -2,19 +2,18 @@ package damcio.gymcms.user;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import damcio.gymcms.exception.AllAdminsRemovalException;
 import damcio.gymcms.exception.ResourceNotFoundException;
-import damcio.gymcms.exception.UserAuthenticationFailedException;
 import damcio.gymcms.role.Role;
 import damcio.gymcms.role.RoleEnum;
 import damcio.gymcms.role.RoleRepository;
+import damcio.gymcms.security.AuthenticationService;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,34 +21,28 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final AuthenticationService authenticationService;
 
     public User createUser(AddUserDto user) {
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<Role> role = roleRepository.findById(user.getRoleId());
-        if (role.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find user role");
+        Role role = roleRepository.findById(user.getRoleId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user role"));
 
-        newUser.setRole(role.get());
+        newUser.setRole(role);
         return userRepository.save(newUser);
     }
 
     public User getUserById(Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty())
-            throw new ResourceNotFoundException("User not found");
-
-        return user.get();
+        return userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public User getUserByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty())
-            throw new ResourceNotFoundException("User not found");
-
-        return user.get();
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public List<User> getAllUsers() {
@@ -57,18 +50,14 @@ public class UserService {
     }
 
     public User updateUser(AddUserDto user, Integer id) {
-        Optional<User> optionalExistingUser = userRepository.findById(id);
-        if (optionalExistingUser.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find user to update");
+        User existingUser = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user to update"));
 
-        User existingUser = optionalExistingUser.get();
-
-        Optional<Role> newRole = roleRepository.findById(user.getRoleId());
-        if (newRole.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find user role");
+        Role newRole = roleRepository.findById(user.getRoleId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user role"));
 
         Role oldRole = existingUser.getRole();
-        if (oldRole.getName() == RoleEnum.ADMIN && newRole.get().getName() == RoleEnum.USER
+        if (oldRole.getName() == RoleEnum.ADMIN && newRole.getName() == RoleEnum.USER
                 && userRepository.findByRole(oldRole).size() < 2)
             throw new AllAdminsRemovalException("You can't change last admin to normal user");
 
@@ -80,22 +69,19 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void changePassword(Authentication authentication, ChangePasswordDto changePasswordDto){
-        User user = getUserByUsername(authentication.getUsername());
-        if (user.getPassword() != passwordEncoder.encode(changePasswordDto.getOldPassword()))
-            throw new UserAuthenticationFailedException("Wrong password");
-
+    public void changePassword(Principal principal, ChangePasswordDto changePasswordDto){
+        LoginUserDto loginData = new LoginUserDto(principal.getName(), changePasswordDto.getOldPassword());
+        User user = authenticationService.authenticate(loginData);
         user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
         userRepository.save(user);
     }
 
     public void deleteUser(Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find user to delete");
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find user to delete"));
 
-        if (user.get().getRole().getName() == RoleEnum.ADMIN
-                && userRepository.findByRole(user.get().getRole()).size() < 2)
+        if (user.getRole().getName() == RoleEnum.ADMIN
+                && userRepository.findByRole(user.getRole()).size() < 2)
             throw new AllAdminsRemovalException("Can't delete last admin user");
 
         userRepository.deleteById(id);

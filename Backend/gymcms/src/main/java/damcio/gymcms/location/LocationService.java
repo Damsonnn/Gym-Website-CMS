@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +16,8 @@ public class LocationService {
     }
 
     public Location getLocationById(Integer id) {
-        Optional<Location> location = locationRepository.findById(id);
-        if (location.isEmpty())
-            throw new ResourceNotFoundException("Location not found");
-
-        return location.get();
+        return locationRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
     }
 
     public List<Location> getAllLocation() {
@@ -29,11 +25,9 @@ public class LocationService {
     }
 
     public Location updateLocation(Location location) {
-        Optional<Location> optionalExistingLocation = locationRepository.findById(location.getId());
-        if (optionalExistingLocation.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find location to update");
+        Location existingLocation = locationRepository.findById(location.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find location to update"));
 
-        Location existingLocation = optionalExistingLocation.get();
         existingLocation.setCity(location.getCity());
         existingLocation.setAddress(location.getAddress());
         existingLocation.setPhoneNumber(location.getPhoneNumber());

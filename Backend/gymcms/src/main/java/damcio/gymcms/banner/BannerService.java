@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import damcio.gymcms.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +17,8 @@ public class BannerService {
     }
 
     public Banner getBannerById(Integer id){
-        Optional<Banner> banner = bannerRepository.findById(id);
-        if (banner.isEmpty())
-            throw new ResourceNotFoundException("Banner not found");
-        
-        return banner.get();
+        return bannerRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Banner not found"));
     }
 
     public List<Banner> getAllBanners(){
@@ -34,11 +30,9 @@ public class BannerService {
     }
 
     public Banner updateBanner(Banner banner){
-        Optional<Banner> optionalExistingBanner = bannerRepository.findById(banner.getId());
-        if (optionalExistingBanner.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find banner to update");
+        Banner existingBanner = bannerRepository.findById(banner.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find banner to update"));
         
-        Banner existingBanner = optionalExistingBanner.get();
         existingBanner.setActive(banner.getActive());
         existingBanner.setBody(banner.getBody());
         existingBanner.setTitle(banner.getTitle());

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import damcio.gymcms.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,10 +17,8 @@ public class OfferService {
     }
 
     public Offer getOfferById(Integer id){
-        Optional<Offer> offer = offerRepository.findById(id);
-        if (offer.isEmpty()) 
-            throw new ResourceNotFoundException("Offer not found");
-        return offer.get();
+        return offerRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Offer not found"));
     }
 
     public List<Offer> getAllOffers(){
@@ -33,11 +30,9 @@ public class OfferService {
     }
 
     public Offer updateOffer(Offer offer){
-        Optional<Offer> optionalExistingOffer = offerRepository.findById(offer.getId());
-        if (optionalExistingOffer.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find offer to update");
+        Offer existingOffer = offerRepository.findById(offer.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find offer to update"));
         
-        Offer existingOffer = optionalExistingOffer.get();
         existingOffer.setActive(offer.getActive());
         existingOffer.setName(offer.getName());
         existingOffer.setBody(offer.getBody());

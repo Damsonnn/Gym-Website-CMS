@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import damcio.gymcms.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +17,8 @@ public class TrainerService {
     }
 
     public Trainer getTrainerById(Integer id){
-        Optional<Trainer> trainer = trainerRepository.findById(id);
-        if (trainer.isEmpty())
-            throw new ResourceNotFoundException("Trainer not found");
-
-        return trainer.get(); 
+        return trainerRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Trainer not found")); 
     }
 
     public List<Trainer> getAllTrainers(){
@@ -34,11 +30,9 @@ public class TrainerService {
     }
 
     public Trainer updateTrainer(Trainer trainer){
-        Optional<Trainer> optionalExistingTrainer = trainerRepository.findById(trainer.getId());
-        if (optionalExistingTrainer.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find trainer to update");
+        Trainer existingTrainer = trainerRepository.findById(trainer.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find trainer to update"));
         
-        Trainer existingTrainer = optionalExistingTrainer.get();
         existingTrainer.setAbout(trainer.getAbout());
         existingTrainer.setAge(trainer.getAge());
         existingTrainer.setActive(trainer.getActive());

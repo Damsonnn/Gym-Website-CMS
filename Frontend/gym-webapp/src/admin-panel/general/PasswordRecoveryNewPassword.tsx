@@ -5,41 +5,42 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import ActionAlert, { AlertType, AlertData } from "../../utils/ActionAlert";
 import { config } from "../../utils/JWTConfig";
-
-type PasswordChangeDto = {
-    oldPassword: string
-    newPassword: string
-}
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 type PasswordChangeForm = {
-    oldPassword: string
-    newPassword: string
+    password: string
     repeatPassword: string
 }
 
-export default function PasswordChange() {
+type PasswordResetDto = {
+    token: string
+    password: string
+}
+
+export default function PasswordRecoveryNewPassword() {
     const [alert, setAlert] = useState<AlertData | null>();
     const schema = yup.object().shape({
-        oldPassword: yup.string().required(),
-        newPassword: yup.string().required(),
-        repeatPassword: yup.string().required().oneOf([yup.ref("newPassword")], "Passwords does not match")
+        password: yup.string().required(),
+        repeatPassword: yup.string().required().oneOf([yup.ref("password")], "Passwords does not match")
     });
     const { register, handleSubmit, formState: { errors }, reset } = useForm<PasswordChangeForm>({
         resolver: yupResolver(schema)
     });
+    const { token } = useParams();
 
     const onSubmit = async (data: PasswordChangeForm) => {
-        const dataToSend: PasswordChangeDto = {
-            oldPassword: data.oldPassword,
-            newPassword: data.newPassword
-        };
-        await axios.put('http://localhost:8080/api/users/password-change', dataToSend, config).then(response => {
+        const dataToSend = {
+            token: token,
+            password: data.password
+        } as PasswordResetDto
+        await axios.put('http://localhost:8080/api/auth/reset-password', dataToSend, config).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setAlert({
                     type: AlertType.Success,
                     title: "Success",
-                    message: "Password changed successfully"
+                    message: "PasswordChangedSuccessfully"
                 });
                 reset();
             }}).catch(error => {
@@ -66,18 +67,16 @@ export default function PasswordChange() {
             {alert ? <ActionAlert data={alert} /> : null}
             <div className='border rounded'>
                 <form className='p-5' onSubmit={handleSubmit(onSubmit)}>
-                    <label htmlFor="oldPassword">Password:</label>
-                    <input type="password" className={`form-control ${errors.oldPassword ? "input-invalid" : null}`} placeholder='Old password' {...register("oldPassword")} />
-                    <p className="text-danger">{errors.oldPassword?.message}</p>
                     <label htmlFor="password">New password:</label>
-                    <input type="password" className={`form-control ${errors.newPassword ? "input-invalid" : null}`} placeholder='New password' {...register("newPassword")} />
-                    <p className="text-danger">{errors.newPassword?.message}</p>
+                    <input type="password" className={`form-control ${errors.password ? "input-invalid" : null}`} placeholder='New password' {...register("password")} />
+                    <p className="text-danger">{errors.password?.message}</p>
                     <label htmlFor="password">Repeat new password:</label>
                     <input type="password" className={`form-control ${errors.repeatPassword ? "input-invalid" : null}`} placeholder='Repeat new password' {...register("repeatPassword")} />
                     <p className="text-danger">{errors.repeatPassword?.message}</p>
-                    <input type="submit" value="Save changes" className='btn btn-primary' />
+                    <input type="submit" value="Save new password" className='btn btn-primary' />
                 </form>
             </div>
+            <Link to={"/login"}>Get back to log in page</Link>
         </div>
     )
 }

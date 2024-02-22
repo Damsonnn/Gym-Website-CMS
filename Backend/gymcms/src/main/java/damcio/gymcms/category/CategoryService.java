@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import damcio.gymcms.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +17,8 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Integer id){
-        Optional<Category> category = categoryRepository.findById(id);
-        if (category.isEmpty())
-            throw new ResourceNotFoundException("Category not found");
-
-        return category.get(); 
+        return categoryRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
     }
 
     public List<Category> getAllCategories() {
@@ -34,11 +30,9 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category category){
-        Optional<Category> optionalExitingCategory = categoryRepository.findById(category.getId());
-        if (optionalExitingCategory.isEmpty())
-            throw new ResourceNotFoundException("Couldn't find category to update");
-        
-        Category exitingCategory = optionalExitingCategory.get();
+        Category exitingCategory = categoryRepository.findById(category.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find category to update"));
+
         exitingCategory.setActive(category.getActive());
         exitingCategory.setName(category.getName());
         return categoryRepository.save(exitingCategory);
