@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ActionAlert, { AlertType, AlertData } from "../../utils/ActionAlert";
-import { config } from "../../utils/JWTConfig";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -34,13 +33,13 @@ export default function PasswordRecoveryNewPassword() {
             token: token,
             password: data.password
         } as PasswordResetDto
-        await axios.put('http://localhost:8080/api/auth/reset-password', dataToSend, config).then(response => {
+        await axios.put('http://localhost:8080/api/auth/reset-password', dataToSend).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setAlert({
                     type: AlertType.Success,
                     title: "Success",
-                    message: "PasswordChangedSuccessfully"
+                    message: "Password changed successfully"
                 });
                 reset();
             }}).catch(error => {

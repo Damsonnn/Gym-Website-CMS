@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -35,7 +34,7 @@ public class PasswordResetToken {
     private Integer id;
 
     @Column(name = "token", length = 36)
-    private String Token;
+    private String token;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -44,11 +43,14 @@ public class PasswordResetToken {
     @Column(name = "expiry_date")
     private Date expiryDate;
 
-    public PasswordResetToken(String token, User user){
-        setToken(token);
-        setUser(user);
+    public void resetExpiryDate(){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, EXPIRATION);
+        setExpiryDate(now.getTime());
+    }
+
+    public void expireToken(){
+        Calendar now = Calendar.getInstance();
         setExpiryDate(now.getTime());
     }
 }

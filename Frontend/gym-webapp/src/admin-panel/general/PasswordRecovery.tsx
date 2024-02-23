@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ActionAlert, { AlertType, AlertData } from "../../utils/ActionAlert";
-import { config } from "../../utils/JWTConfig";
 import { Link } from "react-router-dom";
 
 type PasswordResetForm = {
@@ -21,7 +20,7 @@ export default function PasswordRecovery() {
     });
 
     const onSubmit = async (data: PasswordResetForm) => {
-        await axios.put(`http://localhost:8080/api/auth/reset-password?email=${data.email}`, null, config).then(response => {
+        await axios.post(`http://localhost:8080/api/auth/reset-password?email=${data.email}`).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setAlert({
@@ -58,7 +57,7 @@ export default function PasswordRecovery() {
                 </div>
                 <form className="pt-4" onSubmit={handleSubmit(onSubmit)}>
                     <label htmlFor="email">E-mail:</label>
-                    <input type="email" className={`form-control ${errors.email ? "input-invalid" : null}`} {...register("email")} placeholder='E-mail'/>
+                    <input type="text" className={`form-control ${errors.email ? "input-invalid" : null}`} {...register("email")} placeholder='E-mail'/>
                     <p className="text-danger">{errors.email?.message}</p>
                     <input type="submit" value="Send recovery email" className='btn btn-primary' />
                 </form>

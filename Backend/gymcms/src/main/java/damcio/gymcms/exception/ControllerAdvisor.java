@@ -42,7 +42,7 @@ public class ControllerAdvisor{
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(value = UserAuthenticationFailedException.class)
+    @ExceptionHandler(value = TokenExpiredException.class)
     public ResponseEntity<Object> handleTokenExpiredException(Exception ex){
         Map<String, Object> body = new HashMap<>();
         body.put("message", ex.getMessage());

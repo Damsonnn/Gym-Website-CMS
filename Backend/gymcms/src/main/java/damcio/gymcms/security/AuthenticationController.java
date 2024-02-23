@@ -35,14 +35,14 @@ public class AuthenticationController {
     }
     
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam("email") String email) {
-        authenticationService.resetPassword(email);
+    public ResponseEntity<String> createResetToken(@RequestParam("email") String email) {
+        authenticationService.createResetToken(email);
         return new ResponseEntity<>("Sent reset token", HttpStatus.OK);
     }
     
     @PutMapping("/reset-password")
-    public ResponseEntity<String> resetPasswordChange(@RequestBody PasswordResetDto passwordResetDto) {
-        authenticationService.resetPasswordChange(passwordResetDto.getToken(), passwordResetDto.getPassword());
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordResetDto passwordResetDto) {
+        authenticationService.resetPassword(passwordResetDto.getToken(), passwordResetDto.getPassword());
         return new ResponseEntity<>("Password was changed", HttpStatus.OK);
     }
 }

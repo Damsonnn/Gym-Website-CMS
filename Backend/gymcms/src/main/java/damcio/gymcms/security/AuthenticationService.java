@@ -39,24 +39,30 @@ public class AuthenticationService {
                 .orElseThrow();
     }
 
-    public void resetPassword(String email){
+    public void createResetToken(String email){
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new ResourceNotFoundException("No user with that username"));
-
+            .orElseThrow(() -> new ResourceNotFoundException("No user with that e-mail"));
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByUser(user)
+            .orElseGet(() -> new PasswordResetToken());
         String token = UUID.randomUUID().toString();
-        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user);
+
+        passwordResetToken.setToken(token);
+        passwordResetToken.setUser(user);
+        passwordResetToken.resetExpiryDate();
+        
         passwordResetTokenRepository.save(passwordResetToken);
         emailService.sendPasswordResetToken(passwordResetToken);
     }
 
-    public void resetPasswordChange(String token, String password){
+    public void resetPassword(String token, String password){
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
-            .orElseThrow(() -> new ResourceNotFoundException("Didn't find this token"));
+            .orElseThrow(() -> new ResourceNotFoundException("Didn't find this token or token expired"));
 
         Date now = Calendar.getInstance().getTime();
         if (resetToken.getExpiryDate().before(now)) throw new TokenExpiredException("Token for password change expired");
         
         resetToken.getUser().setPassword(password);
         userRepository.save(resetToken.getUser());
+        resetToken.expireToken();
     }
 }

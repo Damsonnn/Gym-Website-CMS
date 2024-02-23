@@ -24,7 +24,7 @@ public class EmailService {
     @Value("${spring.mail.properties.sender.name}")
     private String serviceEmailName;
 
-    public void sendFromContactForm(ContactFormDto message) throws UnsupportedEncodingException, MessagingException{
+    public void sendFromContactForm(ContactFormDto message) {
         String subject = "[Formularz] " + message.getSubject();
         String content = "[" + message.getSenderEmail() + "]\n" + message.getMessage();
         sendEmail(message.getSendTo(), subject, content, message.getSenderEmail(), message.getSenderName());
@@ -49,7 +49,7 @@ public class EmailService {
             helper.setText(content);
             
             emailSender.send(message);
-        } catch (UnsupportedEncodingException | MessagingException ex){
+        } catch (Exception ex){
             throw new MailFailedException("Couldn't send mail\n" + ex.getMessage() );
         }
     }
