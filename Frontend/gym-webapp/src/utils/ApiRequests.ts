@@ -1,11 +1,11 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router";
-import { config } from "./JWTConfig";
+import { getConfig } from "./JWTConfig";
 import { SetStateAction } from "react";
 import { AlertType } from "./ActionAlert";
 
 export const createObject = async (objectData: Object, endpoint: string, navigate: NavigateFunction, setAlert: (data: SetStateAction<any>) => void | null) => {
-    await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, config).then(response => {
+    await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, getConfig()).then(response => {
 
         if (response.status === 201) {
             console.log('Succesfully created');
@@ -34,7 +34,7 @@ export const createObject = async (objectData: Object, endpoint: string, navigat
 
 
 export const editObject = async (objectData: Object, id: string, endpoint: string, setAlert: (data: SetStateAction<any>) => void) => {
-    await axios.put(`http://localhost:8080/api/${endpoint}/${id}`, objectData, config).then(response => {
+    await axios.put(`http://localhost:8080/api/${endpoint}/${id}`, objectData, getConfig()).then(response => {
         if (response.status === 200) {
             setAlert({
                 type: AlertType.Success,
@@ -62,7 +62,7 @@ export const editObject = async (objectData: Object, id: string, endpoint: strin
 
 export const getOneObject = async (id: string | undefined, endpoint: string, setData: (data: SetStateAction<any>) => void) => {
     try {
-        await axios.get(`http://localhost:8080/api/${endpoint}/${id}`, config).then(response => {
+        await axios.get(`http://localhost:8080/api/${endpoint}/${id}`, getConfig()).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setData(response.data)
@@ -94,7 +94,7 @@ export const getOneObjectNoToken = async (id: string | undefined, endpoint: stri
 
 export const getAllObjects = async (endpoint: string, setData: (data: SetStateAction<Array<any>>) => void) => {
     try {
-        await axios.get(`http://localhost:8080/api/${endpoint}`, config).then(response => {
+        await axios.get(`http://localhost:8080/api/${endpoint}`, getConfig()).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setData(response.data)
@@ -127,7 +127,7 @@ export const getAllObjectsNoToken = async (endpoint: string, setData: (data: Set
 
 export const deleteObject = async (endpoint: string, id: number) => {
     try {
-        const response = await axios.delete(`http://localhost:8080/api/${endpoint}/${id}`, config);
+        const response = await axios.delete(`http://localhost:8080/api/${endpoint}/${id}`, getConfig());
 
         if (response.status === 200) {
             console.log('Succesfully deleted');

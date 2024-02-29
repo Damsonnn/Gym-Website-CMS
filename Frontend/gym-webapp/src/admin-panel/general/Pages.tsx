@@ -82,7 +82,7 @@ export default function Pages() {
                     <div className='col-2'>
                         {showMenu ? <SideMenu /> : null}
                     </div>
-                    <div className='col-10'>
+                    <div className={showMenu ? 'col-10' : 'col-12'}>
                         <Routes>
                             {createCRUDRoutes()}
                             <Route path='password-change' element={<PasswordChange />}/>

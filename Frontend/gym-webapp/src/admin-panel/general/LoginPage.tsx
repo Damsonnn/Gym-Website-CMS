@@ -28,8 +28,7 @@ export default function LoginPage() {
             if (response.status === 200) {
                 sessionStorage.setItem("token", response.data.token);
                 sessionStorage.setItem("role", response.data.roleName);
-                sessionStorage.setItem("userId", response.data.userId);
-                navigate("/manage");
+                navigate("/manage/banners");
             }}).catch(error => {
                 console.error('Error during login:', error);
                 if (error.response){

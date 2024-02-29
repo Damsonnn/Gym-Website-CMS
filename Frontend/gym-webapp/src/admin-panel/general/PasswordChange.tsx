@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ActionAlert, { AlertType, AlertData } from "../../utils/ActionAlert";
-import { config } from "../../utils/JWTConfig";
+import { getConfig } from "../../utils/JWTConfig";
 
 type PasswordChangeDto = {
     oldPassword: string
@@ -33,7 +33,7 @@ export default function PasswordChange() {
             oldPassword: data.oldPassword,
             newPassword: data.newPassword
         };
-        await axios.put('http://localhost:8080/api/users/password-change', dataToSend, config).then(response => {
+        await axios.put('http://localhost:8080/api/users/password-change', dataToSend, getConfig()).then(response => {
             console.log(response)
             if (response.status === 200) {
                 setAlert({
