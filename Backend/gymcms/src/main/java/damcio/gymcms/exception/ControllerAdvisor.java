@@ -49,4 +49,12 @@ public class ControllerAdvisor{
 
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(value = FileSaveException.class)
+    public ResponseEntity<Object> handleFileSaveException(Exception ex){
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

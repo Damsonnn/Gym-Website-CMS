@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import damcio.gymcms.exception.ResourceNotFoundException;
+import damcio.gymcms.fileMetadata.FileMetadata;
+import damcio.gymcms.fileMetadata.FileMetadataService;
 
 import java.util.List;
 
@@ -12,7 +14,15 @@ import java.util.List;
 public class BannerService {
     private final BannerRepository bannerRepository;
 
-    public Banner createBanner(Banner banner){
+    private final FileMetadataService fileMetadataService;
+
+    public Banner createBanner(BannerDto bannerDto){
+        Banner banner = new Banner();
+        banner.setTitle(bannerDto.getTitle());
+        banner.setBody(bannerDto.getBody());
+        banner.setActive(bannerDto.getActive());
+        FileMetadata fileMetadata = fileMetadataService.createFile(bannerDto.getPicture(), Integer.toString(banner.getId()), "banners");
+        banner.setPicture(fileMetadata);
         return bannerRepository.save(banner);
     }
 
@@ -29,20 +39,26 @@ public class BannerService {
         return bannerRepository.findByActive(true);
     }
 
-    public Banner updateBanner(Banner banner){
+    public Banner updateBanner(BannerDto banner){
         Banner existingBanner = bannerRepository.findById(banner.getId())
             .orElseThrow(() -> new ResourceNotFoundException("Couldn't find banner to update"));
         
         existingBanner.setActive(banner.getActive());
         existingBanner.setBody(banner.getBody());
         existingBanner.setTitle(banner.getTitle());
+        if (banner.getPicture().isEmpty()){
+            FileMetadata fileMetdata = fileMetadataService.createFile(banner.getPicture(), String.valueOf(existingBanner.getId()), "banners");
+            existingBanner.setPicture(fileMetdata);
+        }
+        
         return bannerRepository.save(existingBanner);
     }
 
     public void deleteBanner(Integer id){
-        if (bannerRepository.existsById(id))
-            throw new ResourceNotFoundException("Couldn't find banner to change");
+        Banner bannerToDelete = bannerRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Couldn't find banner to delete"));
         
+        fileMetadataService.deleteFile(bannerToDelete.getPicture());
         bannerRepository.deleteById(id);
     }
 }

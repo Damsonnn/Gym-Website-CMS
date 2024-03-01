@@ -1,10 +1,14 @@
 package damcio.gymcms.banner;
 
+import damcio.gymcms.fileMetadata.FileMetadata;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -28,4 +32,8 @@ public class Banner {
 
     @Column(name = "active", nullable = false)
     private Boolean active = false;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "picture_id")
+    private FileMetadata picture;
 }

@@ -6,7 +6,7 @@ import { AlertType } from "./ActionAlert";
 
 export const createObject = async (objectData: Object, endpoint: string, navigate: NavigateFunction, setAlert: (data: SetStateAction<any>) => void | null) => {
     await axios.post(`http://localhost:8080/api/${endpoint}`, objectData, getConfig()).then(response => {
-
+        console.log(response)
         if (response.status === 201) {
             console.log('Succesfully created');
             console.log(response.data);

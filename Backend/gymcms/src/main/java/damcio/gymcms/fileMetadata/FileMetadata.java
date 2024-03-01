@@ -29,4 +29,7 @@ public class FileMetadata {
 
     @Column(name = "path", nullable = false, length = 150)
     private String path;
+
+    @Column(name = "type", nullable = false, length = 50)
+    private String type;
 }

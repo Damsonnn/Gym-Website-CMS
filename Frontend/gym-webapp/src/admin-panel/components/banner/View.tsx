@@ -4,13 +4,14 @@ import { useNavigate, useParams } from "react-router";
 import { createObject, editObject, getOneObject } from "../../../utils/ApiRequests";
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import ActionAlert, { AlertType, AlertData } from '../../../utils/ActionAlert';
 
 type BannerDto = {
     title: string
     body: string
     active: boolean
+    picture: File
 }
 
 const ENDPOINT = "banners"
@@ -24,10 +25,11 @@ export default function BannerView(props: { action: CrudAction }) {
     const schema = yup.object().shape({
         title: yup.string().required().min(3).max(200),
         body: yup.string().required().min(5).max(500),
-        active: yup.boolean().required()
+        active: yup.boolean().required(),
+        picture: yup.mixed<File>().required()
     });
 
-    const { register, handleSubmit, formState: { errors, submitCount, isValid }, reset } = useForm<BannerDto>({
+    const { register, control, handleSubmit, formState: { errors, submitCount, isValid }, reset } = useForm<BannerDto>({
         resolver: yupResolver(schema),
     });
 
@@ -64,6 +66,20 @@ export default function BannerView(props: { action: CrudAction }) {
                         <label htmlFor="body">Text under title:</label>
                         <input type="text" className={`form-control ${errors.body ? "input-invalid" : null}`} placeholder='Text' {...register("body")} disabled={action === CrudAction.View} />
                         <p className="text-danger">{errors.body?.message}</p>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='form-group col'>
+                        <label htmlFor="picture">Photo for banner:</label>
+                        <Controller control={control} name="picture" render={({ field: { value, onChange, ...field } }) =>
+                            <input className={`form-control ${errors.picture ? "input-invalid" : null}`}
+                                onChange={(event) => {
+                                    if (event.target.files) onChange(event.target.files[0])
+                                }
+                                }
+                                type="file" accept='image/jpg, image/jpeg, image/png' />
+                        } />
+                        <p className="text-danger">{errors.picture?.message}</p>
                     </div>
                 </div>
                 <div className='form-check mb-3'>

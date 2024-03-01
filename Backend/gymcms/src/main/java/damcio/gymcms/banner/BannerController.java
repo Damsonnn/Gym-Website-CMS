@@ -17,7 +17,7 @@ public class BannerController {
     private final BannerService bannerService;
 
     @PostMapping
-    public ResponseEntity<Banner> createBanner(@RequestBody Banner banner){
+    public ResponseEntity<Banner> createBanner(@RequestBody BannerDto banner){
         Banner savedBanner = bannerService.createBanner(banner);
         return new ResponseEntity<>(savedBanner, HttpStatus.CREATED);
     }
@@ -42,7 +42,7 @@ public class BannerController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Banner> updateBrand(@PathVariable("id") Integer id, @RequestBody Banner banner){
+    public ResponseEntity<Banner> updateBrand(@PathVariable("id") Integer id, @RequestBody BannerDto banner){
         banner.setId(id);
         Banner updatedBanner = bannerService.updateBanner(banner);
         return new ResponseEntity<>(updatedBanner, HttpStatus.OK);
