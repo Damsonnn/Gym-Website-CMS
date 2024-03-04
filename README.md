@@ -50,3 +50,4 @@ To user email capabilities you have to edit username and password for gmail in [
 - Logs
 - Pagination and sorting (mainly for posts)
 - Improve look of main website
+- Refactor of some parts of the code
